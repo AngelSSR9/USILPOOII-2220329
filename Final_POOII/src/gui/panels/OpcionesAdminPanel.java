@@ -4,6 +4,7 @@
  */
 package gui.panels;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -16,10 +17,12 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
     /**
      * Creates new form OpcionesAdminPanel
      */
+
     private JFrame mainFrame;
     public OpcionesAdminPanel(JFrame mainFrame) {
         initComponents();
         this.mainFrame= mainFrame;
+        
     }
 
     /**
@@ -174,8 +177,9 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
     private void btnAgregarNuevoProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarNuevoProducto1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAgregarNuevoProducto1ActionPerformed
-
+    
     private void btnVerProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProductos1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVerProductos1ActionPerformed
@@ -200,6 +204,15 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
             frame.dispose();
     }//GEN-LAST:event_btnCerrarMouseClicked
 
+    public JButton getBtnAgregarNuevoProducto1() {
+        return btnAgregarNuevoProducto1;
+    }
+
+    public void setBtnAgregarNuevoProducto1(JButton btnAgregarNuevoProducto1) {
+        this.btnAgregarNuevoProducto1 = btnAgregarNuevoProducto1;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;

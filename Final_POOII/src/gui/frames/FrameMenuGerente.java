@@ -1,7 +1,10 @@
 package gui.frames;
 
 
+import gui.panels.FabricacionPanel;
 import gui.panels.OpcionesAdminPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import javax.swing.JOptionPane;
 
@@ -10,19 +13,46 @@ public class FrameMenuGerente extends javax.swing.JFrame {
     
     int xMouse,yMouse;
     OpcionesAdminPanel panelOpciones;
+    FabricacionPanel fab;
     
     public FrameMenuGerente() {
         initComponents();
         setLocationRelativeTo(null);
         agregarEventos();
-        
+        eventosBotones();
         
     }
     
     
-    
+    private void eventosBotones(){
+        panelOpciones.getBtnAgregarNuevoProducto1().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*panelPrincipal.removeAll();
+                panelPrincipal.add(fab);*/
+                
+                panelPrincipal.removeAll();
+                panelPrincipal.add(fab);
+                revalidate();
+                repaint();
+            }
+        });
+        
+        fab.getBtnCerrarOpciones().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*panelPrincipal.removeAll();
+                panelPrincipal.add(fab);*/
+                
+                setContentPane(panelOpciones);
+                revalidate();
+                repaint();
+            }
+        });
+    }
     private void agregarEventos(){
         this.panelOpciones = new OpcionesAdminPanel(this);
+        this.fab = new FabricacionPanel();
         panelPrincipal.removeAll();
         panelPrincipal.add(panelOpciones);
         panelPrincipal.revalidate();
@@ -34,13 +64,16 @@ public class FrameMenuGerente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        topPanel = new javax.swing.JPanel();
         panelPrincipal = new javax.swing.JPanel();
+        topPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelPrincipal.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 410));
 
         topPanel.setBackground(new java.awt.Color(0, 0, 0,0));
         topPanel.setForeground(new java.awt.Color(204, 204, 204));
@@ -55,10 +88,7 @@ public class FrameMenuGerente extends javax.swing.JFrame {
             }
         });
         topPanel.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 620, 30));
-
-        panelPrincipal.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 410));
+        getContentPane().add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
