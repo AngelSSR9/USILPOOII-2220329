@@ -1,15 +1,32 @@
-public abstract class Producto {
+public class Producto {
+
     private double precio;
     private String marca;
     private String modelo;
     private int id;
 
-    public int getId() {
-        return id;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
-    
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
 }
