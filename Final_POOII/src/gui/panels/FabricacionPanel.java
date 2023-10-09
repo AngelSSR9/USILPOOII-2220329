@@ -1,30 +1,21 @@
 package gui.panels;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+
 public class FabricacionPanel extends javax.swing.JPanel {
+
     private ImageIcon imagen;
+
     public FabricacionPanel() {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
-        
-        
+
     }
 
     private void cargarComboBoxProductos() {
-
 
     }
 
@@ -118,56 +109,52 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void btnCerrarOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarOpcionesActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnCerrarOpcionesActionPerformed
 
     private void btnOpciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpciones2ActionPerformed
         // TODO add your handling code here:
         int posicion = this.sliderOpciones.getX();
-        if(posicion >-1){
+        if (posicion > -1) {
             Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
-        }
-        else{
+        } else {
             Animacion.Animacion.mover_derecha(-188, 0, 2, 2, sliderOpciones);
         }
     }//GEN-LAST:event_btnOpciones2ActionPerformed
 
     private void OpcionComponentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionComponentesMouseClicked
         // TODO add your handling code here:
-            String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/imagenees/x.png";
-    imagen = new ImageIcon(rutaImagen);
-    // Establece la imagen en un JLabel dentro del panel
-    JLabel labelImagen = new JLabel(imagen);
-    jPanel1.removeAll();  // Elimina cualquier componente anterior
-    jPanel1.add(labelImagen);  // Agrega la imagen al panel
-    jPanel1.revalidate();
-    jPanel1.repaint();
+        String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/imagenees/x.png";
+        imagen = new ImageIcon(rutaImagen);
+        // Establece la imagen en un JLabel dentro del panel
+        JLabel labelImagen = new JLabel(imagen);
+        jPanel1.removeAll();  // Elimina cualquier componente anterior
+        jPanel1.add(labelImagen);  // Agrega la imagen al panel
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_OpcionComponentesMouseClicked
 
     private void OpcionPerifericoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionPerifericoMouseClicked
         // TODO add your handling code here:
         String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/imagenees/iconCarrito.png";
-    imagen = new ImageIcon(rutaImagen);
-    // Establece la imagen en un JLabel dentro del panel
-    JLabel labelImagen = new JLabel(imagen);
-    jPanel1.removeAll();  // Elimina cualquier componente anterior
-    jPanel1.add(labelImagen);  // Agrega la imagen al panel
-    jPanel1.revalidate();
-    jPanel1.repaint();
+        imagen = new ImageIcon(rutaImagen);
+        // Establece la imagen en un JLabel dentro del panel
+        JLabel labelImagen = new JLabel(imagen);
+        jPanel1.removeAll();  // Elimina cualquier componente anterior
+        jPanel1.add(labelImagen);  // Agrega la imagen al panel
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_OpcionPerifericoMouseClicked
 
     public JButton getBtnCerrarOpciones() {
         return btnCerrarOpciones;
-        
+
     }
 
     public void setBtnCerrarOpciones(JButton btnCerrarOpciones) {
         this.btnCerrarOpciones = btnCerrarOpciones;
     }
 
-
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BarraSup;

@@ -1,19 +1,17 @@
 package gui.frames;
 
-
 import gui.panels.FabricacionPanel;
 import gui.panels.OpcionesAdminPanel;
+import gui.panels.RegistroProductos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import javax.swing.JOptionPane;
 
 public class FrameMenuGerente extends javax.swing.JFrame {
-    
     
     int xMouse,yMouse;
     OpcionesAdminPanel panelOpciones;
     FabricacionPanel fab;
+    RegistroProductos registroProductos;
     
     public FrameMenuGerente() {
         initComponents();
@@ -38,13 +36,22 @@ public class FrameMenuGerente extends javax.swing.JFrame {
             }
         });
         
+        panelOpciones.getBtnVerProductos().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                panelPrincipal.removeAll();
+                panelPrincipal.add(registroProductos);
+                revalidate();
+                repaint();
+            }
+        });
+        
         fab.getBtnCerrarOpciones().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*panelPrincipal.removeAll();
-                panelPrincipal.add(fab);*/
-                
-                setContentPane(panelOpciones);
+                panelPrincipal.removeAll();
+                panelPrincipal.add(panelOpciones);
+                //setContentPane(panelOpciones);
                 revalidate();
                 repaint();
             }
@@ -53,6 +60,7 @@ public class FrameMenuGerente extends javax.swing.JFrame {
     private void agregarEventos(){
         this.panelOpciones = new OpcionesAdminPanel(this);
         this.fab = new FabricacionPanel();
+        this.registroProductos = new RegistroProductos();
         panelPrincipal.removeAll();
         panelPrincipal.add(panelOpciones);
         panelPrincipal.revalidate();

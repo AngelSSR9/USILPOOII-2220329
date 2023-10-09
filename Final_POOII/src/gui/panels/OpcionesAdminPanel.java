@@ -1,22 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package gui.panels;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author henry
- */
-public class OpcionesAdminPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form OpcionesAdminPanel
-     */
+public class OpcionesAdminPanel extends javax.swing.JPanel {
 
     private JFrame mainFrame;
     public OpcionesAdminPanel(JFrame mainFrame) {
@@ -37,7 +27,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         btnVentasDelDia = new javax.swing.JButton();
         btnAgregarNuevoProducto1 = new javax.swing.JButton();
-        btnVerProductos1 = new javax.swing.JButton();
+        btnVerProductos = new javax.swing.JButton();
         btnHistorialDePedidos1 = new javax.swing.JButton();
         btnVerIngresos1 = new javax.swing.JButton();
         btnVerEgresos1 = new javax.swing.JButton();
@@ -91,21 +81,21 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
         });
         add(btnAgregarNuevoProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 250, 40));
 
-        btnVerProductos1.setBackground(new java.awt.Color(153, 153, 255));
-        btnVerProductos1.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerProductos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton1.png"))); // NOI18N
-        btnVerProductos1.setText("Ver todos los productos");
-        btnVerProductos1.setBorder(null);
-        btnVerProductos1.setBorderPainted(false);
-        btnVerProductos1.setContentAreaFilled(false);
-        btnVerProductos1.setFocusPainted(false);
-        btnVerProductos1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnVerProductos1.addActionListener(new java.awt.event.ActionListener() {
+        btnVerProductos.setBackground(new java.awt.Color(153, 153, 255));
+        btnVerProductos.setForeground(new java.awt.Color(0, 0, 0));
+        btnVerProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton1.png"))); // NOI18N
+        btnVerProductos.setText("Ver todos los productos");
+        btnVerProductos.setBorder(null);
+        btnVerProductos.setBorderPainted(false);
+        btnVerProductos.setContentAreaFilled(false);
+        btnVerProductos.setFocusPainted(false);
+        btnVerProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVerProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerProductos1ActionPerformed(evt);
+                btnVerProductosActionPerformed(evt);
             }
         });
-        add(btnVerProductos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+        add(btnVerProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
         btnHistorialDePedidos1.setBackground(new java.awt.Color(153, 153, 255));
         btnHistorialDePedidos1.setForeground(new java.awt.Color(0, 0, 0));
@@ -180,9 +170,9 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnAgregarNuevoProducto1ActionPerformed
     
-    private void btnVerProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProductos1ActionPerformed
+    private void btnVerProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProductosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerProductos1ActionPerformed
+    }//GEN-LAST:event_btnVerProductosActionPerformed
 
     private void btnHistorialDePedidos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialDePedidos1ActionPerformed
         // TODO add your handling code here:
@@ -211,6 +201,11 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
     public void setBtnAgregarNuevoProducto1(JButton btnAgregarNuevoProducto1) {
         this.btnAgregarNuevoProducto1 = btnAgregarNuevoProducto1;
     }
+
+    public JButton getBtnVerProductos() {
+        return btnVerProductos;
+    }
+    
     
     
 
@@ -222,7 +217,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnVentasDelDia;
     private javax.swing.JButton btnVerEgresos1;
     private javax.swing.JButton btnVerIngresos1;
-    private javax.swing.JButton btnVerProductos1;
+    private javax.swing.JButton btnVerProductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
