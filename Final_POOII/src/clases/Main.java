@@ -1,4 +1,4 @@
-package newpackage;
+package clases;
 import login.LoginCliente;
 
 public class Main {

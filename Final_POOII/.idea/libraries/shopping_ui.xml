@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="shopping-ui">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/shopping-ui.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

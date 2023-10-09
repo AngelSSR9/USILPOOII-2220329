@@ -8,7 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import newpackage.*;
+import clases.*;
+import java.awt.Font;
 
 public class LoginCliente extends javax.swing.JFrame {
     
@@ -20,65 +21,130 @@ public class LoginCliente extends javax.swing.JFrame {
         title.requestFocusInWindow();
     }
     
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         bg = new javax.swing.JPanel();
-        favicon = new javax.swing.JLabel();
-        title = new javax.swing.JLabel();
-        userLabel = new javax.swing.JLabel();
-        userTxt = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        passLabel = new javax.swing.JLabel();
-        passTxt = new javax.swing.JPasswordField();
-        jSeparator2 = new javax.swing.JSeparator();
-        loginBtn = new javax.swing.JPanel();
-        loginBtnTxt = new javax.swing.JLabel();
         lblMsjNoHayCuenta = new javax.swing.JLabel();
-        lblRegistrarse = new javax.swing.JLabel();
         pnl_overlay = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
         txtName = new javax.swing.JLabel();
         lblSlonga = new javax.swing.JLabel();
         exit = new javax.swing.JLabel();
+        kGradientPanel1 = new keeptoo.KGradientPanel();
+        favicon = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
+        correoLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        passLabel = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        userTxt = new javax.swing.JTextField();
+        passTxt = new javax.swing.JPasswordField();
+        Text1 = new javax.swing.JPanel();
+        Text2 = new javax.swing.JPanel();
+        loginBtn = new javax.swing.JPanel();
+        loginBtnTxt = new javax.swing.JLabel();
+        lblRegistrarse = new javax.swing.JLabel();
 
-        bg.setBackground(new java.awt.Color(0, 204, 204));
+        bg.setBackground(new java.awt.Color(0, 29, 50));
         bg.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         bg.setMinimumSize(new java.awt.Dimension(500, 440));
         bg.setPreferredSize(new java.awt.Dimension(500, 440));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblMsjNoHayCuenta.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        lblMsjNoHayCuenta.setForeground(new java.awt.Color(255, 255, 255));
+        lblMsjNoHayCuenta.setText("¿No tiene una cuenta?");
+        bg.add(lblMsjNoHayCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 430, -1, -1));
+
+        pnl_overlay.setBackground(new java.awt.Color(255, 255, 255));
+        pnl_overlay.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnl_overlayMouseDragged(evt);
+            }
+        });
+        pnl_overlay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnl_overlayMousePressed(evt);
+            }
+        });
+        pnl_overlay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        imgLogo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        imgLogo.setForeground(new java.awt.Color(255, 255, 255));
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo.jpeg"))); // NOI18N
+        pnl_overlay.add(imgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, 190));
+
+        txtName.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        txtName.setForeground(new java.awt.Color(102, 102, 102));
+        txtName.setText("TIENDA XXXXXXXXXXXX");
+        pnl_overlay.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, -1));
+
+        lblSlonga.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        lblSlonga.setForeground(new java.awt.Color(102, 102, 102));
+        lblSlonga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSlonga.setText("La tienda que vende algo xd");
+        lblSlonga.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnl_overlay.add(lblSlonga, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 252, 20));
+
+        exit.setBackground(new java.awt.Color(231, 73, 134));
+        exit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        exit.setForeground(new java.awt.Color(231, 73, 134));
+        exit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exit.setText("X");
+        exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitMouseClicked(evt);
+            }
+        });
+        pnl_overlay.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 26, 28));
+
+        bg.add(pnl_overlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 470, 550));
+
+        kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         favicon.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        bg.add(favicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        kGradientPanel1.add(favicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
 
-        title.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        title.setText("INICIAR SESIÓN");
-        bg.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+        title.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+        title.setForeground(new java.awt.Color(255, 255, 255));
+        title.setText("INICIAR SESION");
+        kGradientPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
 
-        userLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        userLabel.setText("USUARIO");
-        bg.add(userLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        correoLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        correoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        correoLabel.setText("CORREO");
+        kGradientPanel1.add(correoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
-        userTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        kGradientPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 450, 10));
+
+        passLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        passLabel.setForeground(new java.awt.Color(255, 255, 255));
+        passLabel.setText("CONTRASEÑA");
+        kGradientPanel1.add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        kGradientPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 450, 10));
+
+        userTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         userTxt.setForeground(new java.awt.Color(204, 204, 204));
-        userTxt.setText("Ingrese su nombre de usuario");
+        userTxt.setText("Ingrese su correo");
+        userTxt.setAutoscrolls(false);
         userTxt.setBorder(null);
         userTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxtMousePressed(evt);
             }
         });
-        bg.add(userTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
+        kGradientPanel1.add(userTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
 
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        bg.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 410, 20));
-
-        passLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        passLabel.setText("CONTRASEÑA");
-        bg.add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
-
-        passTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        passTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         passTxt.setForeground(new java.awt.Color(204, 204, 204));
         passTxt.setText("********");
         passTxt.setBorder(null);
@@ -87,15 +153,48 @@ public class LoginCliente extends javax.swing.JFrame {
                 passTxtMousePressed(evt);
             }
         });
-        bg.add(passTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 410, 30));
+        kGradientPanel1.add(passTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 410, 30));
 
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        bg.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 410, 10));
+        Text1.setBackground(new java.awt.Color(255, 255, 255));
+        Text1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Text1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Text1MouseClicked(evt);
+            }
+        });
 
-        loginBtn.setBackground(new java.awt.Color(0, 134, 190));
+        javax.swing.GroupLayout Text1Layout = new javax.swing.GroupLayout(Text1);
+        Text1.setLayout(Text1Layout);
+        Text1Layout.setHorizontalGroup(
+            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        Text1Layout.setVerticalGroup(
+            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        loginBtnTxt.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        loginBtnTxt.setForeground(new java.awt.Color(255, 255, 255));
+        kGradientPanel1.add(Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 450, 30));
+
+        Text2.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout Text2Layout = new javax.swing.GroupLayout(Text2);
+        Text2.setLayout(Text2Layout);
+        Text2Layout.setHorizontalGroup(
+            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+        Text2Layout.setVerticalGroup(
+            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        kGradientPanel1.add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+
+        loginBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        loginBtnTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        loginBtnTxt.setForeground(new java.awt.Color(0, 0, 0));
         loginBtnTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginBtnTxt.setText("ENTRAR");
         loginBtnTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -115,22 +214,20 @@ public class LoginCliente extends javax.swing.JFrame {
         loginBtn.setLayout(loginBtnLayout);
         loginBtnLayout.setHorizontalGroup(
             loginBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginBtnTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(loginBtnLayout.createSequentialGroup()
+                .addComponent(loginBtnTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         loginBtnLayout.setVerticalGroup(
             loginBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginBtnTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loginBtnTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        bg.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 130, 40));
+        kGradientPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, -1, -1));
 
-        lblMsjNoHayCuenta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblMsjNoHayCuenta.setText("¿No tiene una cuenta?");
-        bg.add(lblMsjNoHayCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, -1, -1));
-
-        lblRegistrarse.setBackground(new java.awt.Color(0, 0, 255));
-        lblRegistrarse.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblRegistrarse.setForeground(new java.awt.Color(0, 51, 255));
+        lblRegistrarse.setBackground(new java.awt.Color(255, 0, 255));
+        lblRegistrarse.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        lblRegistrarse.setForeground(new java.awt.Color(0, 204, 0));
         lblRegistrarse.setText("Registrese");
         lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -143,95 +240,31 @@ public class LoginCliente extends javax.swing.JFrame {
                 lblRegistrarseMouseExited(evt);
             }
         });
-        bg.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, -1, -1));
+        kGradientPanel1.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
 
-        pnl_overlay.setBackground(new java.awt.Color(255, 255, 255));
-        pnl_overlay.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                pnl_overlayMouseDragged(evt);
-            }
-        });
-        pnl_overlay.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnl_overlayMousePressed(evt);
-            }
-        });
-        pnl_overlay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        imgLogo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        imgLogo.setForeground(new java.awt.Color(255, 255, 255));
-        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swingg_dribble/images/Logo.jpeg"))); // NOI18N
-        pnl_overlay.add(imgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, -1, 190));
-
-        txtName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtName.setForeground(new java.awt.Color(102, 102, 102));
-        txtName.setText("TIENDA XXXXXXXXXXXX");
-        pnl_overlay.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, -1));
-
-        lblSlonga.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblSlonga.setForeground(new java.awt.Color(102, 102, 102));
-        lblSlonga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSlonga.setText("La tienda que vende algo xd");
-        lblSlonga.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnl_overlay.add(lblSlonga, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 252, 20));
-
-        exit.setBackground(new java.awt.Color(231, 73, 134));
-        exit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        exit.setForeground(new java.awt.Color(231, 73, 134));
-        exit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exit.setText("X");
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitMouseClicked(evt);
-            }
-        });
-        pnl_overlay.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(464, 0, 26, 28));
-
-        bg.add(pnl_overlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 450, 470));
+        bg.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseEntered
-        loginBtn.setBackground(new Color(0, 156, 223));
+        loginBtn.setBackground(new Color(225,217,217));
     }//GEN-LAST:event_loginBtnTxtMouseEntered
 
     private void loginBtnTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseExited
-        loginBtn.setBackground(new Color(0,134,190));
+        loginBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_loginBtnTxtMouseExited
-
-    private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
-        if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
-            userTxt.setText("");
-            userTxt.setForeground(Color.black);
-        }
-        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
-            passTxt.setText("********");
-            passTxt.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_userTxtMousePressed
-
-    private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
-        if (String.valueOf(passTxt.getPassword()).equals("********")) {
-            passTxt.setText("");
-            passTxt.setForeground(Color.black);
-        }
-        if (userTxt.getText().isEmpty()) {
-            userTxt.setText("Ingrese su nombre de usuario");
-            userTxt.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_passTxtMousePressed
 
     private void loginBtnTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseClicked
         
@@ -288,6 +321,32 @@ public class LoginCliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_pnl_overlayMousePressed
 
+    private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
+        if (userTxt.getText().equals("Ingrese su correo")) {
+            userTxt.setText("");
+            userTxt.setForeground(Color.black);
+        }
+        if (String.valueOf(passTxt.getPassword()).isEmpty()) {
+            passTxt.setText("********");
+            passTxt.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_userTxtMousePressed
+
+    private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
+        if (String.valueOf(passTxt.getPassword()).equals("********")) {
+            passTxt.setText("");
+            passTxt.setForeground(Color.black);
+        }
+        if (userTxt.getText().isEmpty()) {
+            userTxt.setText("Ingrese su correo");
+            userTxt.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_passTxtMousePressed
+
+    private void Text1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Text1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Text1MouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -328,12 +387,16 @@ public class LoginCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Text1;
+    private javax.swing.JPanel Text2;
     private javax.swing.JPanel bg;
+    private javax.swing.JLabel correoLabel;
     private javax.swing.JLabel exit;
     private javax.swing.JLabel favicon;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JLabel lblMsjNoHayCuenta;
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblSlonga;
@@ -344,7 +407,6 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_overlay;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;
-    private javax.swing.JLabel userLabel;
     private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
 }

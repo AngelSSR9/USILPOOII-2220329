@@ -1,4 +1,4 @@
-package newpackage;
+package clases;
 
 
 import java.util.ArrayList;

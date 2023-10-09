@@ -6,7 +6,7 @@ package login;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import com.raven.main.Main;
+
 
 /**
  *
@@ -70,14 +70,8 @@ public class Plantillaentrar extends javax.swing.JFrame {
 
     private void txtBuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuyMouseClicked
         this.setVisible(false);
-        Main main = new Main();
-        main.addWindowListener(new WindowAdapter(){
-            @Override
-            public void windowClosing(WindowEvent e){
-                setVisible(true);
-            }
-        });
-        main.setVisible(true);
+       
+        
     }//GEN-LAST:event_txtBuyMouseClicked
 
     /**

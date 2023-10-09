@@ -1,4 +1,4 @@
-package newpackage;
+package clases;
 
 
 public class Pedido {
