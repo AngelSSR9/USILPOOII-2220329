@@ -40,7 +40,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
         jLabel2.setText("jLabel2");
 
-        setPreferredSize(new java.awt.Dimension(800, 410));
+        setPreferredSize(new java.awt.Dimension(650, 420));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         sliderOpciones.setBackground(new java.awt.Color(51, 204, 255));

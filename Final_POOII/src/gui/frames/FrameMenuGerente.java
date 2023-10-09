@@ -3,61 +3,83 @@ package gui.frames;
 import gui.panels.FabricacionPanel;
 import gui.panels.OpcionesAdminPanel;
 import gui.panels.RegistroProductos;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FrameMenuGerente extends javax.swing.JFrame {
-    
-    int xMouse,yMouse;
+
+    int xMouse, yMouse;
     OpcionesAdminPanel panelOpciones;
     FabricacionPanel fab;
     RegistroProductos registroProductos;
-    
+
     public FrameMenuGerente() {
         initComponents();
         setLocationRelativeTo(null);
         agregarEventos();
         eventosBotones();
-        
+
     }
-    
-    
-    private void eventosBotones(){
+
+    private void eventosBotones() {
         panelOpciones.getBtnAgregarNuevoProducto1().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 /*panelPrincipal.removeAll();
                 panelPrincipal.add(fab);*/
-                
+
                 panelPrincipal.removeAll();
                 panelPrincipal.add(fab);
+                pack();
                 revalidate();
                 repaint();
             }
         });
-        
-        panelOpciones.getBtnVerProductos().addActionListener(new ActionListener(){
+
+        panelOpciones.getBtnVerProductos().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                panelPrincipal.removeAll();
-                panelPrincipal.add(registroProductos);
+            public void actionPerformed(ActionEvent e) {
+                // Cambia el contenido del JFrame al panel registroProductos
+                panelPrincipal.setVisible(false);
+                setContentPane(registroProductos);
+                pack();
                 revalidate();
                 repaint();
+
             }
         });
-        
+
+        //Configuracion para cerrar panels
         fab.getBtnCerrarOpciones().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panelPrincipal.removeAll();
                 panelPrincipal.add(panelOpciones);
-                //setContentPane(panelOpciones);
+                
+                pack();
                 revalidate();
                 repaint();
             }
         });
+
+        registroProductos.getBtnCerrarOpciones().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                setContentPane(panelPrincipal);
+                panelPrincipal.setVisible(true);
+                
+                pack();
+                revalidate();
+                repaint();
+            }
+
+        });
+
     }
-    private void agregarEventos(){
+
+    private void agregarEventos() {
         this.panelOpciones = new OpcionesAdminPanel(this);
         this.fab = new FabricacionPanel();
         this.registroProductos = new RegistroProductos();
@@ -65,9 +87,9 @@ public class FrameMenuGerente extends javax.swing.JFrame {
         panelPrincipal.add(panelOpciones);
         panelPrincipal.revalidate();
         panelPrincipal.repaint();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,10 +133,9 @@ public class FrameMenuGerente extends javax.swing.JFrame {
         // TODO add your handling code here:
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x-xMouse,y-yMouse);
+        this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_topPanelMouseDragged
 
-        
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

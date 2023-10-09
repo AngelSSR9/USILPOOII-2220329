@@ -49,6 +49,8 @@ public class LoginCliente extends javax.swing.JFrame {
         loginBtnTxt = new javax.swing.JLabel();
         lblRegistrarse = new javax.swing.JLabel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
         bg.setBackground(new java.awt.Color(0, 29, 50));
         bg.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         bg.setMinimumSize(new java.awt.Dimension(500, 440));

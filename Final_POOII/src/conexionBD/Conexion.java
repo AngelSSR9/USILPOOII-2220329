@@ -9,7 +9,7 @@ public class Conexion {
 
     Connection conexion;
 
-    String url = "jdbc:mysql://localhost:3306/javadata";
+    String url = "jdbc:mysql://localhost:3306/prueba";
     String user = "root";
     String password = "301204";
 

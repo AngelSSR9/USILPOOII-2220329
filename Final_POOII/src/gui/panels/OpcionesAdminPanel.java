@@ -46,6 +46,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        setPreferredSize(new java.awt.Dimension(632, 408));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnVentasDelDia.setBackground(new java.awt.Color(153, 153, 255));
