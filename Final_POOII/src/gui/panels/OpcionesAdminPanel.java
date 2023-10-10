@@ -51,7 +51,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnVentasDelDia.setBackground(new java.awt.Color(153, 153, 255));
         btnVentasDelDia.setForeground(new java.awt.Color(0, 0, 0));
-        btnVentasDelDia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton6.png"))); // NOI18N
+        btnVentasDelDia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton6.png"))); // NOI18N
         btnVentasDelDia.setText("Ventas Del Dia");
         btnVentasDelDia.setBorder(null);
         btnVentasDelDia.setBorderPainted(false);
@@ -67,7 +67,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnAgregarNuevoProducto1.setBackground(new java.awt.Color(153, 153, 255));
         btnAgregarNuevoProducto1.setForeground(new java.awt.Color(0, 0, 0));
-        btnAgregarNuevoProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton.png"))); // NOI18N
+        btnAgregarNuevoProducto1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton.png"))); // NOI18N
         btnAgregarNuevoProducto1.setText("Agregar nuevo producto ");
         btnAgregarNuevoProducto1.setBorder(null);
         btnAgregarNuevoProducto1.setBorderPainted(false);
@@ -84,7 +84,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnVerProductos.setBackground(new java.awt.Color(153, 153, 255));
         btnVerProductos.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton1.png"))); // NOI18N
+        btnVerProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton1.png"))); // NOI18N
         btnVerProductos.setText("Ver todos los productos");
         btnVerProductos.setBorder(null);
         btnVerProductos.setBorderPainted(false);
@@ -100,7 +100,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnHistorialDePedidos1.setBackground(new java.awt.Color(153, 153, 255));
         btnHistorialDePedidos1.setForeground(new java.awt.Color(0, 0, 0));
-        btnHistorialDePedidos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton3.png"))); // NOI18N
+        btnHistorialDePedidos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton3.png"))); // NOI18N
         btnHistorialDePedidos1.setText("Ver historial de pedidos");
         btnHistorialDePedidos1.setBorder(null);
         btnHistorialDePedidos1.setBorderPainted(false);
@@ -116,7 +116,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnVerIngresos1.setBackground(new java.awt.Color(153, 153, 255));
         btnVerIngresos1.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerIngresos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton4.png"))); // NOI18N
+        btnVerIngresos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton4.png"))); // NOI18N
         btnVerIngresos1.setText("Ver Ingresos");
         btnVerIngresos1.setBorder(null);
         btnVerIngresos1.setBorderPainted(false);
@@ -132,7 +132,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
 
         btnVerEgresos1.setBackground(new java.awt.Color(153, 153, 255));
         btnVerEgresos1.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerEgresos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/boton5.png"))); // NOI18N
+        btnVerEgresos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/boton5.png"))); // NOI18N
         btnVerEgresos1.setText("Ver egresos");
         btnVerEgresos1.setBorder(null);
         btnVerEgresos1.setBorderPainted(false);
@@ -146,7 +146,7 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
         });
         add(btnVerEgresos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, 40));
 
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/x.png"))); // NOI18N
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/x.png"))); // NOI18N
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCerrarMouseClicked(evt);
@@ -154,11 +154,11 @@ public class OpcionesAdminPanel extends javax.swing.JPanel {
         });
         add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/administrador.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/administrador.png"))); // NOI18N
         jLabel1.setText("imgAdmin");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 190, -1));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/fondo.png"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo.png"))); // NOI18N
         add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 

@@ -69,7 +69,7 @@
                   <Font name="Showcard Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenees/iconCompo.png"/>
+                  <Image iconType="3" name="/img/iconCompo.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Componentes"/>
               </Properties>
@@ -101,7 +101,7 @@
                   <Font name="Showcard Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenees/iconPerif.png"/>
+                  <Image iconType="3" name="/img/iconPerif.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="  Perif&#xe9;ricos"/>
               </Properties>
@@ -151,7 +151,7 @@
         <Component class="javax.swing.JButton" name="btnCerrarOpciones">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenees/x.png"/>
+              <Image iconType="3" name="/img/x.png"/>
             </Property>
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -168,7 +168,7 @@
         <Component class="javax.swing.JButton" name="btnOpciones2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenees/botonOpciones.png"/>
+              <Image iconType="3" name="/img/botonOpciones.png"/>
             </Property>
             <Property name="borderPainted" type="boolean" value="false"/>
             <Property name="contentAreaFilled" type="boolean" value="false"/>

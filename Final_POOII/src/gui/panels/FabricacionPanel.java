@@ -55,7 +55,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
         OpcionComponentes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblComponentes1.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
-        LblComponentes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/iconCompo.png"))); // NOI18N
+        LblComponentes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
         LblComponentes1.setText("Componentes");
         OpcionComponentes.add(LblComponentes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
@@ -69,7 +69,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
         OpcionPeriferico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblComponentes2.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
-        LblComponentes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/iconPerif.png"))); // NOI18N
+        LblComponentes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconPerif.png"))); // NOI18N
         LblComponentes2.setText("  Periféricos");
         OpcionPeriferico.add(LblComponentes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 40));
 
@@ -84,7 +84,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
         BarraSup.setForeground(new java.awt.Color(51, 51, 255));
         BarraSup.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCerrarOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/x.png"))); // NOI18N
+        btnCerrarOpciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/x.png"))); // NOI18N
         btnCerrarOpciones.setBorderPainted(false);
         btnCerrarOpciones.setContentAreaFilled(false);
         btnCerrarOpciones.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +94,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
         });
         BarraSup.add(btnCerrarOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 5, 30, 30));
 
-        btnOpciones2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenees/botonOpciones.png"))); // NOI18N
+        btnOpciones2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/botonOpciones.png"))); // NOI18N
         btnOpciones2.setBorderPainted(false);
         btnOpciones2.setContentAreaFilled(false);
         btnOpciones2.addActionListener(new java.awt.event.ActionListener() {
