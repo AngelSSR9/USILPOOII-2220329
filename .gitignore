@@ -1,7 +1,46 @@
-/Final_POOII/nbproject/private/
-/Final_POOII/build/
-<<<<<<< HEAD
-/SistemaFacturacion/nbproject/private/
-=======
-/Final_POOII/dist/
->>>>>>> origin/Comprar
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+# Inclusions
+!lib/**
+
+# Compiled Files
+*.class
+bin/
+build/
+/bin1/
+java/build/**
+
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
