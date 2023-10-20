@@ -10,10 +10,18 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import clases.Constantes;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.mail.util.ByteArrayDataSource;
 
 public class RegisterCliente extends javax.swing.JFrame {
     private LoginCliente login;
@@ -399,52 +407,92 @@ public class RegisterCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_registerBtnTxtMouseEntered
 
     private void registerBtnTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerBtnTxtMouseClicked
-        if (!esDireccionDeCorreoValida(userTxt.getText().trim())) {
+        if (!esDireccionDeCorreoValida(userTxt.getText())) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese una dirección de correo electrónico válida.");
             return;
         }
         
         
-        String verificationToken = UUID.randomUUID().toString();
+        //String verificationToken = UUID.randomUUID().toString();
+        //Se crea la clase propiedades para luego configurarlo
         Properties properties = new Properties();
-        // Configuración del servidor de correo
         
+        // Configuración del servidor de correo
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         
-        /*
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        properties.setProperty("mail.smtp.port", "587");
-        properties.setProperty("mail.smtp.user","pruebamonitor7@gmail.com" );
-        properties.setProperty("mail.smtp.ssl.protocols","TLSv1.2" );
-        properties.setProperty("mail.smtp.auth", "true");
-        */
         // Autenticación
+        /*
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("pruebamonitor7@gmail.com", "togj fhkc imxh wldz");
             }
         };
+        */
+        //Se crea una session en la que se pasan las propiedades configuradas
         Session session = Session.getDefaultInstance(properties);
         // Creación y envío del correo
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress("pruebamonitor7@gmail.com"));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(userTxt.getText().trim()));
-            message.setSubject("Verificación de correo electrónico");
-            message.setText("Por favor probando","ISO-8859-1","html");
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(userTxt.getText()));
+            message.setSubject("Correo de bienvenida ");
+            message.setText("Bienvenido a la tienda Nose el nombre","ISO-8859-1","html");
+            
+            // Crear el contenido HTML como un String
+            String htmlContent = "<html><body>";
+            htmlContent += "<p>Bienvenido a la tienda Nose el nombre</p>";
+            htmlContent += "<img src='cid:imagen123'>"; // La imagen se referencia por CID
+            htmlContent += "</body></html>";
+            
+            // Creamos un cuerpo multipart para incluir texto HTML y la imagen
+            MimeMultipart multipart = new MimeMultipart("related");
+            //Es una de las partes del multipart
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            //Se coloca el contenido del correo
+            htmlPart.setContent(htmlContent,"text/html" );
+            //se agrega al multipart
+            multipart.addBodyPart(htmlPart);
+            
+            // Creamos la parte de la imagen
+            MimeBodyPart imagePart = new MimeBodyPart();
+            
+            // Carga la imagen desde el paquete "img"
+            InputStream imgStream = getClass().getResourceAsStream("/img/imgNewProduct.png");
+            
+            //Convertir a bytes la imagen
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = imgStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            
+            //se crea un datahandler, que sirva para gstionar el contenido de la imagen, esta imagen debe de estar en bytes, luego se coloca en la imagen
+            imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));
+            imagePart.setHeader("Content-ID", "<imagen123>"); // Coincide con el CID en el contenido HTML
+            
+            //se agrega otra parte al multipart
+            multipart.addBodyPart(imagePart);
+            
+            // se Establece el contenido del mensaje
+            message.setContent(multipart);
 
+            
+            //logica para enviar mensaje
             Transport mTransport = session.getTransport("smtp");
             mTransport.connect("pruebamonitor7@gmail.com", "togj fhkc imxh wldz");
             mTransport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
             mTransport.close();
             
-            JOptionPane.showMessageDialog(null, "Hemos enviado un correo, por favor ingrese y verifique su cuenta");
+            JOptionPane.showMessageDialog(null, "Gracias por registrarse");
         } catch (MessagingException e) {
             e.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         
 
