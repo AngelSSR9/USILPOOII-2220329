@@ -9,13 +9,13 @@ public class Cliente extends Persona{
     private ArrayList<Pedido> pedidos;
     private String nombre;
     private int id;
-    private String email;
-    private String password;
+    private String correo;
+    private String contraseña;
 
-    public Cliente(String nombre, int dni, int telefono,String email, String password) {
-        super(nombre, dni, telefono);
-        this.email = email;
-        this.password = password;
+    public Cliente(String nombre, int dni,String correo, String contraseña) {
+        super(nombre, dni);
+        this.correo = correo;
+        this.contraseña = contraseña;
     }
     
     public Cliente(){}
@@ -29,20 +29,20 @@ public class Cliente extends Persona{
         this.pedidos = pedidos;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public CarritoCompras getCarritoCompras() {
@@ -69,6 +69,7 @@ public class Cliente extends Persona{
         this.id = id;
     }
 
+    
     
     
 }

@@ -27,10 +27,10 @@ public class ClienteDAO  {
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt(1));
-                c.setDni(rs.getInt(2));
-                c.setNombre(rs.getString(3));
-                c.setTelefono(rs.getInt(4));
-                //c.setDireccion(rs.getString(5));
+                c.setNombre(rs.getString(2));
+                c.setCorreo(rs.getString(3));
+                c.setContraseña(rs.getString(4));
+                c.setDni(rs.getInt(5));
                 lista.add(c);
             }
         } catch (Exception e) {
@@ -42,7 +42,7 @@ public class ClienteDAO  {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO Clientes(DNI,nombre,telefono,direccion)values(?,?,?,?)";
+        String sql = "INSERT INTO Clientes(nombre, correo, contraseña, dni)values(?,?,?,?)";
         con = cn.conectar();
         try {
             ps = con.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class ClienteDAO  {
 
 
     public void eliminar(int id) {
-        String sql = "DELETE FROM Clientes WHERE id =?";
+        String sql = "DELETE FROM Clientes WHERE idCliente =?";
         try {
             con = cn.conectar();
             ps = con.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class ClienteDAO  {
 
     public int actualizar(Object[] o) {
         int r = 0;
-        String sql = "UPDATE Clientes SET DNI=?, nombre=?, telefono=?, direccion=? WHERE idCliente=?";
+        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
         try {
             con = cn.conectar();
             ps = con.prepareStatement(sql);
@@ -103,11 +103,10 @@ public class ClienteDAO  {
             while (rs.next()) {
                 c = new Cliente();
                 c.setId(rs.getInt(1));
-                c.setDni(rs.getInt(2));
-                c.setNombre(rs.getString(3));
-                c.setTelefono(rs.getInt(4));
-                //c.setDireccion(rs.getString(5));
-
+                c.setNombre(rs.getString(2));
+                c.setCorreo(rs.getString(3));
+                c.setContraseña(rs.getString(4));
+                c.setDni(rs.getInt(5));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());

@@ -9,12 +9,15 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import clases.*;
+import conexionBD.ClienteDAO;
 import java.awt.Font;
+import dashboard.MenuCliente;
 
 public class LoginCliente extends javax.swing.JFrame {
     
     private Plantillaentrar p1;
     public LoginCliente() {
+        
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
@@ -37,11 +40,11 @@ public class LoginCliente extends javax.swing.JFrame {
         kGradientPanel1 = new keeptoo.KGradientPanel();
         favicon = new javax.swing.JLabel();
         title = new javax.swing.JLabel();
-        correoLabel = new javax.swing.JLabel();
+        dniLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         passLabel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        userTxt = new javax.swing.JTextField();
+        dniTxt = new javax.swing.JTextField();
         passTxt = new javax.swing.JPasswordField();
         Text1 = new javax.swing.JPanel();
         Text2 = new javax.swing.JPanel();
@@ -116,10 +119,10 @@ public class LoginCliente extends javax.swing.JFrame {
         title.setText("INICIAR SESION");
         kGradientPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
 
-        correoLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        correoLabel.setForeground(new java.awt.Color(255, 255, 255));
-        correoLabel.setText("CORREO");
-        kGradientPanel1.add(correoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+        dniLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        dniLabel.setForeground(new java.awt.Color(255, 255, 255));
+        dniLabel.setText("DNI");
+        kGradientPanel1.add(dniLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -134,17 +137,17 @@ public class LoginCliente extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         kGradientPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 450, 10));
 
-        userTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        userTxt.setForeground(new java.awt.Color(204, 204, 204));
-        userTxt.setText("Ingrese su correo");
-        userTxt.setAutoscrolls(false);
-        userTxt.setBorder(null);
-        userTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+        dniTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        dniTxt.setForeground(new java.awt.Color(204, 204, 204));
+        dniTxt.setText("Ingrese su dni");
+        dniTxt.setAutoscrolls(false);
+        dniTxt.setBorder(null);
+        dniTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                userTxtMousePressed(evt);
+                dniTxtMousePressed(evt);
             }
         });
-        kGradientPanel1.add(userTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
+        kGradientPanel1.add(dniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
 
         passTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         passTxt.setForeground(new java.awt.Color(204, 204, 204));
@@ -270,22 +273,39 @@ public class LoginCliente extends javax.swing.JFrame {
 
     private void loginBtnTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseClicked
         
-        String user = userTxt.getText();
+        int dni = Integer.parseInt(dniTxt.getText());
         String password = String.valueOf(passTxt.getPassword());
         
+        // Llamada al método de autenticación
+        boolean autenticado = autenticarCliente(dni, password);
         
-        this.setVisible(false);
-        Plantillaentrar plantilla = new Plantillaentrar();
-        plantilla.addWindowListener(new WindowAdapter(){
-            @Override
-            public void windowClosing(WindowEvent e){
-                setVisible(true);
-            }
-        });
-        plantilla.setVisible(true);
+        
+        if (autenticado) {
+            // Autenticación exitosa, abre la ventana principal o realiza las acciones necesarias
+            this.setVisible(false);
+            MenuCliente principal = new MenuCliente();
+            principal.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    setVisible(true);
+                }
+            });
+            principal.setVisible(true);
+        } else {
+            // Credenciales incorrectas, muestra un mensaje de error
+            JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
+        }
                 
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 
+    private boolean autenticarCliente(int dni, String password) {
+        // Aquí llama al método de ClienteDAO para verificar las credenciales en la base de datos.
+        // Devuelve true si las credenciales son válidas y false en caso contrario.
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
+        return cliente != null && cliente.getContraseña().equals(password);
+    }
+    
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
         RegisterCliente regCli = new RegisterCliente();
         regCli.addWindowListener(new WindowAdapter(){
@@ -323,25 +343,25 @@ public class LoginCliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_pnl_overlayMousePressed
 
-    private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
-        if (userTxt.getText().equals("Ingrese su correo")) {
-            userTxt.setText("");
-            userTxt.setForeground(Color.black);
+    private void dniTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dniTxtMousePressed
+        if (dniTxt.getText().equals("Ingrese su dni")) {
+            dniTxt.setText("");
+            dniTxt.setForeground(Color.black);
         }
         if (String.valueOf(passTxt.getPassword()).isEmpty()) {
             passTxt.setText("********");
             passTxt.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_userTxtMousePressed
+    }//GEN-LAST:event_dniTxtMousePressed
 
     private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
         if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
             passTxt.setForeground(Color.black);
         }
-        if (userTxt.getText().isEmpty()) {
-            userTxt.setText("Ingrese su correo");
-            userTxt.setForeground(Color.gray);
+        if (dniTxt.getText().isEmpty()) {
+            dniTxt.setText("Ingrese su correo");
+            dniTxt.setForeground(Color.gray);
         }
     }//GEN-LAST:event_passTxtMousePressed
 
@@ -392,7 +412,8 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JPanel Text1;
     private javax.swing.JPanel Text2;
     private javax.swing.JPanel bg;
-    private javax.swing.JLabel correoLabel;
+    private javax.swing.JLabel dniLabel;
+    private javax.swing.JTextField dniTxt;
     private javax.swing.JLabel exit;
     private javax.swing.JLabel favicon;
     private javax.swing.JLabel imgLogo;
@@ -409,6 +430,5 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_overlay;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;
-    private javax.swing.JTextField userTxt;
     // End of variables declaration//GEN-END:variables
 }

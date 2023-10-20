@@ -10,9 +10,7 @@ import java.awt.event.ActionListener;
 public class FrameMenuGerente extends javax.swing.JFrame {
 
     int xMouse, yMouse;
-    OpcionesAdminPanel panelOpciones;
     FabricacionPanel fab;
-    RegistroProductos registroProductos;
 
     public FrameMenuGerente() {
         initComponents();
@@ -23,68 +21,13 @@ public class FrameMenuGerente extends javax.swing.JFrame {
     }
 
     private void eventosBotones() {
-        panelOpciones.getBtnAgregarNuevoProducto1().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                /*panelPrincipal.removeAll();
-                panelPrincipal.add(fab);*/
-
-                panelPrincipal.removeAll();
-                panelPrincipal.add(fab);
-                pack();
-                revalidate();
-                repaint();
-            }
-        });
-
-        panelOpciones.getBtnVerProductos().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Cambia el contenido del JFrame al panel registroProductos
-                panelPrincipal.setVisible(false);
-                setContentPane(registroProductos);
-                pack();
-                revalidate();
-                repaint();
-
-            }
-        });
-
-        //Configuracion para cerrar panels
-        fab.getBtnCerrarOpciones().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                panelPrincipal.removeAll();
-                panelPrincipal.add(panelOpciones);
-                
-                pack();
-                revalidate();
-                repaint();
-            }
-        });
-
-        registroProductos.getBtnCerrarOpciones().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                setContentPane(panelPrincipal);
-                panelPrincipal.setVisible(true);
-                
-                pack();
-                revalidate();
-                repaint();
-            }
-
-        });
-
     }
 
     private void agregarEventos() {
-        this.panelOpciones = new OpcionesAdminPanel(this);
         this.fab = new FabricacionPanel();
-        this.registroProductos = new RegistroProductos();
+        
         panelPrincipal.removeAll();
-        panelPrincipal.add(panelOpciones);
+        panelPrincipal.add(fab);
         panelPrincipal.revalidate();
         panelPrincipal.repaint();
 
@@ -103,7 +46,7 @@ public class FrameMenuGerente extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelPrincipal.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 410));
+        getContentPane().add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1045, 613));
 
         topPanel.setBackground(new java.awt.Color(0, 0, 0,0));
         topPanel.setForeground(new java.awt.Color(204, 204, 204));
@@ -118,7 +61,7 @@ public class FrameMenuGerente extends javax.swing.JFrame {
             }
         });
         topPanel.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 40));
+        getContentPane().add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

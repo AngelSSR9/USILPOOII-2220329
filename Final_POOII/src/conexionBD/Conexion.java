@@ -9,9 +9,10 @@ public class Conexion {
 
     Connection conexion;
 
-    String url = "jdbc:mysql://localhost:3306/prueba";
+    String url = "jdbc:mysql://localhost:3306/poo2";
     String user = "root";
     String password = "2220425929070";
+    
 
     public Connection conectar() {
         try {

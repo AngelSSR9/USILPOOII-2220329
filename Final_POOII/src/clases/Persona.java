@@ -4,12 +4,10 @@ package clases;
 public abstract class Persona {
     protected String nombre;
     protected int dni;
-    protected int telefono;
 
-    public Persona(String nombre, int dni, int telefono) {
+    public Persona(String nombre, int dni) {
         this.nombre = nombre;
         this.dni = dni;
-        this.telefono = telefono;
     }
     
     public Persona(){}
@@ -28,14 +26,6 @@ public abstract class Persona {
 
     public void setDni(int dni) {
         this.dni = dni;
-    }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
     }
     
 }
