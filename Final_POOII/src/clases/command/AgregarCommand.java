@@ -4,7 +4,10 @@
  */
 package clases.command;
 
+import clases.Cliente;
 import clases.Producto;
+import clases.observer.TiendaSubject;
+import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
 import gui.panels.FabricacionPanel;
 import gui.panels.RegistroProductos;
@@ -37,6 +40,17 @@ public class AgregarCommand implements Command{
             Constantes.limpiarComponentes(reg);
             Constantes.limpiarTabla(reg);
             Constantes.listarProductos(reg);
+            // Obtener la lista de clientes, añadir y notificarlos OBserver
+            ClienteDAO clienteDAO = new ClienteDAO();
+            TiendaSubject tienda = TiendaSubject.getInstancia();
+            List<Cliente> clientes = clienteDAO.listar();
+            for (Cliente cliente : clientes) {
+                tienda.añadir(cliente);
+            }
+            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
+            tienda.notificar();
+            System.out.println("Mensajes Enviados");
+            JOptionPane.showMessageDialog(null, "Mesajes enviados");
         }
     }
     
