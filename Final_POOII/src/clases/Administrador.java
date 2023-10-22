@@ -1,5 +1,10 @@
 package clases;
 
+import clases.observer.Observer;
+import clases.observer.Subject;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -9,11 +14,12 @@ package clases;
  *
  * @author henry
  */
-public class Administrador {
+public class Administrador /*implements Subject*/{
     private String nombre;
     private String password;
     private int numero;
     private Inventario inventario;
+    private List<Observer> clientes;
     
     
     public Administrador(String nombre, String password, int numero) {
@@ -65,6 +71,25 @@ public class Administrador {
     public void setNumero(int numero) {
         this.numero = numero;
     }
+
+    /*
+    @Override
+    public void añadir(Observer observer) {
+        clientes.add(observer);
+    }
+
+    @Override
+    public void eliminar(Observer observer) {
+        clientes.remove(observer);
+    }
+
+    @Override
+    public void notificar() {
+        for (Observer cliente : clientes) {
+            cliente.actualizar();
+        }
+    }
+*/
     
     
     
