@@ -11,12 +11,14 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private ImageIcon imagen;
     private RegistroProductos regProd;
+    private VentasDelDiaPanel vnts;
 
     public FabricacionPanel() {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
         this.regProd = new RegistroProductos();
+        this.vnts = new VentasDelDiaPanel();
 
     }
 
@@ -287,7 +289,10 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void OpcionVentasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseClicked
         // TODO add your handling code here:
-        
+        panelContenido.removeAll();
+        panelContenido.add(vnts);
+        panelContenido.revalidate();
+        panelContenido.repaint();
     }//GEN-LAST:event_OpcionVentasDelDiaMouseClicked
 
     private void OpcionVentasDelDiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseEntered
@@ -302,6 +307,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void opcionIyEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionIyEMouseClicked
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_opcionIyEMouseClicked
 
     private void opcionIyEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionIyEMouseEntered
