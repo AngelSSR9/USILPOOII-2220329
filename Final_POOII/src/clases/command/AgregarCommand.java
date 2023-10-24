@@ -12,6 +12,7 @@ import conexionBD.ProductoDAO;
 import gui.panels.FabricacionPanel;
 import gui.panels.RegistroProductos;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

@@ -1,6 +1,7 @@
 
 package dashboard;
 
+import clases.Cliente;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
@@ -8,11 +9,21 @@ import javax.swing.SwingUtilities;
 
 public class MenuCliente extends javax.swing.JFrame {
 
-    
+    OptionsClient optionsClient;
+    Cliente cliente;
     public MenuCliente() {
+        this.optionsClient = new OptionsClient();
+        
+        
+        
         initComponents();
+        dashboardView.removeAll();
+        dashboardView.add(optionsClient);
+        dashboardView.revalidate();
+        dashboardView.repaint();
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,18 +61,7 @@ public class MenuCliente extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dashboardView.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout dashboardViewLayout = new javax.swing.GroupLayout(dashboardView);
-        dashboardView.setLayout(dashboardViewLayout);
-        dashboardViewLayout.setHorizontalGroup(
-            dashboardViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
-        );
-        dashboardViewLayout.setVerticalGroup(
-            dashboardViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
-        );
-
+        dashboardView.setLayout(new java.awt.BorderLayout());
         jPanel1.add(dashboardView, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 660, 470));
 
         kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
