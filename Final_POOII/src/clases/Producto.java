@@ -1,11 +1,16 @@
 package clases;
 
+import java.awt.Image;
+
 public class Producto {
     private double precio;
     private String marca;
     private String modelo;
     private int Stock;
     private int id;
+    private String categoria;
+    private String tipo;
+    private Image imagen;
 
     public double getPrecio() {
         return precio;
@@ -46,4 +51,29 @@ public class Producto {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Image getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Image imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
 }

@@ -9,6 +9,7 @@ public class CarritoPanel extends javax.swing.JPanel {
      */
     public CarritoPanel() {
         initComponents();
+        productosScrollPanel.setVerticalScrollBar(new ScrollBarCustom());
         panelProductos.setLayout(new GridLayout(0,1));
     }
 

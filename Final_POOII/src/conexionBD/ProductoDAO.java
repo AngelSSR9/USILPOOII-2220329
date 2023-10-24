@@ -2,12 +2,18 @@ package conexionBD;
 
 import clases.Producto;
 import conexionBD.Conexion;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.JOptionPane;
 
 public class ProductoDAO  {
@@ -31,6 +37,10 @@ public class ProductoDAO  {
                 p.setModelo(rs.getString(3));
                 p.setPrecio(rs.getDouble(4));
                 p.setStock(rs.getInt(5));
+                p.setCategoria(rs.getString(6));
+                p.setTipo(rs.getString(7));
+                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+
                 lista.add(p);
             }
         } catch (Exception e) {
@@ -40,9 +50,9 @@ public class ProductoDAO  {
         return lista;
     }
 
-    public int agregar(Object[] o) {
+    public int agregar(Object[] o) throws IOException {
         int result = 0;
-        String sql = "INSERT INTO Productos(marca,modelo,precio,stock)values(?,?,?,?)";
+        String sql = "INSERT INTO Productos(marca,modelo,precio,stock, categoría, tipo, imagen)values(?,?,?,?,?,?,?)";
         con = cn.conectar();
         try {
             ps = con.prepareStatement(sql);
@@ -50,6 +60,14 @@ public class ProductoDAO  {
             ps.setObject(2, o[1]);
             ps.setObject(3, o[2]);
             ps.setObject(4, o[3]);
+            ps.setObject(5, o[4]);
+            ps.setObject(6, o[5]);
+            
+            //Convertir la imagen a un arreglo de bytes para ser alamcenada en la bd
+            File imagenFile = new File((String) o[6]);
+            byte[] imagenBytes = Files.readAllBytes(imagenFile.toPath());
+
+            ps.setBlob(7, new SerialBlob(imagenBytes));
             result = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto agregado correctamente.");
         } catch (SQLException ex) {
