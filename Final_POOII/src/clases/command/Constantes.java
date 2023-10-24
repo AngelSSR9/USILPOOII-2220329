@@ -3,6 +3,7 @@ package clases.command;
 import clases.Producto;
 import conexionBD.ProductoDAO;
 import gui.panels.RegistroProductos;
+import gui.panels.VentasDelDiaPanel;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,6 +25,22 @@ public class Constantes {
         }
     }
     
+    public static void listarPedidos(VentasDelDiaPanel vnts){
+        List<Producto> lista = productoDAO.listar();
+        vnts.modelo = (DefaultTableModel) vnts.tablaPedidos.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < lista.size(); i++) {
+            ob[0] = lista.get(i).getId();
+            ob[1] = lista.get(i).getMarca();
+            ob[2] = lista.get(i).getModelo();
+            ob[3] = lista.get(i).getPrecio();
+
+            vnts.modelo.addRow(ob);
+        }
+        
+        vnts.tablaPedidos.setModel(vnts.modelo);
+    }
+    
     public static void listarProductos(RegistroProductos reg) {
         List<Producto> lista = productoDAO.listar();
         reg.modelo = (DefaultTableModel) reg.tablaProductos.getModel();
@@ -40,4 +57,6 @@ public class Constantes {
         
         reg.tablaProductos.setModel(reg.modelo);
     }
+    
+    
 }
