@@ -10,15 +10,19 @@ import javax.swing.SwingUtilities;
 public class FabricacionPanel extends javax.swing.JPanel {
 
     private ImageIcon imagen;
-    private RegistroProductos regProd;
+    private RegistroProductosPanel regProd;
     private VentasDelDiaPanel vnts;
+    private VerClientesPanel clnts;
+    private AgregarProductoPanel agg;
 
     public FabricacionPanel() {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
-        this.regProd = new RegistroProductos();
+        this.regProd = new RegistroProductosPanel();
+        this.agg = new AgregarProductoPanel();
         this.vnts = new VentasDelDiaPanel();
+        this.clnts = new VerClientesPanel();
 
     }
 
@@ -36,18 +40,20 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
         jLabel2 = new javax.swing.JLabel();
         sliderOpciones = new javax.swing.JPanel();
-        opcionVerProductos = new javax.swing.JPanel();
+        opcionRegistrarProductos = new javax.swing.JPanel();
         LblComponentes6 = new javax.swing.JLabel();
+        LblComponentes7 = new javax.swing.JLabel();
         opcionAnunciar = new javax.swing.JPanel();
         LblComponentes5 = new javax.swing.JLabel();
-        OpcionComponentes = new javax.swing.JPanel();
-        LblComponentes1 = new javax.swing.JLabel();
-        OpcionPeriferico = new javax.swing.JPanel();
+        OpcionAgregarPc = new javax.swing.JPanel();
         LblComponentes2 = new javax.swing.JLabel();
         OpcionVentasDelDia = new javax.swing.JPanel();
         LblComponentes3 = new javax.swing.JLabel();
-        opcionIyE = new javax.swing.JPanel();
+        opcionVerClientes = new javax.swing.JPanel();
         LblComponentes4 = new javax.swing.JLabel();
+        opcionAgregarProductos = new javax.swing.JPanel();
+        LblComponentes8 = new javax.swing.JLabel();
+        LblComponentes9 = new javax.swing.JLabel();
         BarraSup = new javax.swing.JPanel();
         btnCerrarOpciones = new javax.swing.JButton();
         btnOpciones2 = new javax.swing.JButton();
@@ -63,26 +69,30 @@ public class FabricacionPanel extends javax.swing.JPanel {
         sliderOpciones.setForeground(new java.awt.Color(0, 204, 255));
         sliderOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        opcionVerProductos.setBackground(new java.awt.Color(51, 204, 255));
-        opcionVerProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+        opcionRegistrarProductos.setBackground(new java.awt.Color(51, 204, 255));
+        opcionRegistrarProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opcionVerProductosMouseClicked(evt);
+                opcionRegistrarProductosMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                opcionVerProductosMouseEntered(evt);
+                opcionRegistrarProductosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                opcionVerProductosMouseExited(evt);
+                opcionRegistrarProductosMouseExited(evt);
             }
         });
-        opcionVerProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        opcionRegistrarProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblComponentes6.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
         LblComponentes6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
-        LblComponentes6.setText("Ver productos");
-        opcionVerProductos.add(LblComponentes6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 30));
+        LblComponentes6.setText("registro");
+        opcionRegistrarProductos.add(LblComponentes6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 30));
 
-        sliderOpciones.add(opcionVerProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 170, 50));
+        LblComponentes7.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
+        LblComponentes7.setText("productos");
+        opcionRegistrarProductos.add(LblComponentes7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 20));
+
+        sliderOpciones.add(opcionRegistrarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 170, 50));
 
         opcionAnunciar.setBackground(new java.awt.Color(51, 204, 255));
         opcionAnunciar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,49 +113,28 @@ public class FabricacionPanel extends javax.swing.JPanel {
         LblComponentes5.setText("Anunciar");
         opcionAnunciar.add(LblComponentes5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(opcionAnunciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 170, 50));
+        sliderOpciones.add(opcionAnunciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 170, 50));
 
-        OpcionComponentes.setBackground(new java.awt.Color(51, 204, 255));
-        OpcionComponentes.addMouseListener(new java.awt.event.MouseAdapter() {
+        OpcionAgregarPc.setBackground(new java.awt.Color(51, 204, 255));
+        OpcionAgregarPc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                OpcionComponentesMouseClicked(evt);
+                OpcionAgregarPcMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                OpcionComponentesMouseEntered(evt);
+                OpcionAgregarPcMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                OpcionComponentesMouseExited(evt);
+                OpcionAgregarPcMouseExited(evt);
             }
         });
-        OpcionComponentes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        LblComponentes1.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
-        LblComponentes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
-        LblComponentes1.setText("Componentes");
-        OpcionComponentes.add(LblComponentes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
-
-        sliderOpciones.add(OpcionComponentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 170, 50));
-
-        OpcionPeriferico.setBackground(new java.awt.Color(51, 204, 255));
-        OpcionPeriferico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                OpcionPerifericoMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                OpcionPerifericoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                OpcionPerifericoMouseExited(evt);
-            }
-        });
-        OpcionPeriferico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        OpcionAgregarPc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblComponentes2.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
         LblComponentes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconPerif.png"))); // NOI18N
-        LblComponentes2.setText("  Periféricos");
-        OpcionPeriferico.add(LblComponentes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 40));
+        LblComponentes2.setText("Agregar Pc");
+        OpcionAgregarPc.add(LblComponentes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 40));
 
-        sliderOpciones.add(OpcionPeriferico, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 170, 50));
+        sliderOpciones.add(OpcionAgregarPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 170, 50));
 
         OpcionVentasDelDia.setBackground(new java.awt.Color(51, 204, 255));
         OpcionVentasDelDia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -163,31 +152,56 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
         LblComponentes3.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
         LblComponentes3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
-        LblComponentes3.setText("Ventas del dia");
+        LblComponentes3.setText("VEr pedidos");
         OpcionVentasDelDia.add(LblComponentes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(OpcionVentasDelDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 170, -1));
+        sliderOpciones.add(OpcionVentasDelDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 170, -1));
 
-        opcionIyE.setBackground(new java.awt.Color(51, 204, 255));
-        opcionIyE.addMouseListener(new java.awt.event.MouseAdapter() {
+        opcionVerClientes.setBackground(new java.awt.Color(51, 204, 255));
+        opcionVerClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opcionIyEMouseClicked(evt);
+                opcionVerClientesMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                opcionIyEMouseEntered(evt);
+                opcionVerClientesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                opcionIyEMouseExited(evt);
+                opcionVerClientesMouseExited(evt);
             }
         });
-        opcionIyE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        opcionVerClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LblComponentes4.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
         LblComponentes4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
-        LblComponentes4.setText("Ver ingreso y egresos");
-        opcionIyE.add(LblComponentes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
+        LblComponentes4.setText("VEr clientes");
+        opcionVerClientes.add(LblComponentes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(opcionIyE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 170, 40));
+        sliderOpciones.add(opcionVerClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 170, 40));
+
+        opcionAgregarProductos.setBackground(new java.awt.Color(51, 204, 255));
+        opcionAgregarProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                opcionAgregarProductosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                opcionAgregarProductosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                opcionAgregarProductosMouseExited(evt);
+            }
+        });
+        opcionAgregarProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LblComponentes8.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
+        LblComponentes8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/iconCompo.png"))); // NOI18N
+        LblComponentes8.setText("Agregar");
+        opcionAgregarProductos.add(LblComponentes8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 30));
+
+        LblComponentes9.setFont(new java.awt.Font("Showcard Gothic", 0, 12)); // NOI18N
+        LblComponentes9.setText("productos");
+        opcionAgregarProductos.add(LblComponentes9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 20));
+
+        sliderOpciones.add(opcionAgregarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 170, 50));
 
         add(sliderOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 170, 570));
 
@@ -243,19 +257,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnOpciones2ActionPerformed
 
-    private void OpcionComponentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionComponentesMouseClicked
-        // TODO add your handling code here:
-        String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/img/x.png";
-        imagen = new ImageIcon(rutaImagen);
-        // Establece la imagen en un JLabel dentro del panel
-        JLabel labelImagen = new JLabel(imagen);
-        panelContenido.removeAll();  // Elimina cualquier componente anterior
-        panelContenido.add(labelImagen);  // Agrega la imagen al panel
-        panelContenido.revalidate();
-        panelContenido.repaint();
-    }//GEN-LAST:event_OpcionComponentesMouseClicked
-
-    private void OpcionPerifericoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionPerifericoMouseClicked
+    private void OpcionAgregarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseClicked
         // TODO add your handling code here:
         String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/img/iconCarrito.png";
         imagen = new ImageIcon(rutaImagen);
@@ -265,27 +267,17 @@ public class FabricacionPanel extends javax.swing.JPanel {
         panelContenido.add(labelImagen);  // Agrega la imagen al panel
         panelContenido.revalidate();
         panelContenido.repaint();
-    }//GEN-LAST:event_OpcionPerifericoMouseClicked
+    }//GEN-LAST:event_OpcionAgregarPcMouseClicked
 
-    private void OpcionComponentesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionComponentesMouseEntered
+    private void OpcionAgregarPcMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseEntered
         // TODO add your handling code here:
-        OpcionComponentes.setBackground(new Color(102,255,255));
-    }//GEN-LAST:event_OpcionComponentesMouseEntered
+        OpcionAgregarPc.setBackground(new Color(102,255,255));
+    }//GEN-LAST:event_OpcionAgregarPcMouseEntered
 
-    private void OpcionComponentesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionComponentesMouseExited
+    private void OpcionAgregarPcMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseExited
         // TODO add your handling code here:
-        OpcionComponentes.setBackground(new Color(51,204,255));
-    }//GEN-LAST:event_OpcionComponentesMouseExited
-
-    private void OpcionPerifericoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionPerifericoMouseEntered
-        // TODO add your handling code here:
-        OpcionPeriferico.setBackground(new Color(102,255,255));
-    }//GEN-LAST:event_OpcionPerifericoMouseEntered
-
-    private void OpcionPerifericoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionPerifericoMouseExited
-        // TODO add your handling code here:
-        OpcionPeriferico.setBackground(new Color(51,204,255));
-    }//GEN-LAST:event_OpcionPerifericoMouseExited
+        OpcionAgregarPc.setBackground(new Color(51,204,255));
+    }//GEN-LAST:event_OpcionAgregarPcMouseExited
 
     private void OpcionVentasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseClicked
         // TODO add your handling code here:
@@ -305,20 +297,23 @@ public class FabricacionPanel extends javax.swing.JPanel {
         OpcionVentasDelDia.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_OpcionVentasDelDiaMouseExited
 
-    private void opcionIyEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionIyEMouseClicked
+    private void opcionVerClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseClicked
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_opcionIyEMouseClicked
+        panelContenido.removeAll();
+        panelContenido.add(clnts);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_opcionVerClientesMouseClicked
 
-    private void opcionIyEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionIyEMouseEntered
+    private void opcionVerClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseEntered
         // TODO add your handling code here:
-        opcionIyE.setBackground(new Color(102,255,255));
-    }//GEN-LAST:event_opcionIyEMouseEntered
+        opcionVerClientes.setBackground(new Color(102,255,255));
+    }//GEN-LAST:event_opcionVerClientesMouseEntered
 
-    private void opcionIyEMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionIyEMouseExited
+    private void opcionVerClientesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseExited
         // TODO add your handling code here:
-        opcionIyE.setBackground(new Color(51,204,255));
-    }//GEN-LAST:event_opcionIyEMouseExited
+        opcionVerClientes.setBackground(new Color(51,204,255));
+    }//GEN-LAST:event_opcionVerClientesMouseExited
 
     private void opcionAnunciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseClicked
         // TODO add your handling code here:
@@ -334,24 +329,40 @@ public class FabricacionPanel extends javax.swing.JPanel {
         opcionAnunciar.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_opcionAnunciarMouseExited
 
-    private void opcionVerProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerProductosMouseClicked
+    private void opcionRegistrarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionRegistrarProductosMouseClicked
         // TODO add your handling code here:
         panelContenido.removeAll();
         panelContenido.add(regProd);
         panelContenido.revalidate();
         panelContenido.repaint();
         
-    }//GEN-LAST:event_opcionVerProductosMouseClicked
+    }//GEN-LAST:event_opcionRegistrarProductosMouseClicked
 
-    private void opcionVerProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerProductosMouseEntered
+    private void opcionRegistrarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionRegistrarProductosMouseEntered
         // TODO add your handling code here:
-        opcionVerProductos.setBackground(new Color(102,255,255));
-    }//GEN-LAST:event_opcionVerProductosMouseEntered
+        opcionRegistrarProductos.setBackground(new Color(102,255,255));
+    }//GEN-LAST:event_opcionRegistrarProductosMouseEntered
 
-    private void opcionVerProductosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerProductosMouseExited
+    private void opcionRegistrarProductosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionRegistrarProductosMouseExited
         // TODO add your handling code here:
-        opcionVerProductos.setBackground(new Color(51,204,255));
-    }//GEN-LAST:event_opcionVerProductosMouseExited
+        opcionRegistrarProductos.setBackground(new Color(51,204,255));
+    }//GEN-LAST:event_opcionRegistrarProductosMouseExited
+
+    private void opcionAgregarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseClicked
+        // TODO add your handling code here:
+        panelContenido.removeAll();
+        panelContenido.add(agg);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_opcionAgregarProductosMouseClicked
+
+    private void opcionAgregarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opcionAgregarProductosMouseEntered
+
+    private void opcionAgregarProductosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opcionAgregarProductosMouseExited
 
     public JButton getBtnCerrarOpciones() {
         return btnCerrarOpciones;
@@ -365,22 +376,24 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BarraSup;
-    private javax.swing.JLabel LblComponentes1;
     private javax.swing.JLabel LblComponentes2;
     private javax.swing.JLabel LblComponentes3;
     private javax.swing.JLabel LblComponentes4;
     private javax.swing.JLabel LblComponentes5;
     private javax.swing.JLabel LblComponentes6;
-    private javax.swing.JPanel OpcionComponentes;
-    private javax.swing.JPanel OpcionPeriferico;
+    private javax.swing.JLabel LblComponentes7;
+    private javax.swing.JLabel LblComponentes8;
+    private javax.swing.JLabel LblComponentes9;
+    private javax.swing.JPanel OpcionAgregarPc;
     private javax.swing.JPanel OpcionVentasDelDia;
     private javax.swing.JPanel barraSup;
     private javax.swing.JButton btnCerrarOpciones;
     private javax.swing.JButton btnOpciones2;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel opcionAgregarProductos;
     private javax.swing.JPanel opcionAnunciar;
-    private javax.swing.JPanel opcionIyE;
-    private javax.swing.JPanel opcionVerProductos;
+    private javax.swing.JPanel opcionRegistrarProductos;
+    private javax.swing.JPanel opcionVerClientes;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel sliderOpciones;
     // End of variables declaration//GEN-END:variables

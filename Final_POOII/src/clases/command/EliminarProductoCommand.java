@@ -6,7 +6,7 @@ package clases.command;
 
 import clases.Producto;
 import conexionBD.ProductoDAO;
-import gui.panels.RegistroProductos;
+import gui.panels.RegistroProductosPanel;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,9 +17,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EliminarProductoCommand implements Command{
     ProductoDAO productoDAO = new ProductoDAO();
-    RegistroProductos reg;
+    RegistroProductosPanel reg;
 
-    public EliminarProductoCommand(RegistroProductos reg) {
+    public EliminarProductoCommand(RegistroProductosPanel reg) {
         this.reg = reg;
     }
     

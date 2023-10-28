@@ -18,7 +18,6 @@ public class Administrador /*implements Subject*/{
     private String nombre;
     private String password;
     private int numero;
-    private Inventario inventario;
     private List<Observer> clientes;
     
     
