@@ -1,6 +1,6 @@
 package gui.frames;
 
-import gui.panels.FabricacionPanel;
+import gui.panels.MenuAdminPanel;
 import gui.panels.OpcionesAdminPanel;
 import gui.panels.RegistroProductosPanel;
 import java.awt.Dimension;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class FrameMenuGerente extends javax.swing.JFrame {
 
     int xMouse, yMouse;
-    FabricacionPanel fab;
+    MenuAdminPanel fab;
 
     public FrameMenuGerente() {
         initComponents();
@@ -24,7 +24,7 @@ public class FrameMenuGerente extends javax.swing.JFrame {
     }
 
     private void agregarEventos() {
-        this.fab = new FabricacionPanel();
+        this.fab = new MenuAdminPanel();
         
         panelPrincipal.removeAll();
         panelPrincipal.add(fab);

@@ -9,7 +9,7 @@ import clases.Producto;
 import clases.observer.TiendaSubject;
 import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
-import gui.panels.FabricacionPanel;
+import gui.panels.MenuAdminPanel;
 import gui.panels.AgregarProductoPanel;
 import gui.panels.RegistroProductosPanel;
 import java.util.List;

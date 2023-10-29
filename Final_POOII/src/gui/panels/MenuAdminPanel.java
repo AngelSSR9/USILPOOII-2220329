@@ -7,15 +7,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class FabricacionPanel extends javax.swing.JPanel {
+public class MenuAdminPanel extends javax.swing.JPanel {
 
-    private ImageIcon imagen;
     private RegistroProductosPanel regProd;
     private VentasDelDiaPanel vnts;
     private VerClientesPanel clnts;
     private AgregarProductoPanel agg;
+    private AnunciarPanel anun;
+    private AgregarPc pc;
 
-    public FabricacionPanel() {
+    public MenuAdminPanel() {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
@@ -23,6 +24,8 @@ public class FabricacionPanel extends javax.swing.JPanel {
         this.agg = new AgregarProductoPanel();
         this.vnts = new VentasDelDiaPanel();
         this.clnts = new VerClientesPanel();
+        this.anun = new AnunciarPanel();
+        this.pc = new AgregarPc();
 
     }
 
@@ -259,12 +262,9 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void OpcionAgregarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseClicked
         // TODO add your handling code here:
-        String rutaImagen = "C:/Users/henry/OneDrive/Escritorio/de la usil/3 ciclo/POO2/USILPOOII-2220329/Final_POOII/src/img/iconCarrito.png";
-        imagen = new ImageIcon(rutaImagen);
-        // Establece la imagen en un JLabel dentro del panel
-        JLabel labelImagen = new JLabel(imagen);
+        
         panelContenido.removeAll();  // Elimina cualquier componente anterior
-        panelContenido.add(labelImagen);  // Agrega la imagen al panel
+        panelContenido.add(pc);  // Agrega la imagen al panel
         panelContenido.revalidate();
         panelContenido.repaint();
     }//GEN-LAST:event_OpcionAgregarPcMouseClicked
@@ -317,6 +317,10 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void opcionAnunciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseClicked
         // TODO add your handling code here:
+        panelContenido.removeAll();
+        panelContenido.add(anun);
+        panelContenido.revalidate();
+        panelContenido.repaint();
     }//GEN-LAST:event_opcionAnunciarMouseClicked
 
     private void opcionAnunciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseEntered
@@ -358,10 +362,12 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void opcionAgregarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseEntered
         // TODO add your handling code here:
+        opcionAgregarProductos.setBackground(new Color(102,255,255));
     }//GEN-LAST:event_opcionAgregarProductosMouseEntered
 
     private void opcionAgregarProductosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseExited
         // TODO add your handling code here:
+        opcionAgregarProductos.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_opcionAgregarProductosMouseExited
 
     public JButton getBtnCerrarOpciones() {
