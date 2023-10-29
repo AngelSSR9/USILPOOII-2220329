@@ -14,10 +14,10 @@ public class CarritoPanel extends javax.swing.JPanel {
 
     Cliente cliente;
     
-    public CarritoPanel() {
+    /*public CarritoPanel() {
         initComponents();
         iniciar();
-    }
+    }*/
     
     public CarritoPanel(Cliente cliente){
         initComponents();
@@ -36,7 +36,11 @@ public class CarritoPanel extends javax.swing.JPanel {
         CarritoDAO c = new CarritoDAO();
         DetalleCarritoDAO d = new DetalleCarritoDAO();
         
-        CarritoCompras carrito = c.obtenerCarritoPorIdCliente(1);
+        CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        if(carrito == null){
+            c.agregar(cliente.getId());
+            carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        }
         List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
         
         
@@ -53,7 +57,9 @@ public class CarritoPanel extends javax.swing.JPanel {
         }
         lblTotal.setText(String.valueOf(total));
     }
-
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -69,7 +75,7 @@ public class CarritoPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        buttonProcesarCompra = new javax.swing.JButton();
 
         panelProductos.setLayout(new java.awt.GridLayout(1, 0));
         productosScrollPanel.setViewportView(panelProductos);
@@ -130,7 +136,12 @@ public class CarritoPanel extends javax.swing.JPanel {
         lblTotal.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         lblTotal.setText("total");
 
-        jButton1.setText("Continuar");
+        buttonProcesarCompra.setText("Continuar");
+        buttonProcesarCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonProcesarCompraActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,7 +149,7 @@ public class CarritoPanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(49, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(buttonProcesarCompra)
                 .addGap(38, 38, 38))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -157,7 +168,7 @@ public class CarritoPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(buttonProcesarCompra)
                 .addContainerGap())
         );
 
@@ -204,9 +215,13 @@ public class CarritoPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
+    private void buttonProcesarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProcesarCompraActionPerformed
+        
+    }//GEN-LAST:event_buttonProcesarCompraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton buttonProcesarCompra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

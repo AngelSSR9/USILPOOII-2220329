@@ -1,25 +1,42 @@
 package dashboard;
 
 import clases.Cliente;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 public class MenuCliente extends javax.swing.JFrame {
 
+    PanelProcesarCompra panelProcesarCompra;
     CarritoPanel carritoPanel;
     PanelProductos productosPanel;
-    
+
     public MenuCliente() {
         initComponents();
     }
-    
+
     Cliente customer;
-    
-    public void agregarCustomer(Cliente customer){
+
+    public void agregarCustomer(Cliente customer) {
         this.customer = customer;
         carritoPanel = new CarritoPanel(customer);
         productosPanel = new PanelProductos(customer);
+        panelProcesarCompra = new PanelProcesarCompra(customer);
+
+        carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dashboardView.removeAll();
+                carritoPanel.establecerComponentes();
+                dashboardView.add(panelProcesarCompra);
+                dashboardView.revalidate();
+                dashboardView.repaint();
+            }
+
+        });
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,30 +248,29 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprar1MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        
+
         dashboardView.removeAll();
         carritoPanel.establecerComponentes();
         dashboardView.add(carritoPanel);
         dashboardView.revalidate();
         dashboardView.repaint();
-        System.out.println("Clcik");
+
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void panelProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelProductsMouseClicked
         dashboardView.removeAll();
-        try{
+        try {
             productosPanel.establecerItems();
-        } catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        
+
         dashboardView.add(productosPanel);
         dashboardView.revalidate();
         dashboardView.repaint();
         System.out.println("Clcik");
     }//GEN-LAST:event_panelProductsMouseClicked
 
-    
     /**
      * @param args the command line arguments
      */

@@ -28,7 +28,8 @@ public class PanelItem extends javax.swing.JPanel {
     }
 
     public void setImagenProducto(Image imagen) {
-        lblImagen.setIcon(new ImageIcon(imagen));
+        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(203,
+            169, Image.SCALE_SMOOTH)));
     }
 
     public void setDescripcionProducto(String descripcion) {

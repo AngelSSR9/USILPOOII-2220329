@@ -18,11 +18,11 @@ public class PanelProductos extends javax.swing.JPanel {
     CarritoDAO c = new CarritoDAO();
     CarritoCompras carrito;
     
-    public PanelProductos(){
+    /*public PanelProductos(){
         this.carrito = c.obtenerCarritoPorIdCliente(1);
         initComponents();
         iniciar();
-    }
+    }*/
     
     public PanelProductos(Cliente cliente) {
         initComponents();

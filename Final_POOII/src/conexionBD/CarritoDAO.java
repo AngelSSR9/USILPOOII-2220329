@@ -35,13 +35,13 @@ public class CarritoDAO {
         return lista;
     }
 
-    public int agregar(Object[] o) {
+    public int agregar(int idCliente) {
         int result = 0;
         String sql = "INSERT INTO carritocompras(idCliente)values(?)";
         con = cn.conectar();
         try {
             ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
+            ps.setObject(1, idCliente);
             
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Carrito agregado correctamente.");
