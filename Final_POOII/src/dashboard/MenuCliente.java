@@ -1,8 +1,14 @@
 package dashboard;
 
+
 import clases.Cliente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import clases.Cliente;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
 
 public class MenuCliente extends javax.swing.JFrame {
@@ -10,19 +16,20 @@ public class MenuCliente extends javax.swing.JFrame {
     PanelProcesarCompra panelProcesarCompra;
     CarritoPanel carritoPanel;
     PanelProductos productosPanel;
+    OptionsClient optionsClient = new OptionsClient();
+    Cliente cliente = new Cliente();
+
 
     public MenuCliente() {
         initComponents();
     }
-
-    Cliente customer;
-
-    public void agregarCustomer(Cliente customer) {
-        this.customer = customer;
-        carritoPanel = new CarritoPanel(customer);
-        productosPanel = new PanelProductos(customer);
-        panelProcesarCompra = new PanelProcesarCompra(customer);
-
+  
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+        carritoPanel = new CarritoPanel(cliente);
+        productosPanel = new PanelProductos(cliente);
+        panelProcesarCompra = new PanelProcesarCompra(cliente);
+      
         carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,7 +41,7 @@ public class MenuCliente extends javax.swing.JFrame {
             }
 
         });
-
+      
     }
 
     @SuppressWarnings("unchecked")
@@ -70,6 +77,7 @@ public class MenuCliente extends javax.swing.JFrame {
         dashboardView.setBackground(new java.awt.Color(102, 102, 102));
         dashboardView.setLayout(new java.awt.BorderLayout());
         jPanel1.add(dashboardView, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 960, 480));
+        dashboardView.getAccessibleContext().setAccessibleDescription("");
 
         kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -149,6 +157,11 @@ public class MenuCliente extends javax.swing.JFrame {
         kGradientPanel1.add(panelArmaPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 220, 80));
 
         panelCarritoCompras.setOpaque(false);
+        panelCarritoCompras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelCarritoComprasMouseClicked(evt);
+            }
+        });
         panelCarritoCompras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblCarrito1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -194,7 +207,7 @@ public class MenuCliente extends javax.swing.JFrame {
             .addGroup(tittlePanelLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addComponent(lblName)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         tittlePanelLayout.setVerticalGroup(
             tittlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +229,7 @@ public class MenuCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(1130, 518));
@@ -270,6 +283,15 @@ public class MenuCliente extends javax.swing.JFrame {
         dashboardView.repaint();
         System.out.println("Clcik");
     }//GEN-LAST:event_panelProductsMouseClicked
+
+    private void panelCarritoComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCarritoComprasMouseClicked
+        optionsClient.setCliente(cliente);
+        dashboardView.removeAll();
+        dashboardView.add(optionsClient);
+        dashboardView.revalidate();
+        dashboardView.repaint();
+        System.out.println("Clcik");
+    }//GEN-LAST:event_panelCarritoComprasMouseClicked
 
     /**
      * @param args the command line arguments
