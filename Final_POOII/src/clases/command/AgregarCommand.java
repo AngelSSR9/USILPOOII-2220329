@@ -13,6 +13,7 @@ import gui.panels.MenuAdminPanel;
 import gui.panels.AgregarProductoPanel;
 import gui.panels.RegistroProductosPanel;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
