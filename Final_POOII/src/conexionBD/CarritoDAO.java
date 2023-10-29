@@ -35,13 +35,13 @@ public class CarritoDAO {
         return lista;
     }
 
-    public int agregar(Object[] o) {
+    public int agregar(int idCliente) {
         int result = 0;
         String sql = "INSERT INTO carritocompras(idCliente)values(?)";
         con = cn.conectar();
         try {
             ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
+            ps.setObject(1, idCliente);
             
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Carrito agregado correctamente.");
@@ -66,7 +66,28 @@ public class CarritoDAO {
         }
 
     }
-
+    
+    public CarritoCompras obtenerCarritoPorIdCliente(int idCliente){
+        String sql = "SELECT * FROM carritocompras WHERE idCliente = ?";
+        CarritoCompras carrito = null;
+                
+        try {
+            con = cn.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, idCliente);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                carrito = new CarritoCompras();
+                carrito.setIdCarrito(rs.getInt(1));
+                carrito.setIdCliente(rs.getInt(2));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
+        
+        return carrito;
+    }
+    
     /*public int actualizar(Object[] o) {
         int r = 0;
         String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";

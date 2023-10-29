@@ -27,7 +27,7 @@ public class LoginCliente extends javax.swing.JFrame {
         title.requestFocusInWindow();
     }
     
-    
+    Cliente customer;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -308,9 +308,11 @@ public class LoginCliente extends javax.swing.JFrame {
         // Aquí llama al método de ClienteDAO para verificar las credenciales en la base de datos.
         // Devuelve true si las credenciales son válidas y false en caso contrario.
         ClienteDAO clienteDAO = new ClienteDAO();
+
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
         principal.setCliente(cliente);
         return cliente != null && cliente.getContraseña().equals(password);
+
     }
     
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked

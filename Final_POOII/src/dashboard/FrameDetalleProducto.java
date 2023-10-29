@@ -1,6 +1,9 @@
 package dashboard;
 
+import clases.CarritoCompras;
 import clases.Producto;
+import conexionBD.DetalleCarritoDAO;
+import conexionBD.ProductoDAO;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
@@ -8,9 +11,19 @@ import javax.swing.JOptionPane;
 
 public class FrameDetalleProducto extends javax.swing.JFrame {
 
-    public FrameDetalleProducto(Producto producto) {
+    Producto producto;
+    CarritoCompras carrito;
+    
+    public FrameDetalleProducto(Producto producto, CarritoCompras carrito) {
         initComponents();
-
+        setLocationRelativeTo(null);
+        this.producto = producto;
+        this.carrito = carrito;        
+        configurarComponentes();
+    }
+    
+    private void configurarComponentes(){
+        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -21,16 +34,14 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         panelCantidad.add(lblCantidad, gbc);
         panelSuma.add(jLabel8, gbc);
         panelResta.add(jLabel6, gbc);
-        configurarComponentes(producto);
-    }
-    
-    private void configurarComponentes(Producto producto){
+        
         lblImagen.setIcon(new ImageIcon(producto.getImagen()));
         lblMarca.setText(producto.getMarca());
         lblStock.setText(String.valueOf(producto.getStock()));
         lblNombre.setText(producto.getMarca() + " " + producto.getModelo());
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,7 +63,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         addToCart = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblImagen.setText("jLabel1");
 
@@ -226,27 +237,31 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_panelRestaMouseClicked
 
     private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartActionPerformed
-
-        /*if(Integer.parseInt(this.productInfoStock.getText())<Integer.parseInt(this.productQtyField.getText())){
+        int stock = Integer.parseInt(this.lblStock.getText());
+        int cantidad = Integer.parseInt(this.lblCantidad.getText());
+        
+        if(stock < cantidad){
             JOptionPane.showMessageDialog(null, "Not enough product in Stock!");
         }
         else{
-            /*int qty = Integer.parseInt(this.productQtyField.getText());
-            ProductList p = new ProductList(this.productInfoBrandName.getText(), this.productInfoModel.getText(), qty*Integer.parseInt(this.productInfoPrice.getText()),
-                Integer.parseInt(this.productQtyField.getText()), null, null);
-            cartItem.add(p);
+            //DetalleCarrito d = new DetalleCarrito(carrito.getIdCarrito(), producto.getId(), cantidad);
+            Object o[] = new Object[3];
+            o[0] = carrito.getIdCarrito();
+            o[1] = producto.getId();
+            o[2] = cantidad;
+            DetalleCarritoDAO d =  new DetalleCarritoDAO();
+            d.agregar(o);
+
+            int stockActualizado = stock - cantidad ;
+            
+            producto.setStock(stockActualizado);
+            lblStock.setText(String.valueOf(stockActualizado));
+            
+            ProductoDAO p = new ProductoDAO();
+            p.actualizarStock(producto.getId(), stockActualizado);
+            
             JOptionPane.showMessageDialog(null, "Product added to cart!");
-
-            int qtyTester = Integer.parseInt(this.productInfoStock.getText())-Integer.parseInt(this.productQtyField.getText());
-
-            if(categoryChooser.equals("mobiles"))
-            MobileDB.updateMobileDB(this.productInfoModel.getText(), qtyTester);
-            else if(categoryChooser.equals("kids"))
-            KidsDB.updateKidsDB(this.productInfoModel.getText(), qtyTester);
-            else if(categoryChooser.equals("electronics"))
-            ElectronicsDB.updateElectronicsDB(this.productInfoModel.getText(), qtyTester);
-
-        }*/
+        }
     }//GEN-LAST:event_addToCartActionPerformed
 
     /**
@@ -280,7 +295,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameDetalleProducto(new Producto()).setVisible(true);
+                new FrameDetalleProducto(new Producto(), new CarritoCompras()).setVisible(true);
             }
         });
     }

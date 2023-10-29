@@ -1,6 +1,9 @@
 package dashboard;
 
+import clases.CarritoCompras;
+import clases.Cliente;
 import clases.Producto;
+import conexionBD.CarritoDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
 import java.io.IOException;
@@ -10,10 +13,20 @@ import javax.swing.JPanel;
 
 public class PanelProductos extends javax.swing.JPanel {
 
+    //Cliente cliente;
     ProductoDAO productoDAO = new ProductoDAO();
-
-    public PanelProductos() {
+    CarritoDAO c = new CarritoDAO();
+    CarritoCompras carrito;
+    
+    /*public PanelProductos(){
+        this.carrito = c.obtenerCarritoPorIdCliente(1);
         initComponents();
+        iniciar();
+    }*/
+    
+    public PanelProductos(Cliente cliente) {
+        initComponents();
+        this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
         iniciar();
     }
 
@@ -23,9 +36,6 @@ public class PanelProductos extends javax.swing.JPanel {
         layout.setHgap(5);
         layout.setVgap(5);
         panelPrincipal.setLayout(layout);
-        
-        
-        
     }
 
     public void establecerItems() throws IOException, SQLException {
@@ -33,8 +43,7 @@ public class PanelProductos extends javax.swing.JPanel {
         List<Producto> productos = productoDAO.listar();
         
         for (Producto p : productos) {
-            PanelItem panel = new PanelItem();
-            panel.setProducto(p);
+            PanelItem panel = new PanelItem(p, carrito);
             panel.setInformacion();
             System.out.println(p.toString());
             panelPrincipal.add(panel);

@@ -93,23 +93,21 @@ public class DetalleCarritoDAO {
        
         return lista;
     }
-
-    /*public int actualizar(Object[] o) {
+    
+    public int actualizarCantidadProducto(int nuevaCantidad, int idCarrito, int idProducto){
         int r = 0;
-        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
+        String sql = "UPDATE detallescarrito SET cantidad=? WHERE idCarrito = ? and idProducto = ?";
         try {
             con = cn.conectar();
             ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
-            ps.setObject(4, o[3]);
-            ps.setObject(5, o[4]);
+            ps.setObject(1, nuevaCantidad);
+            ps.setObject(2, idCarrito);
+            ps.setObject(3, idProducto);
             r = ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         return r;
-    }*/
+    }
+
 }
