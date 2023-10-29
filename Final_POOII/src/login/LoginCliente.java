@@ -12,8 +12,11 @@ import clases.*;
 import conexionBD.ClienteDAO;
 import java.awt.Font;
 import dashboard.MenuCliente;
+import java.security.Principal;
 
 public class LoginCliente extends javax.swing.JFrame {
+    
+    MenuCliente principal = new MenuCliente();
     
     private Plantillaentrar p1;
     public LoginCliente() {
@@ -277,13 +280,16 @@ public class LoginCliente extends javax.swing.JFrame {
         String password = String.valueOf(passTxt.getPassword());
         
         // Llamada al método de autenticación
-        boolean autenticado = autenticarCliente(dni, password);
+        //boolean autenticado = autenticarCliente(dni, password);
+        // Aquí llama al método de ClienteDAO para verificar las credenciales en la base de datos.
+        // Devuelve true si las credenciales son válidas y false en caso contrario.
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
+        principal.setCliente(cliente);
         
-        
-        if (autenticado) {
+        if (cliente != null && cliente.getContraseña().equals(password)) {
             // Autenticación exitosa, abre la ventana principal o realiza las acciones necesarias
             this.setVisible(false);
-            MenuCliente principal = new MenuCliente();
             principal.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -303,6 +309,7 @@ public class LoginCliente extends javax.swing.JFrame {
         // Devuelve true si las credenciales son válidas y false en caso contrario.
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
+        principal.setCliente(cliente);
         return cliente != null && cliente.getContraseña().equals(password);
     }
     

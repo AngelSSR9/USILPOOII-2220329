@@ -4,25 +4,28 @@
  */
 package dashboard;
 
-/**
- *
- * @author david
- */
+import clases.Cliente;
+import conexionBD.ClienteDAO;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+
+
 public class OptionsClient extends javax.swing.JPanel {
 
     
-    /**
-     * Creates new form OptionsClient
-     */
+    Cliente cliente = new Cliente();
+    EditarDatosCliente edc = new EditarDatosCliente();
     public OptionsClient() {
         initComponents();
     }
 
     
-    public void colocarDatos(String usuario, String correo, int dni ){
-        txtUsuario.setText(usuario);
-        txtCorreo.setText(correo);
-        txtDni.setText(Integer.toString(dni));
+    public void setCliente(Cliente cliente){
+        txtUsuario.setText(cliente.getNombre());
+        txtCorreo.setText(cliente.getCorreo());
+        txtDni.setText(Integer.toString(cliente.getDni()));
+        this.cliente = cliente;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,8 +44,12 @@ public class OptionsClient extends javax.swing.JPanel {
         lblDni = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
+        btnEditar = new javax.swing.JLabel();
         PanelEstadoDeCuenta = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         tittleInformacionPersonal = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
@@ -60,13 +67,18 @@ public class OptionsClient extends javax.swing.JPanel {
         lblDatosPersonales.setText("DATOS PERSONALES");
         panelDatosPersonales.add(lblDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 18, -1, -1));
 
+        txtUsuario.setForeground(new java.awt.Color(204, 0, 204));
         txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtUsuarioMouseClicked(evt);
             }
         });
         panelDatosPersonales.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 130, 20));
+
+        txtCorreo.setForeground(new java.awt.Color(204, 0, 204));
         panelDatosPersonales.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 130, 20));
+
+        txtDni.setForeground(new java.awt.Color(204, 0, 204));
         panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 20));
 
         lblDni.setForeground(new java.awt.Color(153, 0, 153));
@@ -81,6 +93,14 @@ public class OptionsClient extends javax.swing.JPanel {
         lblCorreo.setText("Correo:");
         panelDatosPersonales.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/lapizRosaEditaer.jpeg"))); // NOI18N
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
+        panelDatosPersonales.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, -1));
+
         add(panelDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 540, 170));
 
         PanelEstadoDeCuenta.setBackground(new java.awt.Color(255, 255, 255));
@@ -91,6 +111,19 @@ public class OptionsClient extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(204, 0, 204));
         jLabel2.setText("ESTADO DE LA CUENTA");
         PanelEstadoDeCuenta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/verificado.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 6, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 204, 102));
+        jLabel1.setText("VERIFICADO");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 210, 50));
+
+        PanelEstadoDeCuenta.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 540, 50));
 
         add(PanelEstadoDeCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 540, 120));
 
@@ -104,10 +137,26 @@ public class OptionsClient extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txtUsuarioMouseClicked
 
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        
+        JFrame popupFrame = new JFrame();
+        popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        edc.setCliente(this.cliente);
+        popupFrame.getContentPane().add(edc);
+        popupFrame.pack();
+        popupFrame.setLocationRelativeTo(this); 
+        popupFrame.setVisible(true);
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelEstadoDeCuenta;
+    private javax.swing.JLabel btnEditar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDatosPersonales;
     private javax.swing.JLabel lblDni;
