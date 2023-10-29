@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class FabricacionPanel extends javax.swing.JPanel {
+public class MenuAdminPanel extends javax.swing.JPanel {
 
     private ImageIcon imagen;
     private RegistroProductosPanel regProd;
@@ -15,7 +15,7 @@ public class FabricacionPanel extends javax.swing.JPanel {
     private VerClientesPanel clnts;
     private AgregarProductoPanel agg;
 
-    public FabricacionPanel() {
+    public MenuAdminPanel() {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
@@ -358,10 +358,12 @@ public class FabricacionPanel extends javax.swing.JPanel {
 
     private void opcionAgregarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseEntered
         // TODO add your handling code here:
+        opcionAgregarProductos.setBackground(new Color(102,255,255));
     }//GEN-LAST:event_opcionAgregarProductosMouseEntered
 
     private void opcionAgregarProductosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseExited
         // TODO add your handling code here:
+        opcionAgregarProductos.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_opcionAgregarProductosMouseExited
 
     public JButton getBtnCerrarOpciones() {
