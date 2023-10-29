@@ -13,16 +13,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author henry
  */
-public class VentasDelDiaPanel extends javax.swing.JPanel {
-
+public class VerClientesPanel extends javax.swing.JPanel {
+    
     /**
      * Creates new form VentasDelDiaPanel
      */
     public DefaultTableModel modelo = new DefaultTableModel();
-    public VentasDelDiaPanel() {
+    public VerClientesPanel() {
         
         initComponents();
-        Constantes.listarPedidos(this);
+        Constantes.listarClientes(this);
     }
     
     private void executeCommand(Command command) {
@@ -41,21 +41,21 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaPedidos = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
         btnVerDetalles = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel1.setText("Ventas Totales");
+        jLabel1.setText("Clientes Registrados");
 
-        tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Fecha de generado", "Metodo de pago", "Fecha de pago"
+                "ID", "Nombre", "Correo", "DNI"
             }
         ));
-        jScrollPane1.setViewportView(tablaPedidos);
+        jScrollPane1.setViewportView(tablaClientes);
 
         btnVerDetalles.setText("Ver Texto");
         btnVerDetalles.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -74,7 +74,7 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 519, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnVerDetalles)
                 .addGap(269, 269, 269))
             .addGroup(layout.createSequentialGroup()
@@ -83,9 +83,9 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
                         .addGap(69, 69, 69)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
+                        .addGap(61, 61, 61)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,8 +93,8 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(btnVerDetalles)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
@@ -102,7 +102,7 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
 
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         // TODO add your handling code here:
-        executeCommand(new VerPedidoCommand(this));
+        
     }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnVerDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerDetallesMouseClicked
@@ -114,6 +114,6 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnVerDetalles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable tablaPedidos;
+    public javax.swing.JTable tablaClientes;
     // End of variables declaration//GEN-END:variables
 }

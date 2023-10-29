@@ -2,7 +2,7 @@ package gui.frames;
 
 import gui.panels.FabricacionPanel;
 import gui.panels.OpcionesAdminPanel;
-import gui.panels.RegistroProductos;
+import gui.panels.RegistroProductosPanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
