@@ -110,5 +110,47 @@ public class ProductoDAO  {
         }
         return r;
     }
+    
+    public int actualizarStock(int idProducto, int stock){
+        int r = 0;
+        String sql = "UPDATE productos SET stock=? WHERE idProducto=?";
+        try {
+            con = cn.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, stock);
+            ps.setObject(2, idProducto);
+            r = ps.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "Stock actualizado correctamente.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
+        return r;
+    }
+    
+    public Producto obtenerProductoPorId(int id){
+        String query = "SELECT * FROM Productos WHERE idProducto = ?";
+        Producto p = null;
+        try {
+            con = cn.conectar();
+            ps = con.prepareStatement(query);
+            ps.setObject(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Producto();
+                p.setId(rs.getInt(1));
+                p.setMarca(rs.getString(2));
+                p.setModelo(rs.getString(3));
+                p.setPrecio(rs.getDouble(4));
+                p.setStock(rs.getInt(5));
+                p.setCategoria(rs.getString(6));
+                p.setTipo(rs.getString(7));
+                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
 
+        return p;
+    }
+    
 }

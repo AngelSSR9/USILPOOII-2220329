@@ -1,5 +1,6 @@
 package dashboard;
 
+import clases.CarritoCompras;
 import clases.Producto;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -8,13 +9,12 @@ import javax.swing.JLabel;
 public class PanelItem extends javax.swing.JPanel {
 
     Producto producto;
-
-    public PanelItem() {
+    CarritoCompras carrito;
+        
+    public PanelItem(Producto producto, CarritoCompras carrito) {
         initComponents();
-    }
-
-    public void setProducto(Producto producto) {
         this.producto = producto;
+        this.carrito = carrito;
     }
 
     public void setInformacion() {
@@ -106,7 +106,7 @@ public class PanelItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
-        FrameDetalleProducto f = new FrameDetalleProducto(producto);
+        FrameDetalleProducto f = new FrameDetalleProducto(producto, carrito);
         f.setVisible(true);
     }//GEN-LAST:event_lblImagenMouseClicked
 

@@ -1,16 +1,25 @@
 package dashboard;
 
+import clases.Cliente;
 import javax.swing.JOptionPane;
 
 public class MenuCliente extends javax.swing.JFrame {
 
-    CarritoPanel carritoPanel = new CarritoPanel();
-    PanelProductos productosPanel = new PanelProductos();
+    CarritoPanel carritoPanel;
+    PanelProductos productosPanel;
     
     public MenuCliente() {
         initComponents();
     }
-
+    
+    Cliente customer;
+    
+    public void agregarCustomer(Cliente customer){
+        this.customer = customer;
+        carritoPanel = new CarritoPanel(customer);
+        productosPanel = new PanelProductos(customer);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -224,6 +233,7 @@ public class MenuCliente extends javax.swing.JFrame {
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         
         dashboardView.removeAll();
+        carritoPanel.establecerComponentes();
         dashboardView.add(carritoPanel);
         dashboardView.revalidate();
         dashboardView.repaint();
