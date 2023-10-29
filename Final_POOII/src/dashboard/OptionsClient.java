@@ -41,9 +41,9 @@ public class OptionsClient extends javax.swing.JPanel {
         txtUsuario = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JLabel();
         txtDni = new javax.swing.JLabel();
-        lblDni = new javax.swing.JLabel();
-        lblUsuario = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        lblDni = new javax.swing.JLabel();
         btnEditar = new javax.swing.JLabel();
         PanelEstadoDeCuenta = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -81,17 +81,17 @@ public class OptionsClient extends javax.swing.JPanel {
         txtDni.setForeground(new java.awt.Color(204, 0, 204));
         panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 20));
 
-        lblDni.setForeground(new java.awt.Color(153, 0, 153));
-        lblDni.setText("Dni:");
-        panelDatosPersonales.add(lblDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, -1, -1));
+        lblCorreo.setForeground(new java.awt.Color(153, 0, 153));
+        lblCorreo.setText("Correo:");
+        panelDatosPersonales.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, -1, -1));
 
         lblUsuario.setForeground(new java.awt.Color(153, 0, 153));
         lblUsuario.setText("Usuario:");
         panelDatosPersonales.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
-        lblCorreo.setForeground(new java.awt.Color(153, 0, 153));
-        lblCorreo.setText("Correo:");
-        panelDatosPersonales.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        lblDni.setForeground(new java.awt.Color(153, 0, 153));
+        lblDni.setText("Dni:");
+        panelDatosPersonales.add(lblDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/lapizRosaEditaer.jpeg"))); // NOI18N
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -1,11 +1,13 @@
-/*
+        /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package clases.command;
 
 import conexionBD.ProductoDAO;
-import gui.panels.RegistroProductos;
+import gui.frames.FrameMostrarVentas;
+import gui.panels.RegistroProductosPanel;
+import gui.panels.VentasDelDiaPanel;
 
 /**
  *
@@ -13,20 +15,25 @@ import gui.panels.RegistroProductos;
  */
 public class VerPedidoCommand implements Command{
     ProductoDAO productoDAO = new ProductoDAO();
-    RegistroProductos reg;
+    VentasDelDiaPanel reg;
 
-    public VerPedidoCommand(RegistroProductos reg) {
+    public VerPedidoCommand(VentasDelDiaPanel reg) {
         this.reg = reg;
     }
     
     @Override
     public void execute() {
-        
+        ver();
     }
     
     public void ver(){
-        int fila = reg.tablaProductos.getSelectedRow();
-        int idPed = Integer.parseInt(reg.tablaProductos.getValueAt(fila, 0).toString());
+        int fila = reg.tablaPedidos.getSelectedRow();
+        if(fila !=-1){
+            int idPed = Integer.parseInt(reg.tablaPedidos.getValueAt(fila, 0).toString());
+        }
+        
+        FrameMostrarVentas mostVen = new FrameMostrarVentas();
+        mostVen.setVisible(true);
         
         
     }

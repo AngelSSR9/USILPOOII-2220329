@@ -105,6 +105,11 @@ public class EditarDatosCliente extends javax.swing.JPanel {
                 dniTxtMousePressed(evt);
             }
         });
+        dniTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dniTxtActionPerformed(evt);
+            }
+        });
         panelMain.add(dniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 190, -1));
 
         lblDni.setText("Dni");
@@ -196,6 +201,10 @@ public class EditarDatosCliente extends javax.swing.JPanel {
             passTxt.setForeground(Color.black);
         }
     }//GEN-LAST:event_passTxtMousePressed
+
+    private void dniTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dniTxtActionPerformed
 
     private boolean esDireccionDeCorreoValida(String direccionCorreo) {
         // Utiliza una expresión regular simple para validar la dirección de correo.

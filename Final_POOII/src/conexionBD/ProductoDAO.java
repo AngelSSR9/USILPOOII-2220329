@@ -39,7 +39,15 @@ public class ProductoDAO  {
                 p.setStock(rs.getInt(5));
                 p.setCategoria(rs.getString(6));
                 p.setTipo(rs.getString(7));
-                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+                byte[] imageData = rs.getBytes(8);
+                if (imageData != null) {
+                    p.setImagen(ImageIO.read(new ByteArrayInputStream(imageData)));
+                } else {
+                    // Asignar una imagen en blanco o realizar alguna otra acción adecuada para manejar imágenes nulas.
+                    // Por ejemplo, podrías asignar una imagen por defecto.
+                    p.setImagen(null);
+                }
+
 
                 lista.add(p);
             }
