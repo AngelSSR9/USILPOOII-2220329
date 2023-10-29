@@ -5,41 +5,37 @@
 package clases.command;
 
 import clases.Cliente;
-import clases.Producto;
 import clases.observer.TiendaSubject;
 import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
-import gui.panels.FabricacionPanel;
-import gui.panels.AgregarProductoPanel;
 import gui.panels.RegistroProductosPanel;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author henry
  */
-public class AgregarCommand implements Command{
+public class ModificarCommand implements Command{
     ProductoDAO productoDAO = new ProductoDAO();
-    AgregarProductoPanel reg;
+    RegistroProductosPanel reg;
 
-    public AgregarCommand(AgregarProductoPanel fab) {
-        this.reg = fab;
+    public ModificarCommand(RegistroProductosPanel reg) {
+        this.reg = reg;
     }
-    
     
     
     @Override
     public void execute() {
-        agregarProducto();
+        
     }
     
     public void agregarProducto(){
         boolean confirm = agregarProductoBD();
         if (confirm) {
-            Constantes.limpiarPanel(reg.updatePanel);
+            Constantes.limpiarComponentes(reg);
+            Constantes.limpiarTabla(reg);
+            Constantes.listarProductos(reg);
             // Obtener la lista de clientes, añadir y notificarlos OBserver
             ClienteDAO clienteDAO = new ClienteDAO();
             TiendaSubject tienda = TiendaSubject.getInstancia();
@@ -55,16 +51,11 @@ public class AgregarCommand implements Command{
     }
     
     private boolean agregarProductoBD() {
-        Object[] o = new Object[7];
+        Object[] o = new Object[4];
         String marca = reg.marcaTxt.getText();
         String modelo = reg.modeloTxt.getText();
         String precio = reg.precioTxt.getText();
         String stock = reg.stockTxt.getText();
-        String categoria = (String)reg.catCombo.getSelectedItem();
-        String tipo = reg.tipoTxt.getText();
-        String rutaImagen = reg.imagenTxt.getText();
-        
-        
         //String direccion = direccionTxt.getText();
         try {
            
@@ -72,9 +63,6 @@ public class AgregarCommand implements Command{
             o[1] = modelo;
             o[2] = Double.parseDouble(precio);
             o[3] = Integer.parseInt(stock);
-            o[4] = categoria;
-            o[5] = tipo;
-            o[6] = rutaImagen;
 
             productoDAO.agregar(o);
 
@@ -84,7 +72,6 @@ public class AgregarCommand implements Command{
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
             return false;
         }
+
     }
-    
-    
 }

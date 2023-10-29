@@ -9,7 +9,7 @@ public class Main {
         // TODO code application logic here
         FrameMenuGerente f = new FrameMenuGerente();
         f.setVisible(true);
-
+        
     }
     
 }

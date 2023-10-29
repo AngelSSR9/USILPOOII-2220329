@@ -5,7 +5,7 @@
 package clases.command;
 
 import conexionBD.ProductoDAO;
-import gui.panels.RegistroProductos;
+import gui.panels.RegistroProductosPanel;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
  */
 public class MostrarTablaCommand implements Command{
     ProductoDAO productoDAO = new ProductoDAO();
-    RegistroProductos reg;
+    RegistroProductosPanel reg;
 
-    public MostrarTablaCommand(RegistroProductos reg) {
+    public MostrarTablaCommand(RegistroProductosPanel reg) {
         this.reg = reg;
     }
     
