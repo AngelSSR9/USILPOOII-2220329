@@ -42,7 +42,12 @@ public class CarritoPanel extends javax.swing.JPanel {
             carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
         }
         List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
-        
+        if(listaDetalles.isEmpty()){
+            buttonProcesarCompra.setEnabled(false);
+        }
+        else{
+            buttonProcesarCompra.setEnabled(true);
+        }
         
         double total = 0;
         for(DetalleCarrito detalle : listaDetalles){

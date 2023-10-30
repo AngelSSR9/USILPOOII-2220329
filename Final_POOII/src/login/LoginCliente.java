@@ -9,7 +9,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import clases.*;
+import conexionBD.CarritoDAO;
 import conexionBD.ClienteDAO;
+import conexionBD.ProductoDAO;
 import java.awt.Font;
 import dashboard.MenuCliente;
 import java.security.Principal;
@@ -285,6 +287,11 @@ public class LoginCliente extends javax.swing.JFrame {
         // Devuelve true si las credenciales son válidas y false en caso contrario.
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
+        CarritoDAO c = new CarritoDAO();
+        CarritoCompras car = c.obtenerCarritoPorIdCliente(cliente.getId());
+        if(car == null){
+            c.agregar(cliente.getId());
+        }
         principal.setCliente(cliente);
         
         if (cliente != null && cliente.getContraseña().equals(password)) {

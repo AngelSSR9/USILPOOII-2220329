@@ -5,6 +5,7 @@ import clases.Producto;
 import conexionBD.DetalleCarritoDAO;
 import conexionBD.DetallePedidoDAO;
 import java.awt.Color;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JSpinner;
@@ -52,7 +53,8 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
             }
         });
         
-        lblImagen.setIcon(new ImageIcon(producto.getImagen()));
+        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(137,
+            105, Image.SCALE_SMOOTH)));
         lblModelo.setText(producto.getModelo());
         lblPrecio.setText(String.valueOf(producto.getPrecio()));
         System.out.println(cantidad);
@@ -75,8 +77,6 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         lblSubtotal = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(99, 96, 119), 1, true));
-
-        lblImagen.setText("jLabel1");
 
         lblModelo.setText("jLabel2");
 
@@ -127,9 +127,9 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(27, 27, 27)
                 .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
                 .addComponent(lblModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -137,16 +137,18 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblModelo))
-                .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblModelo)
+                        .addGap(10, 10, 10)))
                 .addGap(52, 52, 52))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
