@@ -20,6 +20,8 @@ public class PanelMiniProducto extends javax.swing.JPanel {
         setNombreProducto(producto.getMarca() + " " + producto.getModelo());
         setPrecioProducto(producto.getPrecio());
         setImagenProducto(producto.getImagen());
+        setMarcaProducto(producto.getMarca());
+        setCantidadProducto(cantidad);
     }
 
     public void setNombreProducto(String nombre) {
@@ -33,6 +35,14 @@ public class PanelMiniProducto extends javax.swing.JPanel {
 
     public void setPrecioProducto(double precio) {
         lblPrecio.setText(String.valueOf(precio));
+    }
+    
+    public void setMarcaProducto(String marca){
+        lblMarca.setText(marca);
+    }
+    
+    public void setCantidadProducto(int cantidad){
+        lblCantidad.setText(String.valueOf(cantidad) + "un.");
     }
     
 
