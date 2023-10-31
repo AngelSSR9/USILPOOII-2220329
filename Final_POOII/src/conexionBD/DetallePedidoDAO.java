@@ -35,7 +35,7 @@ public class DetallePedidoDAO {
                 lista.add(d);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error listando: " + e.toString());
         }
 
         return lista;
@@ -43,7 +43,7 @@ public class DetallePedidoDAO {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precio)values(?,?,?,?)";
+        String sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precioVenta)values(?,?,?,?)";
         con = cn.conectar();
         try {
             ps = con.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class DetallePedidoDAO {
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
         }
 
         return result;
@@ -69,7 +69,7 @@ public class DetallePedidoDAO {
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle pedido eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error eliminando: " + e.toString());
         }
 
     }
@@ -92,7 +92,7 @@ public class DetallePedidoDAO {
             }
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error obteniendo detalle: " + e.toString());
         }
        
         return lista;

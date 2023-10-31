@@ -62,7 +62,7 @@ public class CarritoDAO {
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Carrito eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error eliminando carro: " + e.toString());
         }
 
     }
@@ -88,22 +88,4 @@ public class CarritoDAO {
         return carrito;
     }
     
-    /*public int actualizar(Object[] o) {
-        int r = 0;
-        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
-        try {
-            con = cn.conectar();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
-            ps.setObject(4, o[3]);
-            ps.setObject(5, o[4]);
-            r = ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
-        }
-        return r;
-    }*/
 }

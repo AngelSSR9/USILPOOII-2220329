@@ -3,24 +3,32 @@ package dashboard;
 import clases.CarritoCompras;
 import clases.Cliente;
 import clases.DetalleCarrito;
+import clases.Pedido;
 import clases.Producto;
 import conexionBD.CarritoDAO;
 import conexionBD.DetalleCarritoDAO;
+import conexionBD.DetallePedidoDAO;
+import conexionBD.PedidoDAO;
 import conexionBD.ProductoDAO;
+import gui.panels.VentasDelDiaPanel;
 import java.awt.GridLayout;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class PanelProcesarCompra extends javax.swing.JPanel {
-
+    DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
+    DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
+    PedidoDAO pedidoDAO = new PedidoDAO();
+    ProductoDAO p = new ProductoDAO();
     CarritoCompras carrito;
+    CarritoDAO c;
 
     public PanelProcesarCompra(Cliente cliente) {
         initComponents();
-        CarritoDAO c = new CarritoDAO();
+        c = new CarritoDAO();
         this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        establecerProductos();
     }
 
     public void establecerProductos() {
@@ -30,12 +38,11 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         productosScrollPanel.getVerticalScrollBar().setValue(0);
         panelProductos.removeAll();
 
-        DetalleCarritoDAO d = new DetalleCarritoDAO();
-        List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
+        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
         double total = 0;
         int cant = 0;
         for (DetalleCarrito detalle : listaDetalles) {
-            ProductoDAO p = new ProductoDAO();
+            
             Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
             total += producto.getPrecio() * detalle.getCantidad();
             PanelMiniProducto productoPanel = new PanelMiniProducto(producto, detalle.getCantidad());
@@ -45,9 +52,47 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
             panelProductos.repaint();
             cant++;
         }
+        if(listaDetalles.size() == 1){
+            for(int i = 0; i < 2; i++){
+                JPanel p = new JPanel();
+                panelProductos.add(p);
+            }
+        }
         lblTotal.setText(String.valueOf(total));
         lblNumeroProductos.setText(String.valueOf(cant));
-
+    }
+    
+    private void generarPedido(){
+        guardarNuevaVenta();
+        guardarDetallesVenta();
+        eliminarCarrito();
+    }
+    
+    public void guardarNuevaVenta(){
+        
+        pedidoDAO.agregar(new Date(), carrito.getIdCarrito());
+    }
+    
+    public void guardarDetallesVenta(){
+        
+        Pedido pedido = pedidoDAO.obtenerPedidoPorIdCarrito(carrito.getIdCarrito());
+        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+        for(DetalleCarrito detalle : listaDetalles){
+            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
+            
+            Object[] o = new Object[4];
+            o[0] = pedido.getIdPedido();
+            o[1] = producto.getId();
+            o[2] = detalle.getCantidad();
+            o[3] = producto.getPrecio();
+            detallePedidoDAO.agregar(o);
+        }
+    }
+    
+    public void eliminarCarrito(){
+        detalleCarritoDAO.eliminarTodosDetalles(carrito.getIdCarrito());
+        c.eliminar(carrito.getIdCarrito());
+        establecerProductos();
     }
 
     @SuppressWarnings("unchecked")
@@ -346,6 +391,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
             }
             else{
                 JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
+                generarPedido();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un medio de pago.");

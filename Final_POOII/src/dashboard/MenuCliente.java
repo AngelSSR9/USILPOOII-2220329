@@ -34,7 +34,7 @@ public class MenuCliente extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dashboardView.removeAll();
-                carritoPanel.establecerComponentes();
+                panelProcesarCompra.establecerProductos();
                 dashboardView.add(panelProcesarCompra);
                 dashboardView.revalidate();
                 dashboardView.repaint();

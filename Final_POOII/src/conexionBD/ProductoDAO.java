@@ -155,7 +155,7 @@ public class ProductoDAO  {
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
         }
 
         return p;

@@ -57,18 +57,32 @@ public class DetalleCarritoDAO {
     }
 
 
-    public void eliminar(int id) {
-        String sql = "DELETE FROM detallescarrito WHERE idCarrito =?";
+    public void eliminar(int idCarrito, int idProducto) {
+        String sql = "DELETE FROM detallescarrito WHERE idCarrito =? AND idProducto =?";
         try {
             con = cn.conectar();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, idCarrito);
+            ps.setInt(2, idProducto);
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
+    }
+    
+    public void eliminarTodosDetalles(int idCarrito){
+        String sql = "DELETE FROM detallescarrito WHERE idCarrito =?";
+        try {
+            con = cn.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idCarrito);
+            ps.executeUpdate();
+            //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
     }
     
     public List obtenerDetallesPorId(int id){
@@ -88,7 +102,7 @@ public class DetalleCarritoDAO {
             }
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error detalle x id: " + e.toString());
         }
        
         return lista;

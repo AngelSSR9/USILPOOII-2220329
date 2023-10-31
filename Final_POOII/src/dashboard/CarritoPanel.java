@@ -8,63 +8,76 @@ import conexionBD.CarritoDAO;
 import conexionBD.DetalleCarritoDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
+import javax.swing.JPanel;
 
 public class CarritoPanel extends javax.swing.JPanel {
 
     Cliente cliente;
-    
+
     /*public CarritoPanel() {
         initComponents();
         iniciar();
     }*/
-    
-    public CarritoPanel(Cliente cliente){
+    public CarritoPanel(Cliente cliente) {
         initComponents();
         iniciar();
         this.cliente = cliente;
     }
-    
-    public void iniciar(){
+
+    public void iniciar() {
         productosScrollPanel.setVerticalScrollBar(new ScrollBarCustom());
-        panelProductos.setLayout(new GridLayout(0,1));
+        panelProductos.setLayout(new GridLayout(0, 1));
     }
-    
-    public void establecerComponentes(){
+
+    public void establecerComponentes() {
         productosScrollPanel.getVerticalScrollBar().setValue(0);
         panelProductos.removeAll();
         CarritoDAO c = new CarritoDAO();
         DetalleCarritoDAO d = new DetalleCarritoDAO();
-        
+
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        if(carrito == null){
+        /*if(carrito == null){
             c.agregar(cliente.getId());
             carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        }
+        }*/
         List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
-        if(listaDetalles.isEmpty()){
+        if (listaDetalles.isEmpty()) {
             buttonProcesarCompra.setEnabled(false);
-        }
-        else{
+        } else {
             buttonProcesarCompra.setEnabled(true);
         }
-        
+
         double total = 0;
-        for(DetalleCarrito detalle : listaDetalles){
+        for (DetalleCarrito detalle : listaDetalles) {
             ProductoDAO p = new ProductoDAO();
             Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
             total += producto.getPrecio() * detalle.getCantidad();
             ProductoCarritoPanel productoPanel = new ProductoCarritoPanel(producto, detalle.getCantidad(), carrito);
+            productoPanel.lblEliminar.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    d.eliminar(carrito.getIdCarrito(), producto.getId());
+                    establecerComponentes();
+                }
+            });
             //System.out.println(detalle.getCantidad());
             panelProductos.add(productoPanel);
             panelProductos.revalidate();
             panelProductos.repaint();
         }
+        if (listaDetalles.size() == 1) {
+            for (int i = 0; i < 2; i++) {
+                JPanel p = new JPanel();
+                panelProductos.add(p);
+            }
+        }
         lblTotal.setText(String.valueOf(total));
     }
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -221,7 +234,7 @@ public class CarritoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void buttonProcesarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProcesarCompraActionPerformed
-        
+
     }//GEN-LAST:event_buttonProcesarCompraActionPerformed
 
 
