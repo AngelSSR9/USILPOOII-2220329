@@ -135,6 +135,35 @@ public class ProductoDAO  {
         return r;
     }
     
+    public List<Producto> obtenerProductosPorTipo(String tipo){
+        String query = "SELECT * FROM Productos WHERE tipo = ?";
+        List<Producto> list = new ArrayList<Producto>();
+         Producto p = null;
+        try{
+            con = cn.conectar();
+            ps = con.prepareStatement(query);
+            ps.setString(1, tipo);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                p = new Producto();
+                p.setId(rs.getInt(1));
+                p.setMarca(rs.getString(2));
+                p.setModelo(rs.getString(3));
+                p.setPrecio(rs.getDouble(4));
+                p.setStock(rs.getInt(5));
+                p.setCategoria(rs.getString(6));
+                p.setTipo(rs.getString(7));
+                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+                
+                list.add(p);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
+        
+        return list;
+    }
+    
     public Producto obtenerProductoPorId(int id){
         String query = "SELECT * FROM Productos WHERE idProducto = ?";
         Producto p = null;

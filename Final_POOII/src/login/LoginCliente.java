@@ -20,7 +20,6 @@ public class LoginCliente extends javax.swing.JFrame {
     
     MenuCliente principal = new MenuCliente();
     
-    private Plantillaentrar p1;
     public LoginCliente() {
         
         initComponents();

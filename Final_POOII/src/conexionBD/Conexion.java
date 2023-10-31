@@ -12,7 +12,7 @@ public class Conexion {
     String url = "jdbc:mysql://localhost:3306/poo2";
     String user = "root";
 
-    String password = "301204";
+    String password = "henry";
 
     public Connection conectar() {
         try {

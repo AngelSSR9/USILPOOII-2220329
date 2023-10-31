@@ -2,7 +2,6 @@ package gui.panels;
 
 import clases.Producto;
 import clases.command.AgregarCommand;
-import clases.command.Command;
 import clases.command.Constantes;
 import clases.command.EliminarProductoCommand;
 import clases.command.ModificarCommand;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import clases.command.Command;
 
 
 public class RegistroProductosPanel extends javax.swing.JPanel {

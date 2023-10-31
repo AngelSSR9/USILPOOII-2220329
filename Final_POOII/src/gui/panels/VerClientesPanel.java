@@ -5,9 +5,10 @@
 package gui.panels;
 
 import clases.command.Constantes;
-import clases.command.Command;
 import clases.command.VerPedidoCommand;
+import gui.frames.EditarDatosFrame;
 import javax.swing.table.DefaultTableModel;
+import clases.command.Command;
 
 /**
  *
@@ -18,6 +19,7 @@ public class VerClientesPanel extends javax.swing.JPanel {
     /**
      * Creates new form VentasDelDiaPanel
      */
+    
     public DefaultTableModel modelo = new DefaultTableModel();
     public VerClientesPanel() {
         
@@ -118,6 +120,8 @@ public class VerClientesPanel extends javax.swing.JPanel {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        EditarDatosFrame edit = new EditarDatosFrame();
+        edit.setVisible(true);
         
     }//GEN-LAST:event_btnModificarActionPerformed
 

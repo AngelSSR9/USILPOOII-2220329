@@ -5,7 +5,6 @@
 package gui.panels;
 
 import clases.command.AgregarCommand;
-import clases.command.Command;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -13,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import clases.command.Command;
 
 /**
  *
