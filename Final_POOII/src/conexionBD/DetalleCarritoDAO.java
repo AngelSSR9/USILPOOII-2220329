@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class DetalleCarritoDAO {
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -20,7 +20,7 @@ public class DetalleCarritoDAO {
         List<DetalleCarrito> lista = new ArrayList<>();
         String query = "SELECT * FROM detallescarrito";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -40,7 +40,7 @@ public class DetalleCarritoDAO {
     public int agregar(Object[] o) {
         int result = 0;
         String sql = "INSERT INTO detallescarrito(idCarrito, idProducto, cantidad)values(?,?,?)";
-        con = cn.conectar();
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
@@ -60,7 +60,7 @@ public class DetalleCarritoDAO {
     public void eliminar(int idCarrito, int idProducto) {
         String sql = "DELETE FROM detallescarrito WHERE idCarrito =? AND idProducto =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, idCarrito);
             ps.setInt(2, idProducto);
@@ -75,7 +75,7 @@ public class DetalleCarritoDAO {
     public void eliminarTodosDetalles(int idCarrito){
         String sql = "DELETE FROM detallescarrito WHERE idCarrito =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, idCarrito);
             ps.executeUpdate();
@@ -89,7 +89,7 @@ public class DetalleCarritoDAO {
         List<DetalleCarrito> lista = new ArrayList<>();
         String sql = "SELECT * FROM detallescarrito WHERE idCarrito = ?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -112,7 +112,7 @@ public class DetalleCarritoDAO {
         int r = 0;
         String sql = "UPDATE detallescarrito SET cantidad=? WHERE idCarrito = ? and idProducto = ?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, nuevaCantidad);
             ps.setObject(2, idCarrito);

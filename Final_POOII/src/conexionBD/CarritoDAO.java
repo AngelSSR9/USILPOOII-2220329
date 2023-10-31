@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class CarritoDAO {
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -19,7 +19,7 @@ public class CarritoDAO {
         List<CarritoCompras> lista = new ArrayList<>();
         String query = "SELECT * FROM carritocompras";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -38,7 +38,7 @@ public class CarritoDAO {
     public int agregar(int idCliente) {
         int result = 0;
         String sql = "INSERT INTO carritocompras(idCliente)values(?)";
-        con = cn.conectar();
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, idCliente);
@@ -56,7 +56,7 @@ public class CarritoDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM carritocompras WHERE idCarrito =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -72,7 +72,7 @@ public class CarritoDAO {
         CarritoCompras carrito = null;
                 
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, idCliente);
             rs = ps.executeQuery();

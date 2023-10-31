@@ -12,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 public class CarritoPanel extends javax.swing.JPanel {
@@ -40,10 +42,6 @@ public class CarritoPanel extends javax.swing.JPanel {
         DetalleCarritoDAO d = new DetalleCarritoDAO();
 
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        /*if(carrito == null){
-            c.agregar(cliente.getId());
-            carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        }*/
         List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
         if (listaDetalles.isEmpty()) {
             buttonProcesarCompra.setEnabled(false);
@@ -61,6 +59,11 @@ public class CarritoPanel extends javax.swing.JPanel {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     d.eliminar(carrito.getIdCarrito(), producto.getId());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(CarritoPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     establecerComponentes();
                 }
             });

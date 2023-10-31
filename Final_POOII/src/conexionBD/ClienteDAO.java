@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class ClienteDAO  {
    
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -21,7 +21,7 @@ public class ClienteDAO  {
         List<Cliente> lista = new ArrayList<>();
         String query = "SELECT * FROM Clientes";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -43,7 +43,7 @@ public class ClienteDAO  {
     public int agregar(Object[] o) {
         int result = 0;
         String sql = "INSERT INTO Clientes(nombre, correo, contraseña, dni)values(?,?,?,?)";
-        con = cn.conectar();
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
@@ -63,7 +63,7 @@ public class ClienteDAO  {
     public void eliminar(int id) {
         String sql = "DELETE FROM Clientes WHERE idCliente =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -78,7 +78,7 @@ public class ClienteDAO  {
         int r = 0;
         String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
             ps.setObject(2, o[1]);
@@ -97,7 +97,7 @@ public class ClienteDAO  {
         String query = "SELECT * FROM Clientes WHERE DNI =" + dni;
         Cliente c = null;
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
