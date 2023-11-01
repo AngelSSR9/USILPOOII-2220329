@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class ProductoDAO  {
    
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -27,7 +27,7 @@ public class ProductoDAO  {
         List<Producto> lista = new ArrayList<>();
         String query = "SELECT * FROM Productos";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -61,7 +61,7 @@ public class ProductoDAO  {
     public int agregar(Object[] o) throws IOException {
         int result = 0;
         String sql = "INSERT INTO Productos(marca,modelo,precio,stock, categoría, tipo, imagen)values(?,?,?,?,?,?,?)";
-        con = cn.conectar();
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
@@ -89,7 +89,7 @@ public class ProductoDAO  {
     public void eliminar(int id) {
         String sql = "DELETE FROM Productos WHERE id =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -104,7 +104,7 @@ public class ProductoDAO  {
         int r = 0;
         String sql = "UPDATE Producto SET marca=?, modelo=?, precio=?, stock=? WHERE idProducto=?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
             ps.setObject(2, o[1]);
@@ -123,7 +123,7 @@ public class ProductoDAO  {
         int r = 0;
         String sql = "UPDATE productos SET stock=? WHERE idProducto=?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, stock);
             ps.setObject(2, idProducto);
@@ -139,7 +139,7 @@ public class ProductoDAO  {
         String query = "SELECT * FROM Productos WHERE idProducto = ?";
         Producto p = null;
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             ps.setObject(1, id);
             rs = ps.executeQuery();
@@ -155,7 +155,7 @@ public class ProductoDAO  {
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
         }
 
         return p;

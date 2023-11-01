@@ -6,15 +6,14 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Conexion {
-
-    Connection conexion;
+    private static Conexion instancia = null;
+    private Connection conexion;
 
     String url = "jdbc:mysql://localhost:3306/poo2";
     String user = "root";
-
     String password = "301204";
 
-    public Connection conectar() {
+    private Conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection(url, user, password);
@@ -22,6 +21,16 @@ public class Conexion {
             JOptionPane.showMessageDialog(null, e.toString());  
         }
         
+    }
+    
+    public static Conexion obtenerInstancia(){
+        if(instancia == null){
+            instancia = new Conexion();
+        }
+        return instancia;
+    }
+    
+    public Connection obtenerConexion(){
         return conexion;
     }
 

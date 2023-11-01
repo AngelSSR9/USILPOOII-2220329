@@ -90,6 +90,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
 
         panelResta.setBackground(new java.awt.Color(0, 153, 153));
         panelResta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelResta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelResta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panelRestaMouseClicked(evt);
@@ -126,6 +127,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
 
         panelSuma.setBackground(new java.awt.Color(0, 153, 153));
         panelSuma.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelSuma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelSuma.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panelSumaMouseClicked(evt);
