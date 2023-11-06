@@ -92,6 +92,7 @@ public class Cliente extends Persona implements Observer{
         enviarMensaje();
     }
     public void enviarMensaje(){
+        /*
         //String verificationToken = UUID.randomUUID().toString();
         //Se crea la clase propiedades para luego configurarlo
         Properties properties = new Properties();
@@ -103,6 +104,7 @@ public class Cliente extends Persona implements Observer{
         properties.put("mail.smtp.starttls.enable", "true");
         
         // Autenticación
+        */
         /*
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -110,6 +112,7 @@ public class Cliente extends Persona implements Observer{
             }
         };
         */
+        /*
         //Se crea una session en la que se pasan las propiedades configuradas
         Session session = Session.getDefaultInstance(properties);
         // Creación y envío del correo
@@ -172,6 +175,8 @@ public class Cliente extends Persona implements Observer{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+*/
+        
     }
 
     
