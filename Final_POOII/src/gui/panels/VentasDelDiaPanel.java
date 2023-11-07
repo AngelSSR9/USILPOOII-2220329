@@ -5,9 +5,9 @@
 package gui.panels;
 
 import clases.command.Constantes;
-import clases.command.Command;
-import clases.command.VerPedidoCommand;
 import javax.swing.table.DefaultTableModel;
+import clases.command.Command;
+import gui.frames.FrameMostrarVentas;
 
 /**
  *
@@ -45,14 +45,14 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
         btnVerDetalles = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jLabel1.setText("Ventas Totales");
+        jLabel1.setText("Pedidos Totales");
 
         tablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Fecha de generado", "Metodo de pago", "Fecha de pago"
+                "ID", "ID de cliente", "Fecha de generado", "Metodo de pago", "Fecha de pago"
             }
         ));
         jScrollPane1.setViewportView(tablaPedidos);
@@ -102,7 +102,13 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
 
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         // TODO add your handling code here:
-        executeCommand(new VerPedidoCommand(this));
+        int fila = tablaPedidos.getSelectedRow();
+        if(fila !=-1){
+            int idPed = Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
+        }
+        
+        FrameMostrarVentas mostVen = new FrameMostrarVentas();
+        mostVen.setVisible(true);
     }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnVerDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerDetallesMouseClicked

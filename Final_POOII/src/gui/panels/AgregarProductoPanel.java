@@ -4,8 +4,7 @@
  */
 package gui.panels;
 
-import clases.command.AgregarCommand;
-import clases.command.Command;
+import clases.Cliente;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -13,27 +12,82 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import clases.command.Command;
+import clases.command.Constantes;
+import clases.observer.TiendaSubject;
+import conexionBD.ClienteDAO;
+import conexionBD.ProductoDAO;
+import java.util.List;
+import javax.swing.JTextField;
 
 /**
  *
  * @author henry
  */
 public class AgregarProductoPanel extends javax.swing.JPanel {
+
     AgregarProductoPanel app;
     public DefaultTableModel modelo = new DefaultTableModel();
     public int id;
+    ProductoDAO productoDAO = new ProductoDAO();
     String path;
+
     /**
      * Creates new form RegistrarProductoPanel
      */
     public AgregarProductoPanel() {
         initComponents();
     }
-    
-    private void executeCommand(Command command) {
-        command.execute();
 
+    private boolean agregarProductoBD() {
+        Object[] o = new Object[7];
+        String marca = marcaTxt.getText();
+        String modelo = modeloTxt.getText();
+        String precio = precioTxt.getText();
+        String stock = stockTxt.getText();
+        String categoria = (String) catCombo.getSelectedItem();
+        String tipo = tipoTxt.getText();
+        String rutaImagen = imagenTxt.getText();
+
+        //String direccion = direccionTxt.getText();
+        try {
+
+            o[0] = marca;
+            o[1] = modelo;
+            o[2] = Double.parseDouble(precio);
+            o[3] = Integer.parseInt(stock);
+            o[4] = categoria;
+            o[5] = tipo;
+            o[6] = rutaImagen;
+
+            productoDAO.agregar(o);
+
+            return true;
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            return false;
+        }
     }
+
+    public void agregarProducto() {
+        boolean confirm = agregarProductoBD();
+        if (confirm) {
+            Constantes.limpiarPanel(updatePanel);
+            // Obtener la lista de clientes, añadir y notificarlos OBserver
+            ClienteDAO clienteDAO = new ClienteDAO();
+            TiendaSubject tienda = TiendaSubject.getInstancia();
+            List<Cliente> clientes = clienteDAO.listar();
+            for (Cliente cliente : clientes) {
+                tienda.añadir(cliente);
+            }
+            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
+            tienda.notificar();
+            System.out.println("Mensajes Enviados");
+            JOptionPane.showMessageDialog(null, "Mesajes enviados");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -253,24 +307,24 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
 
     private void photoSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoSelectionActionPerformed
         // TODO add your handling code here:
-        
-        JFileChooser fc = new JFileChooser();
-fc.showOpenDialog(this);
-File selectedImage = fc.getSelectedFile();
 
-if (selectedImage != null) {
-    path = selectedImage.getAbsolutePath();
-    
-    try {
-        Image img = ImageIO.read(selectedImage);
-        imagenTxt.setText(path);
-        selectedPhoto.setIcon(new ImageIcon(img.getScaledInstance(selectedPhoto.getWidth(),
-            selectedPhoto.getHeight(), Image.SCALE_SMOOTH)));
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, ex.toString());
-    }
-}
-        
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File selectedImage = fc.getSelectedFile();
+
+        if (selectedImage != null) {
+            path = selectedImage.getAbsolutePath();
+
+            try {
+                Image img = ImageIO.read(selectedImage);
+                imagenTxt.setText(path);
+                selectedPhoto.setIcon(new ImageIcon(img.getScaledInstance(selectedPhoto.getWidth(),
+                        selectedPhoto.getHeight(), Image.SCALE_SMOOTH)));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.toString());
+            }
+        }
+
     }//GEN-LAST:event_photoSelectionActionPerformed
 
     private void precioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioTxtActionPerformed
@@ -279,8 +333,7 @@ if (selectedImage != null) {
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
         // TODO add your handling code here:
-        app=this;
-        executeCommand(new AgregarCommand(app));
+        agregarProducto();
 
     }//GEN-LAST:event_LogInButtonActionPerformed
 

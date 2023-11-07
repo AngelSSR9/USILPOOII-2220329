@@ -4,11 +4,17 @@ import clases.Cliente;
 import clases.Producto;
 import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
+import gui.panels.AgregarPc;
 import gui.panels.RegistroProductosPanel;
 import gui.panels.VentasDelDiaPanel;
 import gui.panels.VerClientesPanel;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -28,6 +34,82 @@ public class Constantes {
     }
     
     
+    public static void agregarRetorno(AgregarPc aggPc){
+    List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo("mouse");
+    
+    aggPc.cBoxMouse.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedIndex = aggPc.cBoxMouse.getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+                String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                System.out.println("Valor seleccionado: " + valorEspecifico);
+            }
+        }
+    });
+}
+    
+    public static void cargarComboBox(AgregarPc aggPc){
+        
+        List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("motherboard");
+        for(Producto a : listaMother){
+            aggPc.cBoMoBo.addItem(a.getTipo()+"marca "+a.getMarca());
+        }
+        List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("memoria ram");
+        for(Producto a : listaRam){
+            aggPc.cBoxMemRom.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("memoria rom");
+        for(Producto a : listaRom){
+            aggPc.cBoxMemRom.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaMoBo =  productoDAO.obtenerProductosPorTipo("motherboard");
+        for(Producto a : listaMoBo){
+            aggPc.cBoMoBo.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("procesador");
+        for(Producto a : listaPro){
+            aggPc.cBoxProce.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("refrigeracion");
+        for(Producto a : listaRefr){
+            aggPc.cBoxRefrig.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxRefrig.addItem("sin seleccionar");
+        
+        List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("Mouse");
+        for(Producto a : listaMouse){
+            aggPc.cBoxMouse.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxMouse.addItem("sin seleccionar");
+        
+        List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("tarjeta grafica");
+        for(Producto a : listaTar){
+            aggPc.cBoxTarjGraf.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxTarjGraf.addItem("sin seleccionar");
+        
+        List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("audifonos");
+        for(Producto a : listaAud){
+            aggPc.cBoxAudif.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxAudif.addItem("sin seleccionar");
+        
+        List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("teclado");
+        for(Producto a : listaTec){
+            aggPc.cBoxTeclado.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxTeclado.addItem("sin seleccionar");
+        
+        List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("monitor");
+        for(Producto a : listaMon){
+            aggPc.cBoxMonitor.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        aggPc.cBoxMonitor.addItem("sin seleccionar");
+        
+    }
+    
+    
     
     public static final void limpiarPanel(Container container) {
         for (Component component : container.getComponents()) {
@@ -44,9 +126,9 @@ public class Constantes {
         }
     }
     
-    public static void limpiarTabla(RegistroProductosPanel reg) {
-        for (int i = 0; i < reg.modelo.getRowCount(); i++) {
-            reg.modelo.removeRow(i);
+    public static void limpiarTabla(DefaultTableModel modelo) {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
             i = i - 1;
         }
     }
@@ -67,23 +149,6 @@ public class Constantes {
         vnts.tablaPedidos.setModel(vnts.modelo);
     }
     
-    public static void listarProductos(RegistroProductosPanel reg) {
-        List<Producto> lista = productoDAO.listar();
-        System.out.println(lista.size());
-        reg.modelo = (DefaultTableModel) reg.tablaProductos.getModel();
-        Object[] ob = new Object[5];
-        for (int i = 0; i < lista.size(); i++) {
-            ob[0] = lista.get(i).getId();
-            ob[1] = lista.get(i).getMarca();
-            ob[2] = lista.get(i).getModelo();
-            ob[3] = lista.get(i).getPrecio();
-            ob[4] = lista.get(i).getStock();
-
-            reg.modelo.addRow(ob);
-        }
-        
-        reg.tablaProductos.setModel(reg.modelo);
-    }
     
     public static void listarClientes(VerClientesPanel vnts){
         List<Cliente> lista = clienteDAO.listar();

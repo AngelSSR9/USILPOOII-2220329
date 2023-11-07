@@ -1,7 +1,6 @@
 package gui.frames;
 
 import gui.panels.MenuAdminPanel;
-import gui.panels.OpcionesAdminPanel;
 import gui.panels.RegistroProductosPanel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
