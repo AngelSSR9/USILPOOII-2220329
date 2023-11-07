@@ -6,23 +6,14 @@ import clases.Producto;
 import conexionBD.CarritoDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JPanel;
 
 public class PanelProductos extends javax.swing.JPanel {
 
-    //Cliente cliente;
     ProductoDAO productoDAO = new ProductoDAO();
     CarritoDAO c = new CarritoDAO();
     CarritoCompras carrito;
-    
-    /*public PanelProductos(){
-        this.carrito = c.obtenerCarritoPorIdCliente(1);
-        initComponents();
-        iniciar();
-    }*/
     
     public PanelProductos(Cliente cliente) {
         initComponents();
@@ -38,14 +29,13 @@ public class PanelProductos extends javax.swing.JPanel {
         panelPrincipal.setLayout(layout);
     }
 
-    public void establecerItems() throws IOException, SQLException {
+    public void establecerItems() {
         panelPrincipal.removeAll();
         List<Producto> productos = productoDAO.listar();
         
         for (Producto p : productos) {
             PanelItem panel = new PanelItem(p, carrito);
             panel.setInformacion();
-            System.out.println(p.toString());
             panelPrincipal.add(panel);
         }
 
@@ -57,7 +47,6 @@ public class PanelProductos extends javax.swing.JPanel {
                 panelPrincipal.add(new JPanel());
                 panelPrincipal.revalidate();
                 panelPrincipal.repaint();
-                System.out.println(i);
             }
         }
 
@@ -96,7 +85,7 @@ public class PanelProductos extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JScrollPane scrollPanePrincipal;
+    public javax.swing.JPanel panelPrincipal;
+    public javax.swing.JScrollPane scrollPanePrincipal;
     // End of variables declaration//GEN-END:variables
 }

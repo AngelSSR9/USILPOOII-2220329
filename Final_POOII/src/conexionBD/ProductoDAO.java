@@ -128,7 +128,7 @@ public class ProductoDAO  {
             ps.setObject(1, stock);
             ps.setObject(2, idProducto);
             r = ps.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Stock actualizado correctamente.");
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }

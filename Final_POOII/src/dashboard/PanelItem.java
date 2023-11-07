@@ -20,6 +20,7 @@ public class PanelItem extends javax.swing.JPanel {
     public void setInformacion() {
         setNombreProducto(producto.getMarca() + " " + producto.getModelo());
         setPrecioProducto(producto.getPrecio());
+        setDescripcionProducto(producto.getTipo());
         setImagenProducto(producto.getImagen());
     }
 
@@ -53,7 +54,7 @@ public class PanelItem extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
 
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(67, 82, 104), 1, true));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         lblNombre.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(76, 76, 76));
@@ -64,7 +65,6 @@ public class PanelItem extends javax.swing.JPanel {
         lblDescripcion.setText("Description");
 
         lblImagen.setText("imagenProducto");
-        lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblImagen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -100,7 +100,7 @@ public class PanelItem extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDescripcion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPrecio)
                 .addContainerGap())
