@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import clases.Cliente;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
@@ -17,20 +20,29 @@ public class MenuCliente extends javax.swing.JFrame {
     CarritoPanel carritoPanel;
     PanelProductos productosPanel;
     PanelArmarPC panelArmarPc;
+    PanelHistorialPedidos panelHistorialPedidos;
     OptionsClient optionsClient = new OptionsClient();
     Cliente cliente = new Cliente();
 
 
     public MenuCliente() {
         initComponents();
+        ubicarImagenes();
     }
   
+    public void ubicarImagenes(){
+        URL imgUrl = getClass().getResource("/dashboardimg/pclogoblanco.png");
+        ImageIcon icon = new ImageIcon(imgUrl);
+        Image image = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        imgArmaPc.setIcon(new ImageIcon(image));
+    }
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
         carritoPanel = new CarritoPanel(cliente);
         productosPanel = new PanelProductos(cliente);
         panelProcesarCompra = new PanelProcesarCompra(cliente);
         panelArmarPc = new PanelArmarPC(cliente);
+        panelHistorialPedidos = new PanelHistorialPedidos(cliente);
       
         carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
             @Override
@@ -62,7 +74,7 @@ public class MenuCliente extends javax.swing.JFrame {
         btnHistorialDeCompras = new javax.swing.JLabel();
         panelArmaPc = new javax.swing.JPanel();
         lblArmaPc = new javax.swing.JLabel();
-        btnArmaTuPc = new javax.swing.JLabel();
+        imgArmaPc = new javax.swing.JLabel();
         panelCarritoCompras = new javax.swing.JPanel();
         lblCarrito1 = new javax.swing.JLabel();
         btnCarritoDeCompras1 = new javax.swing.JLabel();
@@ -118,6 +130,11 @@ public class MenuCliente extends javax.swing.JFrame {
         kGradientPanel1.add(panelProducts, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 220, 80));
 
         panelHistorial.setOpaque(false);
+        panelHistorial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelHistorialMouseClicked(evt);
+            }
+        });
         panelHistorial.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblHistorial.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -148,13 +165,13 @@ public class MenuCliente extends javax.swing.JFrame {
         lblArmaPc.setText("Arma tu PC");
         panelArmaPc.add(lblArmaPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        btnArmaTuPc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/3.png"))); // NOI18N
-        btnArmaTuPc.addMouseListener(new java.awt.event.MouseAdapter() {
+        imgArmaPc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/3.png"))); // NOI18N
+        imgArmaPc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnArmaTuPcMouseClicked(evt);
+                imgArmaPcMouseClicked(evt);
             }
         });
-        panelArmaPc.add(btnArmaTuPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 29, -1));
+        panelArmaPc.add(imgArmaPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 29, -1));
 
         kGradientPanel1.add(panelArmaPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 220, 80));
 
@@ -168,8 +185,8 @@ public class MenuCliente extends javax.swing.JFrame {
 
         lblCarrito1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         lblCarrito1.setForeground(new java.awt.Color(255, 255, 255));
-        lblCarrito1.setText("Carrito de compras");
-        panelCarritoCompras.add(lblCarrito1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        lblCarrito1.setText("Información personal");
+        panelCarritoCompras.add(lblCarrito1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         btnCarritoDeCompras1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/9.png"))); // NOI18N
         panelCarritoCompras.add(btnCarritoDeCompras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
@@ -247,9 +264,9 @@ public class MenuCliente extends javax.swing.JFrame {
         System.out.println("Clcik");
     }//GEN-LAST:event_panelArmaPcMouseClicked
 
-    private void btnArmaTuPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArmaTuPcMouseClicked
+    private void imgArmaPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgArmaPcMouseClicked
 
-    }//GEN-LAST:event_btnArmaTuPcMouseClicked
+    }//GEN-LAST:event_imgArmaPcMouseClicked
 
     private void btnHistorialDeComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistorialDeComprasMouseClicked
 
@@ -300,6 +317,14 @@ public class MenuCliente extends javax.swing.JFrame {
         System.out.println("Clcik");
     }//GEN-LAST:event_panelCarritoComprasMouseClicked
 
+    private void panelHistorialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelHistorialMouseClicked
+        dashboardView.removeAll();
+        dashboardView.add(panelHistorialPedidos);
+        dashboardView.revalidate();
+        dashboardView.repaint();
+
+    }//GEN-LAST:event_panelHistorialMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -337,13 +362,13 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnArmaTuPc;
     private javax.swing.JLabel btnCarritoDeCompras;
     private javax.swing.JLabel btnCarritoDeCompras1;
     private javax.swing.JLabel btnCarritoDeCompras2;
     private javax.swing.JLabel btnComprar1;
     private javax.swing.JLabel btnHistorialDeCompras;
     private javax.swing.JPanel dashboardView;
+    private javax.swing.JLabel imgArmaPc;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel7;
     private keeptoo.KGradientPanel kGradientPanel1;
