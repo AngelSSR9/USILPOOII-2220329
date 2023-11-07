@@ -1,7 +1,5 @@
 package clases;
 
-import java.util.Date;
-
 public class DetallePedido {
     private int idPedido;
     private int idProducto;

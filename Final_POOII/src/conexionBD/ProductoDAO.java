@@ -149,7 +149,7 @@ public class ProductoDAO  {
             ps.setObject(1, stock);
             ps.setObject(2, idProducto);
             r = ps.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Stock actualizado correctamente.");
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
@@ -206,6 +206,32 @@ public class ProductoDAO  {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
+        }
+
+        return p;
+    }
+    
+    public Producto obtenerProductoPorCategoria(String categoria){
+        String query = "SELECT * FROM Productos WHERE categoría = ?";
+        Producto p = null;
+        try {
+            con = cn.obtenerConexion();
+            ps = con.prepareStatement(query);
+            ps.setObject(1, categoria);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Producto();
+                p.setId(rs.getInt(1));
+                p.setMarca(rs.getString(2));
+                p.setModelo(rs.getString(3));
+                p.setPrecio(rs.getDouble(4));
+                p.setStock(rs.getInt(5));
+                p.setCategoria(rs.getString(6));
+                p.setTipo(rs.getString(7));
+                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
         return p;

@@ -56,10 +56,11 @@ public class PanelMiniProducto extends javax.swing.JPanel {
         lblCantidad = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
 
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         lblImagen.setText("jLabel4");
 
+        lblMarca.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         lblMarca.setText("jLabel5");
 
         lblNombre.setText("jLabel6");
@@ -84,8 +85,8 @@ public class PanelMiniProducto extends javax.swing.JPanel {
                             .addComponent(lblCantidad))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblPrecio)
                         .addGap(25, 25, 25))))
         );
@@ -105,7 +106,7 @@ public class PanelMiniProducto extends javax.swing.JPanel {
                             .addComponent(lblPrecio))
                         .addGap(15, 15, 15)
                         .addComponent(lblCantidad)
-                        .addGap(0, 11, Short.MAX_VALUE))))
+                        .addGap(0, 14, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
