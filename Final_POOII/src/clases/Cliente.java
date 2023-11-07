@@ -1,13 +1,9 @@
 package clases;
 
-
 import clases.observer.Observer;
-import clases.observer.Subject;
-import clases.observer.TiendaSubject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.mail.Message;
@@ -19,32 +15,37 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import javax.swing.JOptionPane;
 
-
-public class Cliente extends Persona implements Observer{
-    private CarritoCompras carritoCompras;
-    private ArrayList<Pedido> pedidos;
+public class Cliente  implements Observer{
     private String nombre;
+    private int dni;
     private int id;
     private String correo;
     private String contraseña;
 
     public Cliente(String nombre, int dni,String correo, String contraseña) {
-        super(nombre, dni);
+        this.nombre = nombre;
+        this.dni = dni;
         this.correo = correo;
         this.contraseña = contraseña;
     }
     
     public Cliente(){}
 
-
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPedidos(ArrayList<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
     public String getCorreo() {
@@ -61,22 +62,6 @@ public class Cliente extends Persona implements Observer{
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
-    }
-
-    public CarritoCompras getCarritoCompras() {
-        return carritoCompras;
-    }
-
-    public void setCarritoCompras(CarritoCompras carritoCompras) {
-        this.carritoCompras = carritoCompras;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public int getId() {

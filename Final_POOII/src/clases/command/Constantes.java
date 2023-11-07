@@ -35,7 +35,7 @@ public class Constantes {
     
     
     public static void agregarRetorno(AgregarPc aggPc){
-    List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo("Mouse");
+    List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo("mouse");
     
     aggPc.cBoxMouse.addActionListener(new ActionListener() {
         @Override
@@ -126,9 +126,9 @@ public class Constantes {
         }
     }
     
-    public static void limpiarTabla(RegistroProductosPanel reg) {
-        for (int i = 0; i < reg.modelo.getRowCount(); i++) {
-            reg.modelo.removeRow(i);
+    public static void limpiarTabla(DefaultTableModel modelo) {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
             i = i - 1;
         }
     }
@@ -149,23 +149,6 @@ public class Constantes {
         vnts.tablaPedidos.setModel(vnts.modelo);
     }
     
-    public static void listarProductos(RegistroProductosPanel reg) {
-        List<Producto> lista = productoDAO.listar();
-        System.out.println(lista.size());
-        reg.modelo = (DefaultTableModel) reg.tablaProductos.getModel();
-        Object[] ob = new Object[5];
-        for (int i = 0; i < lista.size(); i++) {
-            ob[0] = lista.get(i).getId();
-            ob[1] = lista.get(i).getMarca();
-            ob[2] = lista.get(i).getModelo();
-            ob[3] = lista.get(i).getPrecio();
-            ob[4] = lista.get(i).getStock();
-
-            reg.modelo.addRow(ob);
-        }
-        
-        reg.tablaProductos.setModel(reg.modelo);
-    }
     
     public static void listarClientes(VerClientesPanel vnts){
         List<Cliente> lista = clienteDAO.listar();

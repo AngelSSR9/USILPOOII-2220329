@@ -4,10 +4,15 @@
  */
 package gui.panels;
 
+import clases.PC;
 import clases.Producto;
 import clases.command.Constantes;
+import conexionBD.ProductoDAO;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,12 +23,110 @@ public class AgregarPc extends javax.swing.JPanel {
     /**
      * Creates new form AgregarPc
      */
+    PC pc;
+    ProductoDAO productoDAO = new ProductoDAO();
     public AgregarPc() {
+        
         initComponents();
-        Constantes.cargarComboBox(this);
-        Constantes.agregarRetorno(this);
+        cargarComboBox();
     }
-
+    
+    private void cargarComboBox(){
+        
+        List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("motherboard");
+        for(Producto a : listaMother){
+            cBoMoBo.addItem(a.getTipo()+"marca "+a.getMarca());
+        }
+        List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("memoria ram");
+        for(Producto a : listaRam){
+            cBoxMemRam.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("memoria rom");
+        for(Producto a : listaRom){
+            cBoxMemRom.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaMoBo =  productoDAO.obtenerProductosPorTipo("motherboard");
+        for(Producto a : listaMoBo){
+            cBoMoBo.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("procesador");
+        for(Producto a : listaPro){
+            cBoxProce.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("refrigeracion");
+        for(Producto a : listaRefr){
+            cBoxRefrig.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        cBoxRefrig.addItem("sin seleccionar");
+        
+        List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("mouse");
+        cBoxMouse.addItem("sin seleccionar");
+        for(Producto a : listaMouse){
+            cBoxMouse.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        
+        
+        List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("tarjeta grafica");
+        cBoxTarjGraf.addItem("sin seleccionar");
+        for(Producto a : listaTar){
+            cBoxTarjGraf.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        
+        
+        List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("audifonos");
+        cBoxAudif.addItem("sin seleccionar");
+        for(Producto a : listaAud){
+            cBoxAudif.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        
+        List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("teclado");
+        cBoxTeclado.addItem("sin seleccionar");
+        for(Producto a : listaTec){
+            cBoxTeclado.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        
+        List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("monitor");
+        cBoxMonitor.addItem("sin seleccionar");
+        for(Producto a : listaMon){
+            cBoxMonitor.addItem(a.getTipo()+" marca "+a.getMarca());
+        }
+        
+    }
+    
+    private Producto agregarCom(String prod, JComboBox box){
+        List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
+            int selectedIndex = box.getSelectedIndex();
+            
+            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+               if(valoresEspecificos.get(selectedIndex).getStock()!=0){
+                    String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                return valoresEspecificos.get(selectedIndex);
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        
+    }
+    
+    private Producto agregarPer(String prod, JComboBox box){
+        List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
+            int selectedIndex = box.getSelectedIndex()-1;
+            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+                if(valoresEspecificos.get(selectedIndex).getStock()!=0){
+                    String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                return valoresEspecificos.get(selectedIndex);
+                }else{
+                    return null;
+                }
+                
+            }else{
+                return null;
+            }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,6 +289,39 @@ public class AgregarPc extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        if(agregarCom("memoria ram", cBoxMemRam)== null || agregarCom("memoria rom", cBoxMemRom)== null || agregarCom("procesador", cBoxProce)==null || agregarCom("motherboard", cBoMoBo)==null){
+            JOptionPane.showMessageDialog(this, "El stock esta en 0");
+        }else{
+                List<Producto> prod = new ArrayList<Producto>();
+            prod.add(agregarCom("memoria ram", cBoxMemRam));
+            prod.add(agregarCom("memoria rom", cBoxMemRom));
+            prod.add(agregarCom("procesador", cBoxProce));
+            prod.add(agregarCom("motherboard", cBoMoBo));
+            if(agregarPer("refrigeracion", cBoxTarjGraf)!=null){
+                prod.add(agregarPer("refrigeracion", cBoxTarjGraf));
+            }
+            if(agregarPer("mouse", cBoxMouse)!=null){
+                prod.add(agregarPer("mouse", cBoxMouse));
+            }
+            if(agregarPer("audifonos", cBoxAudif)!=null){
+                prod.add(agregarPer("audifonos", cBoxAudif));
+            }
+            if(agregarPer("teclado", cBoxTeclado)!=null){
+                prod.add(agregarPer("teclado", cBoxTeclado));
+            }
+            if(agregarPer("monitor", cBoxMonitor)!=null){
+                prod.add(agregarPer("monitor", cBoxMonitor));
+            }
+            
+            
+            
+            for(Producto a: prod){
+                System.out.println(a.getModelo());
+            }
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cBoMoBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoMoBoActionPerformed

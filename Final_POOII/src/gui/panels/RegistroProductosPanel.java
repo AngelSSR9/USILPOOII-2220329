@@ -1,11 +1,8 @@
 package gui.panels;
 
+import clases.Cliente;
 import clases.Producto;
-import clases.command.AgregarCommand;
 import clases.command.Constantes;
-import clases.command.EliminarProductoCommand;
-import clases.command.ModificarCommand;
-import clases.command.MostrarTablaCommand;
 import conexionBD.ProductoDAO;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import clases.command.Command;
+import clases.observer.TiendaSubject;
+import conexionBD.ClienteDAO;
 
 
 public class RegistroProductosPanel extends javax.swing.JPanel {
@@ -20,10 +19,11 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     RegistroProductosPanel app;
     public DefaultTableModel modelo = new DefaultTableModel();
     public int id;
+    ProductoDAO productoDAO = new ProductoDAO();
 
     public RegistroProductosPanel() {
         initComponents();
-        Constantes.listarProductos(this);
+        listarProductos();
     }
     private void executeCommand(Command command) {
         command.execute();
@@ -31,7 +31,83 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }
 
     //********************************************************************************************
+    private boolean modificarProductoBD() {
+        Object[] o = new Object[8];
+        String marca = marcaTxt.getText();
+        String modelo = modeloTxt.getText();
+        String precio = precioTxt.getText();
+        String stock = stockTxt.getText();
+        String categoria = categoriaTxt.getText();
+        String tipo = tipoTxt.getText();
+        String rutaImagen = imagenTxt.getText();
+        String id = idTxt.getText();
+        
+        
+        //String direccion = direccionTxt.getText();
+        try {
+           
+            o[0] = marca;
+            o[1] = modelo;
+            o[2] = Double.parseDouble(precio);
+            o[3] = Integer.parseInt(stock);
+            o[4] = categoria;
+            o[5] = tipo;
+            o[6] = rutaImagen;
+            o[7] = Integer.parseInt(id);
+            
+            
+            
 
+            productoDAO.actualizar(o);
+
+            return true;
+        } catch (Exception ex) {
+            
+            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            return false;
+        }
+
+    }
+    
+    public void listarProductos() {
+        List<Producto> lista = productoDAO.listar();
+        System.out.println(lista.size());
+        modelo = (DefaultTableModel) tablaProductos.getModel();
+        Object[] ob = new Object[7];
+        for (int i = 0; i < lista.size(); i++) {
+            ob[0] = lista.get(i).getId();
+            ob[1] = lista.get(i).getMarca();
+            ob[2] = lista.get(i).getModelo();
+            ob[3] = lista.get(i).getPrecio();
+            ob[4] = lista.get(i).getCategoria();
+            ob[5] = lista.get(i).getTipo();
+            ob[6] = lista.get(i).getStock();
+            
+            modelo.addRow(ob);
+        }
+        
+        tablaProductos.setModel(modelo);
+    }
+    
+    public void modificarProducto(){
+        boolean confirm = modificarProductoBD();
+        if (confirm) {
+            Constantes.limpiarPanel(jPanel1);
+            Constantes.limpiarTabla(modelo);
+            listarProductos();
+            // Obtener la lista de clientes, añadir y notificarlos OBserver
+            ClienteDAO clienteDAO = new ClienteDAO();
+            TiendaSubject tienda = TiendaSubject.getInstancia();
+            List<Cliente> clientes = clienteDAO.listar();
+            for (Cliente cliente : clientes) {
+                tienda.añadir(cliente);
+            }
+            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
+            tienda.notificar();
+            System.out.println("Mensajes Enviados");
+            JOptionPane.showMessageDialog(null, "Mesajes enviados");
+        }
+    }
 
 
     @SuppressWarnings("unchecked")
@@ -46,7 +122,6 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         marcaTxt = new javax.swing.JTextField();
         precioTxt = new javax.swing.JTextField();
-        agregarButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
         limpiarDatosButton = new javax.swing.JButton();
         modificarButton = new javax.swing.JButton();
@@ -58,7 +133,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         imagenTxt = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        precioTxt3 = new javax.swing.JTextField();
+        tipoTxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -113,14 +188,6 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(precioTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 120, 20));
-
-        agregarButton.setText("Registrar");
-        agregarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregarButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(agregarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 89, -1));
 
         eliminarButton.setText("Eliminar");
         eliminarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -185,14 +252,14 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         jLabel10.setText("Tipo:");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
 
-        precioTxt3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        precioTxt3.setBorder(null);
-        precioTxt3.addActionListener(new java.awt.event.ActionListener() {
+        tipoTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tipoTxt.setBorder(null);
+        tipoTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                precioTxt3ActionPerformed(evt);
+                tipoTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(precioTxt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 140, 20));
+        jPanel1.add(tipoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 140, 20));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel11.setText("Imagen:");
@@ -264,8 +331,28 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
-        app=this;
-        executeCommand(new MostrarTablaCommand(app));
+        int fila = tablaProductos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
+        } else {
+            id = Integer.parseInt(tablaProductos.getValueAt(fila, 0).toString());
+            String marca = tablaProductos.getValueAt(fila, 1).toString();
+            String modelo = tablaProductos.getValueAt(fila, 2).toString();
+            String precio = tablaProductos.getValueAt(fila, 3).toString();
+            String categoria = tablaProductos.getValueAt(fila, 4).toString();
+            String tipo = tablaProductos.getValueAt(fila, 5).toString();
+            String stock = tablaProductos.getValueAt(fila, 6).toString();
+            
+            
+            
+            idTxt.setText(String.valueOf(id));
+            marcaTxt.setText(marca);
+            modeloTxt.setText(modelo);
+            precioTxt.setText(precio);
+            categoriaTxt.setText(categoria);
+            tipoTxt.setText(tipo);
+            stockTxt.setText(stock);
+        }
     }//GEN-LAST:event_tablaProductosMouseClicked
 
     private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
@@ -299,9 +386,9 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         }*/
     }//GEN-LAST:event_buscarTxtKeyReleased
 
-    private void precioTxt3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioTxt3ActionPerformed
+    private void tipoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_precioTxt3ActionPerformed
+    }//GEN-LAST:event_tipoTxtActionPerformed
 
     private void imagenTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imagenTxtActionPerformed
         // TODO add your handling code here:
@@ -313,6 +400,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
         // TODO add your handling code here:
+        modificarProducto();
     }//GEN-LAST:event_modificarButtonActionPerformed
 
     private void limpiarDatosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarDatosButtonActionPerformed
@@ -321,8 +409,16 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
         // TODO add your handling code here:
-        app=this;
-        executeCommand(new EliminarProductoCommand(app));
+        int fila = tablaProductos.getSelectedRow();
+        int ids = Integer.parseInt(tablaProductos.getValueAt(fila, 0).toString());
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
+        } else {
+            productoDAO.eliminar(ids);
+        }
+        Constantes.limpiarPanel(jPanel1);
+            Constantes.limpiarTabla(modelo);
+            listarProductos();
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     private void precioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioTxtActionPerformed
@@ -332,17 +428,10 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     private void idTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idTxtActionPerformed
-
-    private void agregarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarButtonActionPerformed
-        // TODO add your handling code here:
-        app=this;
-        executeCommand(new ModificarCommand(app));
-    }//GEN-LAST:event_agregarButtonActionPerformed
     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton agregarButton;
     private javax.swing.JTextField buscarTxt;
     public javax.swing.JTextField categoriaTxt;
     private javax.swing.JButton eliminarButton;
@@ -370,8 +459,8 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     public javax.swing.JTextField modeloTxt;
     private javax.swing.JButton modificarButton;
     public javax.swing.JTextField precioTxt;
-    public javax.swing.JTextField precioTxt3;
     public javax.swing.JTextField stockTxt;
     public javax.swing.JTable tablaProductos;
+    public javax.swing.JTextField tipoTxt;
     // End of variables declaration//GEN-END:variables
 }

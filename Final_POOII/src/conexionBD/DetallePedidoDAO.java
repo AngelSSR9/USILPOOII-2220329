@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class DetallePedidoDAO {
 
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -23,7 +23,7 @@ public class DetallePedidoDAO {
         List<DetallePedido> lista = new ArrayList<>();
         String query = "SELECT * FROM detallespedidos";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -35,7 +35,7 @@ public class DetallePedidoDAO {
                 lista.add(d);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error listando: " + e.toString());
         }
 
         return lista;
@@ -43,8 +43,8 @@ public class DetallePedidoDAO {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precio)values(?,?,?,?)";
-        con = cn.conectar();
+        String sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precioVenta)values(?,?,?,?)";
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
@@ -54,7 +54,7 @@ public class DetallePedidoDAO {
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
         }
 
         return result;
@@ -63,13 +63,13 @@ public class DetallePedidoDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM detallespedidos WHERE idPedido =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle pedido eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error eliminando: " + e.toString());
         }
 
     }
@@ -78,7 +78,7 @@ public class DetallePedidoDAO {
         List<DetallePedido> lista = new ArrayList<>();
         String sql = "SELECT * FROM detallespedidos WHERE idPedido = ?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -92,28 +92,10 @@ public class DetallePedidoDAO {
             }
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error obteniendo detalle: " + e.toString());
         }
        
         return lista;
     }
 
-    /*public int actualizar(Object[] o) {
-        int r = 0;
-        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
-        try {
-            con = cn.conectar();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
-            ps.setObject(4, o[3]);
-            ps.setObject(5, o[4]);
-            r = ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
-        }
-        return r;
-    }*/
 }

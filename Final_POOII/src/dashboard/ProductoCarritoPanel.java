@@ -16,7 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ProductoCarritoPanel extends javax.swing.JPanel {
-
+    DetalleCarritoDAO d = new DetalleCarritoDAO();
     Producto producto;
     CarritoCompras carrito;
     int cantidad;
@@ -32,7 +32,7 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
     private void establecerComponentes() {
         
         //CONFIGURACION JSPINNER
-        SpinnerModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1); // valor inicial, mínimo, máximo y paso
+        SpinnerModel model = new SpinnerNumberModel(1, 1, producto.getStock(), 1); // valor inicial, mínimo, máximo y paso
         spinnerCantidad.setModel(model);
         JComponent editor = spinnerCantidad.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {
@@ -47,9 +47,9 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
             public void stateChanged(ChangeEvent e) {
                 // Realizar acciones cuando se produce un cambio en el JSpinner
                 System.out.println(spinnerCantidad.getValue());
-                DetalleCarritoDAO d = new DetalleCarritoDAO();
-                d.actualizarCantidadProducto((int) spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId());
-                
+                if((int)spinnerCantidad.getValue() >= producto.getStock()){
+                    d.actualizarCantidadProducto((int) spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId());
+                }
             }
         });
         
@@ -83,6 +83,9 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         lblEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tacho.png"))); // NOI18N
         lblEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEliminarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblEliminarMouseEntered(evt);
             }
@@ -127,28 +130,29 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(30, 30, 30)
                 .addComponent(lblModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblModelo)
-                        .addGap(10, 10, 10)))
-                .addGap(52, 52, 52))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblModelo)
+                        .addGap(62, 62, 62))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,11 +164,16 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         lblEliminar.setForeground(new Color(30, 30, 30));
     }//GEN-LAST:event_lblEliminarMouseExited
 
+    private void lblEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEliminarMouseClicked
+        
+        
+    }//GEN-LAST:event_lblEliminarMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblEliminar;
+    public javax.swing.JLabel lblEliminar;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblPrecio;

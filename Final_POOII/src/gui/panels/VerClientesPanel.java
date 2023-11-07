@@ -5,7 +5,6 @@
 package gui.panels;
 
 import clases.command.Constantes;
-import clases.command.VerPedidoCommand;
 import gui.frames.EditarDatosFrame;
 import javax.swing.table.DefaultTableModel;
 import clases.command.Command;

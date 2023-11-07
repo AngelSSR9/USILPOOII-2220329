@@ -5,9 +5,9 @@
 package gui.panels;
 
 import clases.command.Constantes;
-import clases.command.VerPedidoCommand;
 import javax.swing.table.DefaultTableModel;
 import clases.command.Command;
+import gui.frames.FrameMostrarVentas;
 
 /**
  *
@@ -102,7 +102,13 @@ public class VentasDelDiaPanel extends javax.swing.JPanel {
 
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         // TODO add your handling code here:
-        executeCommand(new VerPedidoCommand(this));
+        int fila = tablaPedidos.getSelectedRow();
+        if(fila !=-1){
+            int idPed = Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
+        }
+        
+        FrameMostrarVentas mostVen = new FrameMostrarVentas();
+        mostVen.setVisible(true);
     }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnVerDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerDetallesMouseClicked

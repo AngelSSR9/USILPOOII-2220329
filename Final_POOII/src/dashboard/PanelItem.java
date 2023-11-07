@@ -65,6 +65,7 @@ public class PanelItem extends javax.swing.JPanel {
 
         lblImagen.setText("imagenProducto");
         lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblImagen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblImagen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblImagenMouseClicked(evt);

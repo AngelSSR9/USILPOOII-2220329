@@ -2,7 +2,9 @@ package conexionBD;
 
 import clases.Producto;
 import conexionBD.Conexion;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,7 +21,7 @@ import javax.swing.JOptionPane;
 public class ProductoDAO  {
    
     Connection con;
-    Conexion cn = new Conexion();
+    Conexion cn = Conexion.obtenerInstancia();
     PreparedStatement ps;
     ResultSet rs;
 
@@ -27,7 +29,7 @@ public class ProductoDAO  {
         List<Producto> lista = new ArrayList<>();
         String query = "SELECT * FROM Productos";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -61,7 +63,7 @@ public class ProductoDAO  {
     public int agregar(Object[] o) throws IOException {
         int result = 0;
         String sql = "INSERT INTO Productos(marca,modelo,precio,stock, categoría, tipo, imagen)values(?,?,?,?,?,?,?)";
-        con = cn.conectar();
+        con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
@@ -87,9 +89,9 @@ public class ProductoDAO  {
 
 
     public void eliminar(int id) {
-        String sql = "DELETE FROM Productos WHERE id =?";
+        String sql = "DELETE FROM Productos WHERE idProducto =?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -102,28 +104,47 @@ public class ProductoDAO  {
 
     public int actualizar(Object[] o) {
         int r = 0;
-        String sql = "UPDATE Producto SET marca=?, modelo=?, precio=?, stock=? WHERE idProducto=?";
+        String sql = "UPDATE Productos SET marca=?,modelo=?,precio=?,stock=?,categoría=?,tipo=?,imagen=? WHERE idProducto=?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, o[0]);
             ps.setObject(2, o[1]);
             ps.setObject(3, o[2]);
             ps.setObject(4, o[3]);
             ps.setObject(5, o[4]);
+            ps.setObject(6, o[5]);
+            if(o[6].equals("")){
+                Producto p = obtenerProductoPorId((int)o[7]);
+                BufferedImage bufferedImage = new BufferedImage(p.getImagen().getWidth(null), p.getImagen().getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                bufferedImage.getGraphics().drawImage(p.getImagen(), 0, 0, null);
+                System.out.println("a");
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "jpg", outputStream);
+                byte[] imagenBytes = outputStream.toByteArray();
+                ps.setBlob(7, new SerialBlob(imagenBytes));
+            }else{
+                System.out.println("ab");
+                File imagenFile = new File((String) o[6]);
+                byte[] imagenBytes = Files.readAllBytes(imagenFile.toPath());
+                ps.setBlob(7, new SerialBlob(imagenBytes));
+            }
+            
+            ps.setObject(8, o[7]);
             r = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto actualizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            System.out.println(e.toString());
         }
-        return r;
+        return r;   
     }
     
     public int actualizarStock(int idProducto, int stock){
         int r = 0;
         String sql = "UPDATE productos SET stock=? WHERE idProducto=?";
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
             ps.setObject(1, stock);
             ps.setObject(2, idProducto);
@@ -140,7 +161,7 @@ public class ProductoDAO  {
         List<Producto> list = new ArrayList<Producto>();
          Producto p = null;
         try{
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             ps.setString(1, tipo);
             rs = ps.executeQuery();
@@ -168,7 +189,7 @@ public class ProductoDAO  {
         String query = "SELECT * FROM Productos WHERE idProducto = ?";
         Producto p = null;
         try {
-            con = cn.conectar();
+            con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
             ps.setObject(1, id);
             rs = ps.executeQuery();
@@ -184,7 +205,7 @@ public class ProductoDAO  {
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
         }
 
         return p;
