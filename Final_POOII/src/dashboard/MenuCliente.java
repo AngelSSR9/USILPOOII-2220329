@@ -216,6 +216,9 @@ public class MenuCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panelArmaPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelArmaPcMouseClicked
+        if(panelArmarPc == null){
+            panelArmarPc = new PanelArmarPC(cliente);
+        }
         dashboardView.removeAll();
         dashboardView.add(panelArmarPc);
         dashboardView.revalidate();
