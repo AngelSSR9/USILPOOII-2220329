@@ -1,18 +1,12 @@
 package dashboard;
 
-
-import clases.Cliente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import clases.Cliente;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.JOptionPane;
+import conexionBD.CarritoDAO;
 
 public class MenuCliente extends javax.swing.JFrame {
-
+    CarritoDAO c = new CarritoDAO();
     PanelProcesarCompra panelProcesarCompra;
     CarritoPanel carritoPanel;
     PanelProductos productosPanel;
@@ -27,23 +21,6 @@ public class MenuCliente extends javax.swing.JFrame {
   
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
-        carritoPanel = new CarritoPanel(cliente);
-        productosPanel = new PanelProductos(cliente);
-        panelProcesarCompra = new PanelProcesarCompra(cliente);
-        panelArmarPc = new PanelArmarPC(cliente);
-      
-        carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dashboardView.removeAll();
-                panelProcesarCompra.establecerProductos();
-                dashboardView.add(panelProcesarCompra);
-                dashboardView.revalidate();
-                dashboardView.repaint();
-            }
-
-        });
-      
     }
 
     @SuppressWarnings("unchecked")
@@ -239,6 +216,9 @@ public class MenuCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panelArmaPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelArmaPcMouseClicked
+        if(panelArmarPc == null){
+            panelArmarPc = new PanelArmarPC(cliente);
+        }
         dashboardView.removeAll();
         dashboardView.add(panelArmarPc);
         dashboardView.revalidate();
@@ -268,7 +248,29 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprar1MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        if(c.obtenerCarritoPorIdCliente(cliente.getId()) == null){
+            c.agregar(cliente.getId());
+        }
+        
+        if(panelProcesarCompra == null){
+            panelProcesarCompra = new PanelProcesarCompra(cliente);
+        }
+        
+        if(carritoPanel == null){
+            carritoPanel = new CarritoPanel(cliente);
+            carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dashboardView.removeAll();
+                panelProcesarCompra.establecerProductos();
+                dashboardView.add(panelProcesarCompra);
+                dashboardView.revalidate();
+                dashboardView.repaint();
+            }
 
+        });
+        }
+        
         dashboardView.removeAll();
         carritoPanel.establecerComponentes();
         dashboardView.add(carritoPanel);
@@ -278,17 +280,20 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void panelProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelProductsMouseClicked
-        dashboardView.removeAll();
-        try {
-            productosPanel.establecerItems();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+        
+        if(c.obtenerCarritoPorIdCliente(cliente.getId()) == null){
+            c.agregar(cliente.getId());
+        }
+        
+        if(productosPanel == null){
+            productosPanel = new PanelProductos(cliente);
         }
 
+        productosPanel.establecerItems();
+        dashboardView.removeAll();
         dashboardView.add(productosPanel);
         dashboardView.revalidate();
         dashboardView.repaint();
-        System.out.println("Clcik");
     }//GEN-LAST:event_panelProductsMouseClicked
 
     private void panelCarritoComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCarritoComprasMouseClicked
@@ -297,7 +302,6 @@ public class MenuCliente extends javax.swing.JFrame {
         dashboardView.add(optionsClient);
         dashboardView.revalidate();
         dashboardView.repaint();
-        System.out.println("Clcik");
     }//GEN-LAST:event_panelCarritoComprasMouseClicked
 
     /**

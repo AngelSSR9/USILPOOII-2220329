@@ -5,12 +5,12 @@ import java.util.Date;
 public class Pedido {
     private int idPedido;
     private Date fecha;
-    private int idCarritoCompras;
+    private int idCliente;
 
-    public Pedido(int idPedido, Date fecha, int idCarritoCompras) {
+    public Pedido(int idPedido, Date fecha, int idCliente) {
         this.idPedido = idPedido;
         this.fecha = fecha;
-        this.idCarritoCompras = idCarritoCompras;
+        this.idCliente = idCliente;
     }
 
     public Pedido() {
@@ -32,14 +32,14 @@ public class Pedido {
         this.fecha = fecha;
     }
 
-    public int getIdCarritoCompras() {
-        return idCarritoCompras;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setIdCarritoCompras(int idCarritoCompras) {
-        this.idCarritoCompras = idCarritoCompras;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
     
     
-    
+   
 }

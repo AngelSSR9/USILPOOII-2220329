@@ -10,20 +10,21 @@ import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class CarritoPanel extends javax.swing.JPanel {
 
+    CarritoDAO c = new CarritoDAO();
+    DetalleCarritoDAO d = new DetalleCarritoDAO();
     Cliente cliente;
+    double total;
 
-    /*public CarritoPanel() {
-        initComponents();
-        iniciar();
-    }*/
     public CarritoPanel(Cliente cliente) {
         initComponents();
         iniciar();
@@ -32,14 +33,16 @@ public class CarritoPanel extends javax.swing.JPanel {
 
     public void iniciar() {
         productosScrollPanel.setVerticalScrollBar(new ScrollBarCustom());
-        panelProductos.setLayout(new GridLayout(0, 1));
+        GridLayout layout = new GridLayout(0, 1);
+        layout.setHgap(5);
+        layout.setVgap(5);
+        panelProductos.setLayout(layout);
+        panelProductos.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
     }
 
     public void establecerComponentes() {
         productosScrollPanel.getVerticalScrollBar().setValue(0);
         panelProductos.removeAll();
-        CarritoDAO c = new CarritoDAO();
-        DetalleCarritoDAO d = new DetalleCarritoDAO();
 
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
         List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
@@ -49,7 +52,7 @@ public class CarritoPanel extends javax.swing.JPanel {
             buttonProcesarCompra.setEnabled(true);
         }
 
-        double total = 0;
+        total = 0;
         for (DetalleCarrito detalle : listaDetalles) {
             ProductoDAO p = new ProductoDAO();
             Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
@@ -67,16 +70,48 @@ public class CarritoPanel extends javax.swing.JPanel {
                     establecerComponentes();
                 }
             });
+            
+            productoPanel.spinnerCantidad.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                // Realizar acciones cuando se produce un cambio en el JSpinner
+                //System.out.println(productoPanel.spinnerCantidad.getValue());
+                if((int)productoPanel.spinnerCantidad.getValue() <= producto.getStock()){
+                    d.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId());
+                    calcularTotal();
+                }
+            }
+        });
             //System.out.println(detalle.getCantidad());
             panelProductos.add(productoPanel);
             panelProductos.revalidate();
             panelProductos.repaint();
         }
-        if (listaDetalles.size() == 1) {
-            for (int i = 0; i < 2; i++) {
+        int cant = listaDetalles.size();
+        if (cant == 1 || cant == 2) {
+            while (cant < 3) {
                 JPanel p = new JPanel();
                 panelProductos.add(p);
+                cant++;
             }
+        }
+        lblTotal.setText(String.valueOf(total));
+    }
+
+    public void calcularTotal() {
+        CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
+        if (listaDetalles.isEmpty()) {
+            buttonProcesarCompra.setEnabled(false);
+        } else {
+            buttonProcesarCompra.setEnabled(true);
+        }
+        total = 0;
+        for (DetalleCarrito detalle : listaDetalles) {
+            
+            ProductoDAO p = new ProductoDAO();
+            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
+            total += producto.getPrecio() * detalle.getCantidad();
         }
         lblTotal.setText(String.valueOf(total));
     }
@@ -97,6 +132,8 @@ public class CarritoPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         buttonProcesarCompra = new javax.swing.JButton();
+
+        productosScrollPanel.setBorder(null);
 
         panelProductos.setLayout(new java.awt.GridLayout(1, 0));
         productosScrollPanel.setViewportView(panelProductos);
@@ -144,7 +181,8 @@ public class CarritoPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(99, 96, 119), 1, true));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setText("Total");
@@ -168,10 +206,6 @@ public class CarritoPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addComponent(buttonProcesarCompra)
-                .addGap(38, 38, 38))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,6 +214,10 @@ public class CarritoPanel extends javax.swing.JPanel {
                         .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
+                .addComponent(buttonProcesarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,8 +226,8 @@ public class CarritoPanel extends javax.swing.JPanel {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(buttonProcesarCompra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(buttonProcesarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -225,11 +263,7 @@ public class CarritoPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        //System.out.println("clickCarritoPanel");
-        //ProductoCarritoPanel pc = new ProductoCarritoPanel();
-        //panelProductos.add(pc);
-        //panelProductos.revalidate();
-        //panelProductos.repaint();
+
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
