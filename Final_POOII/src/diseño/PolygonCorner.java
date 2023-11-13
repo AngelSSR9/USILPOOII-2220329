@@ -1,4 +1,4 @@
-package dashboard;
+package diseño;
 
 import java.awt.Point;
 import java.awt.geom.GeneralPath;
