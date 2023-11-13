@@ -32,7 +32,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
     //********************************************************************************************
     private boolean modificarProductoBD() {
-        Object[] o = new Object[8];
+        Object[] o = new Object[9];
         String marca = marcaTxt.getText();
         String modelo = modeloTxt.getText();
         String precio = precioTxt.getText();
@@ -40,6 +40,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         String categoria = categoriaTxt.getText();
         String tipo = tipoTxt.getText();
         String rutaImagen = imagenTxt.getText();
+        String descripcion = mDescripcion.getText();
         String id = idTxt.getText();
         
         
@@ -53,7 +54,8 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             o[4] = categoria;
             o[5] = tipo;
             o[6] = rutaImagen;
-            o[7] = Integer.parseInt(id);
+            o[7] = descripcion;
+            o[8] = Integer.parseInt(id);
             
             
             
@@ -138,7 +140,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         tipoTxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        mDescripcion = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -267,9 +269,9 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         jLabel11.setText("Imagen:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        mDescripcion.setColumns(20);
+        mDescripcion.setRows(5);
+        jScrollPane2.setViewportView(mDescripcion);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 370, 80));
 
@@ -455,8 +457,8 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton limpiarDatosButton;
+    private javax.swing.JTextArea mDescripcion;
     public javax.swing.JTextField marcaTxt;
     public javax.swing.JTextField modeloTxt;
     private javax.swing.JButton modificarButton;

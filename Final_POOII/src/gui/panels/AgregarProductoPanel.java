@@ -40,7 +40,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
     }
 
     private boolean agregarProductoBD() {
-        Object[] o = new Object[7];
+        Object[] o = new Object[8];
         String marca = marcaTxt.getText();
         String modelo = modeloTxt.getText();
         String precio = precioTxt.getText();
@@ -48,6 +48,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         String categoria = (String) catCombo.getSelectedItem();
         String tipo = tipoTxt.getText();
         String rutaImagen = imagenTxt.getText();
+        String descripcion = mDescription.getText();
 
         //String direccion = direccionTxt.getText();
         try {
@@ -59,6 +60,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
             o[4] = categoria;
             o[5] = tipo;
             o[6] = rutaImagen;
+            o[7] = descripcion;
 
             productoDAO.agregar(o);
 
