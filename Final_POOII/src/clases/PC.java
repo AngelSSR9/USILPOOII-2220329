@@ -9,6 +9,10 @@ public class PC {
     public PC(List<Producto> partes) {
         this.partes = partes;
     }
+    
+    public void add(Producto p){
+        partes.add(p);
+    }
 
 
     

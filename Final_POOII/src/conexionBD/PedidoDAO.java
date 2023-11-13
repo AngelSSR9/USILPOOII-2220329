@@ -31,7 +31,7 @@ public class PedidoDAO {
                 Pedido p = new Pedido();
                 p.setIdPedido(rs.getInt(1));
                 p.setFecha(rs.getDate(2));
-                p.setIdCarritoCompras(rs.getInt(3));
+                p.setIdCliente(rs.getInt(3));
                 lista.add(p);
             }
         } catch (Exception e) {
@@ -41,14 +41,14 @@ public class PedidoDAO {
         return lista;
     }
 
-    public int agregar(Date fecha, int idCarrito) {
+    public int agregar(Date fecha, int idCliente) {
         int result = 0;
-        String sql = "INSERT INTO pedidos(fecha, idCarrito)values(?,?)";
+        String sql = "INSERT INTO pedidos(fecha, idCliente)values(?,?)";
         con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
             ps.setObject(1, fecha);
-            ps.setObject(2, idCarrito);
+            ps.setObject(2, idCliente);
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Pedido agregado correctamente.");
         } catch (SQLException ex) {
@@ -72,7 +72,7 @@ public class PedidoDAO {
 
     }
     
-    public Pedido obtenerPedidoPorIdCarrito(int idCarrito){
+    public Pedido obtenerPedidoPorIdCliente(int idCliente){
         Pedido pedido = null;
         String query = "SELECT * FROM pedidos";
         try {
@@ -83,7 +83,7 @@ public class PedidoDAO {
                 pedido = new Pedido();
                 pedido.setIdPedido(rs.getInt(1));
                 pedido.setFecha(rs.getDate(2));
-                pedido.setIdCarritoCompras(rs.getInt(3));
+                pedido.setIdCliente(rs.getInt(3));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo: " + e.toString());

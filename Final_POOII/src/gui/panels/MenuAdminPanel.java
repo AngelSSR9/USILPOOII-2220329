@@ -20,13 +20,8 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         initComponents();
         cargarComboBoxProductos();
         cargarComboBoxColores();
-        this.regProd = new RegistroProductosPanel();
-        this.agg = new AgregarProductoPanel();
-        this.vnts = new VentasDelDiaPanel();
-        this.clnts = new VerClientesPanel();
-        this.anun = new AnunciarPanel();
-        this.pc = new AgregarPc();
-
+        
+        
     }
 
     private void cargarComboBoxProductos() {
@@ -262,7 +257,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void OpcionAgregarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseClicked
         // TODO add your handling code here:
-        
+        this.pc = new AgregarPc();
         panelContenido.removeAll();  // Elimina cualquier componente anterior
         panelContenido.add(pc);  // Agrega la imagen al panel
         panelContenido.revalidate();
@@ -281,6 +276,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void OpcionVentasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseClicked
         // TODO add your handling code here:
+        this.vnts = new VentasDelDiaPanel();
         panelContenido.removeAll();
         panelContenido.add(vnts);
         panelContenido.revalidate();
@@ -299,6 +295,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionVerClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseClicked
         // TODO add your handling code here:
+        this.clnts = new VerClientesPanel();
         panelContenido.removeAll();
         panelContenido.add(clnts);
         panelContenido.revalidate();
@@ -317,6 +314,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionAnunciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseClicked
         // TODO add your handling code here:
+        this.anun = new AnunciarPanel();
         panelContenido.removeAll();
         panelContenido.add(anun);
         panelContenido.revalidate();
@@ -335,6 +333,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionRegistrarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionRegistrarProductosMouseClicked
         // TODO add your handling code here:
+        this.regProd = new RegistroProductosPanel();
         panelContenido.removeAll();
         panelContenido.add(regProd);
         panelContenido.revalidate();
@@ -354,6 +353,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionAgregarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseClicked
         // TODO add your handling code here:
+        this.agg = new AgregarProductoPanel();
         panelContenido.removeAll();
         panelContenido.add(agg);
         panelContenido.revalidate();

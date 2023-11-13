@@ -280,6 +280,7 @@ public class LoginCliente extends javax.swing.JFrame {
         
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
+        
         if(cliente!=null){
             if (autenticarCliente(dni, password)) {
                 // Devuelve true si las credenciales son válidas y false en caso contrario.
@@ -303,8 +304,7 @@ public class LoginCliente extends javax.swing.JFrame {
         }
         else{
             JOptionPane.showMessageDialog(null, "Cuenta inexistente. Por favor, inténtelo de nuevo.");
-        }
-                
+        }               
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 
     private boolean autenticarCliente(int dni, String password) {
