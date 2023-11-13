@@ -14,7 +14,6 @@ public class Conexion {
     String user = "root";
     String password = "301204";
 
-
     private Conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
