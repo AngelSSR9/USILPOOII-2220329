@@ -4,10 +4,14 @@
  */
 package gui.panels;
 
+import clases.Cliente;
 import clases.command.Constantes;
 import gui.frames.EditarDatosFrame;
 import javax.swing.table.DefaultTableModel;
 import clases.command.Command;
+import conexionBD.ClienteDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +22,7 @@ public class VerClientesPanel extends javax.swing.JPanel {
     /**
      * Creates new form VentasDelDiaPanel
      */
-    
+    private ClienteDAO clienteDAO = new ClienteDAO();
     public DefaultTableModel modelo = new DefaultTableModel();
     public VerClientesPanel() {
         
@@ -29,6 +33,23 @@ public class VerClientesPanel extends javax.swing.JPanel {
     private void executeCommand(Command command) {
         command.execute();
 
+    }
+    
+    public void listarClientes(){
+        List<Cliente> lista = clienteDAO.listar();
+        System.out.println(lista.size());
+        modelo = (DefaultTableModel) tablaClientes.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < lista.size(); i++) {
+            ob[0] = lista.get(i).getId();
+            ob[1] = lista.get(i).getNombre();
+            ob[2] = lista.get(i).getCorreo();
+            ob[3] = lista.get(i).getDni();
+
+            modelo.addRow(ob);
+        }
+        
+        tablaClientes.setModel(modelo);
     }
     
     /**
@@ -130,10 +151,21 @@ public class VerClientesPanel extends javax.swing.JPanel {
 
     private void btnBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarMouseClicked
         // TODO add your handling code here:
+        int fila = tablaClientes.getSelectedRow();
+        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+        
+        if(fila ==-1){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
+        }else{
+            clienteDAO.eliminar(id);
+        }
+        Constantes.limpiarTabla(modelo);
+        listarClientes();
     }//GEN-LAST:event_btnBorrarMouseClicked
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnBorrarActionPerformed
 
 
