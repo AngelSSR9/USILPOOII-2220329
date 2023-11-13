@@ -4,6 +4,7 @@
  */
 package dashboard;
 
+import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
 import clases.Producto;
