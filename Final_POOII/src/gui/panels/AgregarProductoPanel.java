@@ -74,17 +74,6 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         boolean confirm = agregarProductoBD();
         if (confirm) {
             Constantes.limpiarPanel(updatePanel);
-            // Obtener la lista de clientes, añadir y notificarlos OBserver
-            ClienteDAO clienteDAO = new ClienteDAO();
-            TiendaSubject tienda = TiendaSubject.getInstancia();
-            List<Cliente> clientes = clienteDAO.listar();
-            for (Cliente cliente : clientes) {
-                tienda.añadir(cliente);
-            }
-            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
-            tienda.notificar();
-            System.out.println("Mensajes Enviados");
-            JOptionPane.showMessageDialog(null, "Mesajes enviados");
         }
     }
 

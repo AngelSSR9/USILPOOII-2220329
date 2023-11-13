@@ -4,6 +4,18 @@
  */
 package gui.panels;
 
+import clases.Cliente;
+import clases.Producto;
+import clases.observer.TiendaSubject;
+import conexionBD.ClienteDAO;
+import conexionBD.ProductoDAO;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author henry
@@ -13,10 +25,19 @@ public class AnunciarPanel extends javax.swing.JPanel {
     /**
      * Creates new form AnunciarPanel
      */
+    ProductoDAO productoDAO = new ProductoDAO();
+    
     public AnunciarPanel() {
         initComponents();
+        cargarCombos();
     }
 
+    public void cargarCombos(){
+        List<Producto> lista = productoDAO.listar();
+        for(Producto producto : lista){
+            productosComboBox.addItem(producto.getTipo()+" "+producto.getMarca());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,7 +50,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        productosComboBox = new javax.swing.JComboBox<>();
         btnAnunciarProd = new javax.swing.JButton();
         btnAnunciarPc = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -57,9 +78,18 @@ public class AnunciarPanel extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        productosComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productosComboBoxMouseClicked(evt);
+            }
+        });
 
         btnAnunciarProd.setText("Anunciar producto");
+        btnAnunciarProd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnunciarProdMouseClicked(evt);
+            }
+        });
         btnAnunciarProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnunciarProdActionPerformed(evt);
@@ -100,7 +130,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
                         .addComponent(btnAnunciarProd))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(jLabel2)))
@@ -149,7 +179,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
                 .addGap(97, 97, 97)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(productosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAnunciarProd)
                 .addGap(153, 153, 153))
@@ -169,12 +199,49 @@ public class AnunciarPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnunciarPcActionPerformed
 
+    private void productosComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosComboBoxMouseClicked
+        
+    }//GEN-LAST:event_productosComboBoxMouseClicked
+
+    private void btnAnunciarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarProdMouseClicked
+        
+        Producto productoEncontrado = encontrarProducto(productosComboBox);
+        System.out.println("Productos del tipo " + productoEncontrado.getTipo() + ":");
+        System.out.println("Modelo: " + productoEncontrado.getModelo());
+        System.out.println("Stock: "+ productoEncontrado.getStock());
+        // Obtener la lista de clientes, añadir y notificarlos OBserver
+        ClienteDAO clienteDAO = new ClienteDAO();
+        TiendaSubject tienda = TiendaSubject.getInstancia();
+        List<Cliente> clientes = clienteDAO.listar();
+        for (Cliente cliente : clientes) {
+            tienda.añadir(cliente);
+        }
+        JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
+        tienda.notificar(productoEncontrado);
+        System.out.println("Mensajes Enviados");
+        JOptionPane.showMessageDialog(null, "Mesajes enviados");    
+    }//GEN-LAST:event_btnAnunciarProdMouseClicked
+
+    private Producto encontrarProducto(JComboBox box){
+        List<Producto> valoresEspecificos = productoDAO.listar();
+            int selectedIndex = box.getSelectedIndex();
+            
+            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+               if(valoresEspecificos.get(selectedIndex).getStock()!=0){
+                    return valoresEspecificos.get(selectedIndex);
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnunciarPc;
     private javax.swing.JButton btnAnunciarProd;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -183,5 +250,6 @@ public class AnunciarPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JComboBox<String> productosComboBox;
     // End of variables declaration//GEN-END:variables
 }

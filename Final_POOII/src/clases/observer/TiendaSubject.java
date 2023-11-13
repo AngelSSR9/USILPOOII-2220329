@@ -1,6 +1,7 @@
 
 package clases.observer;
 
+import clases.Producto;
 import java.util.ArrayList;
 
 
@@ -30,9 +31,9 @@ public class TiendaSubject implements Subject{
     }
 
     @Override
-    public void notificar() {
+    public void notificar(Producto producto) {
         for (Observer observer : observadores) {
-            observer.actualizar();
+            observer.actualizar(producto);
         }
     }
 }
