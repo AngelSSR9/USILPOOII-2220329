@@ -4,30 +4,47 @@
  */
 package gui.panels;
 
+import clases.Producto;
 import clases.command.Constantes;
 import javax.swing.table.DefaultTableModel;
 import clases.command.Command;
+import conexionBD.ProductoDAO;
 import gui.frames.FrameMostrarVentas;
+import java.util.List;
 
 /**
  *
  * @author henry
  */
-public class VentasDelDiaPanel extends javax.swing.JPanel {
+public class VerPedidosPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form VentasDelDiaPanel
      */
+    private ProductoDAO productoDAO = new ProductoDAO();
+    
     public DefaultTableModel modelo = new DefaultTableModel();
-    public VentasDelDiaPanel() {
+    public VerPedidosPanel() {
         
         initComponents();
-        Constantes.listarPedidos(this);
+        listarPedidos();
     }
     
-    private void executeCommand(Command command) {
-        command.execute();
+    
+    public void listarPedidos(){
+        List<Producto> lista = productoDAO.listar();
+        modelo = (DefaultTableModel) tablaPedidos.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < lista.size(); i++) {
+            ob[0] = lista.get(i).getId();
+            ob[1] = lista.get(i).getMarca();
+            ob[2] = lista.get(i).getModelo();
+            ob[3] = lista.get(i).getPrecio();
 
+            modelo.addRow(ob);
+        }
+        
+        tablaPedidos.setModel(modelo);
     }
     
     /**

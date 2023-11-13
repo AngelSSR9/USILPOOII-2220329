@@ -121,6 +121,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         tipoTxt = new javax.swing.JTextField();
 
         updatePanel.setBackground(new java.awt.Color(255, 255, 255));
+        updatePanel.setPreferredSize(new java.awt.Dimension(853, 496));
         updatePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
