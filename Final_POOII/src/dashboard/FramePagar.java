@@ -16,10 +16,8 @@ public class FramePagar extends javax.swing.JFrame {
     }
     
     private void establecer(){
-        
         for(Component component : getContentPane().getComponents()){
             if(component instanceof JTextField jTextField){
-                System.out.println("HOLA");
                 jTextField.getDocument().addDocumentListener(new DocumentListener(){
                     @Override
                     public void insertUpdate(DocumentEvent e) {

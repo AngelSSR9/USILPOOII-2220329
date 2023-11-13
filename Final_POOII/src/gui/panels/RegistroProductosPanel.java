@@ -96,6 +96,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             Constantes.limpiarTabla(modelo);
             listarProductos();
             // Obtener la lista de clientes, añadir y notificarlos OBserver
+            /*
             ClienteDAO clienteDAO = new ClienteDAO();
             TiendaSubject tienda = TiendaSubject.getInstancia();
             List<Cliente> clientes = clienteDAO.listar();
@@ -106,6 +107,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             tienda.notificar();
             System.out.println("Mensajes Enviados");
             JOptionPane.showMessageDialog(null, "Mesajes enviados");
+            */
         }
     }
 

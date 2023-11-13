@@ -4,7 +4,9 @@ import clases.observer.Observer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import java.util.Scanner;
 import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -15,6 +17,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import correo.ImageUtils;
+import java.awt.Image;
 
 public class Cliente  implements Observer{
     private String nombre;
@@ -73,12 +77,10 @@ public class Cliente  implements Observer{
     }
 
     @Override
-    public void actualizar() {
-        enviarMensaje();
+    public void actualizar(Producto producto) {
+        enviarMensaje(producto);
     }
-    public void enviarMensaje(){
-        /*
-        //String verificationToken = UUID.randomUUID().toString();
+    public void enviarMensaje(Producto producto){
         //Se crea la clase propiedades para luego configurarlo
         Properties properties = new Properties();
         
@@ -88,16 +90,6 @@ public class Cliente  implements Observer{
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         
-        // Autenticación
-        */
-        /*
-        Authenticator auth = new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("pruebamonitor7@gmail.com", "togj fhkc imxh wldz");
-            }
-        };
-        */
-        /*
         //Se crea una session en la que se pasan las propiedades configuradas
         Session session = Session.getDefaultInstance(properties);
         // Creación y envío del correo
@@ -109,11 +101,14 @@ public class Cliente  implements Observer{
             message.setSubject("Nuevo Producto ");
             message.setText("Se ha subido un nuevo producto","ISO-8859-1","html");
             
+            InputStream htmlStream = getClass().getResourceAsStream("/correo/correohtml.html");
+            
             // Crear el contenido HTML como un String
-            String htmlContent = "<html><body>";
-            htmlContent += "<p>Se ha subido un nuevo producto</p>";
-            htmlContent += "<img src='cid:imagen123'>"; // La imagen se referencia por CID
-            htmlContent += "</body></html>";
+            String htmlContent = convertInputStreamToString(htmlStream);
+            // Reemplazar los marcadores de posición con valores reales del producto
+            htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", producto.getTipo()+" "+producto.getMarca()+" "+producto.getModelo());
+            htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(producto.getStock()));
+            htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(producto.getPrecio()));
             
             // Creamos un cuerpo multipart para incluir texto HTML y la imagen
             MimeMultipart multipart = new MimeMultipart("related");
@@ -127,20 +122,11 @@ public class Cliente  implements Observer{
             // Creamos la parte de la imagen
             MimeBodyPart imagePart = new MimeBodyPart();
             
-            // Carga la imagen desde el paquete "img"
-            InputStream imgStream = getClass().getResourceAsStream("/img/imgNewProduct.png");
-            
-            //Convertir a bytes la imagen
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = imgStream.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, bytesRead);
-            }
-            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            Image imagenProducto = producto.getImagen();
+            InputStream imgStream = ImageUtils.convertImageToInputStream(imagenProducto, "png");
             
             //se crea un datahandler, que sirva para gstionar el contenido de la imagen, esta imagen debe de estar en bytes, luego se coloca en la imagen
-            imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));
+            imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imgStream, "image/png")));
             imagePart.setHeader("Content-ID", "<imagen123>"); // Coincide con el CID en el contenido HTML
             
             //se agrega otra parte al multipart
@@ -160,11 +146,14 @@ public class Cliente  implements Observer{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-*/
         
     }
 
-    
-    
-    
+    // Método para convertir InputStream a String
+    public String convertInputStreamToString(InputStream inputStream) throws IOException {
+        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+            return scanner.useDelimiter("\\A").next();
+        }
+                
+    }
 }

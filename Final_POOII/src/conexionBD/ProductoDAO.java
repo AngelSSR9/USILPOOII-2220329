@@ -49,6 +49,7 @@ public class ProductoDAO  {
                     // Por ejemplo, podrías asignar una imagen por defecto.
                     p.setImagen(null);
                 }
+                p.setDescripcion(rs.getString(9));
 
 
                 lista.add(p);
@@ -62,7 +63,7 @@ public class ProductoDAO  {
 
     public int agregar(Object[] o) throws IOException {
         int result = 0;
-        String sql = "INSERT INTO Productos(marca,modelo,precio,stock, categoría, tipo, imagen)values(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Productos(marca,modelo,precio,stock, categoría, tipo, imagen, descripcion)values(?,?,?,?,?,?,?,?)";
         con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
@@ -78,6 +79,7 @@ public class ProductoDAO  {
             byte[] imagenBytes = Files.readAllBytes(imagenFile.toPath());
 
             ps.setBlob(7, new SerialBlob(imagenBytes));
+            ps.setObject(8, o[7]);
             result = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto agregado correctamente.");
         } catch (SQLException ex) {
@@ -104,7 +106,12 @@ public class ProductoDAO  {
 
     public int actualizar(Object[] o) {
         int r = 0;
-        String sql = "UPDATE Productos SET marca=?,modelo=?,precio=?,stock=?,categoría=?,tipo=?,imagen=? WHERE idProducto=?";
+        String sql = "UPDATE Productos SET marca=?,modelo=?,precio=?,stock=?,categoría=?,tipo=?,imagen=?,descripcion=? WHERE idProducto=?";
+        
+        if(o[6].equals("")){
+            sql = "UPDATE Productos SET marca=?, modelo=?, precio=?, stock=?, categoría=?, tipo=?, descripcion=? WHERE idProducto=?";
+        }
+        
         try {
             con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -114,23 +121,19 @@ public class ProductoDAO  {
             ps.setObject(4, o[3]);
             ps.setObject(5, o[4]);
             ps.setObject(6, o[5]);
+            
             if(o[6].equals("")){
-                Producto p = obtenerProductoPorId((int)o[7]);
-                BufferedImage bufferedImage = new BufferedImage(p.getImagen().getWidth(null), p.getImagen().getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                bufferedImage.getGraphics().drawImage(p.getImagen(), 0, 0, null);
-                System.out.println("a");
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", outputStream);
-                byte[] imagenBytes = outputStream.toByteArray();
-                ps.setBlob(7, new SerialBlob(imagenBytes));
+                ps.setObject(7, o[7]);
+                ps.setObject(8, o[8]);
             }else{
                 System.out.println("ab");
                 File imagenFile = new File((String) o[6]);
                 byte[] imagenBytes = Files.readAllBytes(imagenFile.toPath());
                 ps.setBlob(7, new SerialBlob(imagenBytes));
+                ps.setObject(8, o[7]);
+                ps.setObject(9, o[8]);
             }
-            
-            ps.setObject(8, o[7]);
+
             r = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto actualizado correctamente.");
         } catch (Exception e) {
@@ -175,6 +178,7 @@ public class ProductoDAO  {
                 p.setCategoria(rs.getString(6));
                 p.setTipo(rs.getString(7));
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+                p.setDescripcion(rs.getString(9));
                 
                 list.add(p);
             }
@@ -203,6 +207,7 @@ public class ProductoDAO  {
                 p.setCategoria(rs.getString(6));
                 p.setTipo(rs.getString(7));
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+                p.setDescripcion(rs.getString(9));
             }
         } catch (Exception e) {
             System.out.println("holapDAO");
@@ -230,6 +235,7 @@ public class ProductoDAO  {
                 p.setCategoria(rs.getString(6));
                 p.setTipo(rs.getString(7));
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(8))));
+                p.setDescripcion(rs.getString(9));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());

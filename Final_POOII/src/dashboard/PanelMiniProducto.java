@@ -60,7 +60,7 @@ public class PanelMiniProducto extends javax.swing.JPanel {
 
         lblImagen.setText("jLabel4");
 
-        lblMarca.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        lblMarca.setFont(new java.awt.Font("Segoe UI", 0, 9)); // NOI18N
         lblMarca.setText("jLabel5");
 
         lblNombre.setText("jLabel6");
@@ -106,7 +106,7 @@ public class PanelMiniProducto extends javax.swing.JPanel {
                             .addComponent(lblPrecio))
                         .addGap(15, 15, 15)
                         .addComponent(lblCantidad)
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                        .addGap(0, 16, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -11,6 +11,7 @@ public class Producto {
     private String categoria;
     private String tipo;
     private Image imagen;
+    private String descripcion;
 
     public double getPrecio() {
         return precio;
@@ -75,5 +76,12 @@ public class Producto {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

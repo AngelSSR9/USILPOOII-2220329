@@ -38,7 +38,7 @@ public class PanelItem extends javax.swing.JPanel {
     }
 
     public void setPrecioProducto(double precio) {
-        lblPrecio.setText(String.valueOf(precio));
+        lblPrecio.setText("s/." + String.valueOf(precio));
     }
 
     public JLabel getLblImagen() {

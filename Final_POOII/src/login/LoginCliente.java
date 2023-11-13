@@ -28,8 +28,6 @@ public class LoginCliente extends javax.swing.JFrame {
         title.requestFocusInWindow();
     }
     
-    Cliente customer;
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -280,30 +278,33 @@ public class LoginCliente extends javax.swing.JFrame {
         int dni = Integer.parseInt(dniTxt.getText());
         String password = String.valueOf(passTxt.getPassword());
         
-        // Llamada al método de autenticación
-        //boolean autenticado = autenticarCliente(dni, password);
-        // Aquí llama al método de ClienteDAO para verificar las credenciales en la base de datos.
-        // Devuelve true si las credenciales son válidas y false en caso contrario.
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
         
-        principal.setCliente(cliente);
-        
-        if (cliente != null && cliente.getContraseña().equals(password)) {
-            // Autenticación exitosa, abre la ventana principal o realiza las acciones necesarias
-            this.setVisible(false);
-            principal.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    setVisible(true);
+        if(cliente!=null){
+            if (autenticarCliente(dni, password)) {
+                // Devuelve true si las credenciales son válidas y false en caso contrario.
+                CarritoDAO c = new CarritoDAO();
+                CarritoCompras car = c.obtenerCarritoPorIdCliente(cliente.getId());
+                if(car == null){
+                    c.agregar(cliente.getId());
                 }
-            });
-            principal.setVisible(true);
-        } else {
-            // Credenciales incorrectas, muestra un mensaje de error
-            JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
+                principal.setCliente(cliente);
+                this.setVisible(false);
+                principal.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        setVisible(true);
+                    }
+                });
+                principal.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Comtraseña Incorrecta. Por favor, inténtelo de nuevo.");
+            }
         }
-                
+        else{
+            JOptionPane.showMessageDialog(null, "Cuenta inexistente. Por favor, inténtelo de nuevo.");
+        }               
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 
     private boolean autenticarCliente(int dni, String password) {
@@ -371,7 +372,7 @@ public class LoginCliente extends javax.swing.JFrame {
             passTxt.setForeground(Color.black);
         }
         if (dniTxt.getText().isEmpty()) {
-            dniTxt.setText("Ingrese su correo");
+            dniTxt.setText("Ingrese su dni");
             dniTxt.setForeground(Color.gray);
         }
     }//GEN-LAST:event_passTxtMousePressed
