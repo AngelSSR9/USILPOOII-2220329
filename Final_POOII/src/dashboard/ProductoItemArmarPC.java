@@ -46,12 +46,15 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
         panelProducto.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(producto.getStock() <= 0){
+                    if (productos.size() >= 8) {
+                        JOptionPane.showMessageDialog(null, "Cannot add more than 8 products!");
+                    } else if (producto.getStock() <= 0) {
                         JOptionPane.showMessageDialog(null, "Not enough product in Stock!");
-                    }
-                    else{
+                    } else if (productos.contains(producto)) {
+                        JOptionPane.showMessageDialog(null, "Product already chosen!");
+                    } else {
                         productos.add(producto);
-                        JOptionPane.showMessageDialog(null, "Product elegido");
+                        JOptionPane.showMessageDialog(null, "Product chosen");
                         text.setForeground(Color.red);
                     }
                 }
@@ -96,19 +99,24 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
         lblNombre = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
-        panelProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelProducto.setBackground(new java.awt.Color(255, 255, 255));
+        panelProducto.setForeground(new java.awt.Color(255, 255, 255));
         panelProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panelProductoMouseClicked(evt);
             }
         });
 
+        lblImagen.setBackground(new java.awt.Color(255, 255, 255));
+        lblImagen.setForeground(new java.awt.Color(255, 255, 255));
         lblImagen.setText("imagen");
         lblImagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
