@@ -210,6 +210,7 @@ public class ProductoDAO  {
                 p.setDescripcion(rs.getString(9));
             }
         } catch (Exception e) {
+            System.out.println("holapDAO");
             JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
         }
 
@@ -241,6 +242,21 @@ public class ProductoDAO  {
         }
 
         return p;
+    }
+    
+    public boolean comprobarProducto(int id){
+        String query = "SELECT * FROM Productos WHERE idProducto = ?";
+        Producto p =null;
+        try{
+            con = cn.obtenerConexion();
+            ps = con.prepareStatement(query);
+            ps.setObject(1,id);
+            rs = ps.executeQuery();
+            return rs.next(); //devuelve true si existe siquiera uno
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            return false;
+        }
     }
     
 }
