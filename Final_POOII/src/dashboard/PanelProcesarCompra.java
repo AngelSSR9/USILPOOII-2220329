@@ -1,5 +1,6 @@
 package dashboard;
 
+import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
 import clases.DetalleCarrito;
@@ -19,68 +20,76 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class PanelProcesarCompra extends javax.swing.JPanel {
+
     DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
     DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
     PedidoDAO pedidoDAO = new PedidoDAO();
     ProductoDAO p = new ProductoDAO();
     CarritoCompras carrito;
-    CarritoDAO c;
+    CarritoDAO c = new CarritoDAO();
+    Cliente cliente;
 
     public PanelProcesarCompra(Cliente cliente) {
         initComponents();
-        c = new CarritoDAO();
-        this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        productosScrollPanel.setVerticalScrollBar(new ScrollBarCustom());
+        panelProductos.setLayout(new GridLayout(0, 1));
+        productosScrollPanel.getVerticalScrollBar().setValue(0);
+        this.cliente = cliente;
     }
 
     public void establecerProductos() {
 
-        productosScrollPanel.setVerticalScrollBar(new ScrollBarCustom());
-        panelProductos.setLayout(new GridLayout(0, 1));
-        productosScrollPanel.getVerticalScrollBar().setValue(0);
-        panelProductos.removeAll();
+        this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        if (carrito != null) {
+            panelProductos.removeAll();
 
-        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
-        double total = 0;
-        int cant = 0;
-        for (DetalleCarrito detalle : listaDetalles) {
-            
-            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
-            total += producto.getPrecio() * detalle.getCantidad();
-            PanelMiniProducto productoPanel = new PanelMiniProducto(producto, detalle.getCantidad());
-            //System.out.println(detalle.getCantidad());
-            panelProductos.add(productoPanel);
-            panelProductos.revalidate();
-            panelProductos.repaint();
-            cant++;
-        }
-        if(listaDetalles.size() == 1){
-            for(int i = 0; i < 2; i++){
-                JPanel pan = new JPanel();
-                panelProductos.add(pan);
+            List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+            double total = 0;
+            int cant = 0;
+            for (DetalleCarrito detalle : listaDetalles) {
+
+                Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
+                total += producto.getPrecio() * detalle.getCantidad();
+                PanelMiniProducto productoPanel = new PanelMiniProducto(producto, detalle.getCantidad());
+                //System.out.println(detalle.getCantidad());
+                panelProductos.add(productoPanel);
+                panelProductos.revalidate();
+                panelProductos.repaint();
+                cant++;
             }
+            if (listaDetalles.size() == 1) {
+                for (int i = 0; i < 2; i++) {
+                    JPanel pan = new JPanel();
+                    panelProductos.add(pan);
+                }
+            }
+            lblTotal.setText(String.valueOf(total));
+            lblNumeroProductos.setText(String.valueOf(cant));
         }
-        lblTotal.setText(String.valueOf(total));
-        lblNumeroProductos.setText(String.valueOf(cant));
+
     }
-    
-    private void generarPedido(){
+
+    private void generarPedido() {
         guardarNuevaVenta();
         guardarDetallesVenta();
         eliminarCarrito();
+        panelProductos.removeAll();
+        lblNumeroProductos.setText("0");
+        lblTotal.setText("0");
     }
-    
-    public void guardarNuevaVenta(){
+
+    public void guardarNuevaVenta() {
         pedidoDAO.agregar(new Date(), carrito.getIdCliente());
     }
-    
-    public void guardarDetallesVenta(){
-        
+
+    public void guardarDetallesVenta() {
+
         Pedido pedido = pedidoDAO.obtenerPedidoPorIdCliente(carrito.getIdCliente());
         List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
-        for(DetalleCarrito detalle : listaDetalles){
+        for (DetalleCarrito detalle : listaDetalles) {
             Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
             p.actualizarStock(producto.getId(), producto.getStock() - detalle.getCantidad());
-            
+
             Object[] o = new Object[4];
             o[0] = pedido.getIdPedido();
             o[1] = producto.getId();
@@ -89,13 +98,13 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
             detallePedidoDAO.agregar(o);
         }
     }
-    
-    public void eliminarCarrito(){
+
+    public void eliminarCarrito() {
         detalleCarritoDAO.eliminarTodosDetalles(carrito.getIdCarrito());
         c.eliminar(carrito.getIdCarrito());
         establecerProductos();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -109,7 +118,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         checkTarjetaDebito = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        checkYape = new javax.swing.JCheckBox();
+        checkTransferencia = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -201,9 +210,9 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Transferencia bancaria");
 
-        checkYape.addActionListener(new java.awt.event.ActionListener() {
+        checkTransferencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkYapeActionPerformed(evt);
+                checkTransferenciaActionPerformed(evt);
             }
         });
 
@@ -232,7 +241,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(checkYape)
+                        .addComponent(checkTransferencia)
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -252,7 +261,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(checkYape))
+                    .addComponent(checkTransferencia))
                 .addGap(28, 28, 28)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -390,57 +399,64 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPagarActionPerformed
-        if (checkTarjetaCredito.isSelected() || checkTarjetaDebito.isSelected() || checkYape.isSelected()) {
-            if (checkTarjetaCredito.isSelected() || checkTarjetaDebito.isSelected()) {
-                FramePagar frame = new FramePagar();
-                frame.pagarBtn.addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JOptionPane.showMessageDialog(null, "Pedido Finalizado\nGracias por su compra !");
-                        generarPedido();
-                    }
-                    
-                });
-                frame.setVisible(true);
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
-                generarPedido();
+        if (lblNumeroProductos.getText() != "0") {
+
+            if (checkTarjetaCredito.isSelected() || checkTarjetaDebito.isSelected() || checkTransferencia.isSelected()) {
+                if (checkTarjetaCredito.isSelected() || checkTarjetaDebito.isSelected()) {
+                    FramePagar frame = new FramePagar();
+                    frame.pagarBtn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            checkTarjetaCredito.setSelected(false);
+                            checkTarjetaDebito.setSelected(false);
+                            JOptionPane.showMessageDialog(null, "Pedido Finalizado\nGracias por su compra !");
+                            generarPedido();
+                        }
+
+                    });
+                    frame.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
+                    checkTransferencia.setSelected(false);
+                    generarPedido();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un medio de pago.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un medio de pago.");
+            JOptionPane.showMessageDialog(this, "No hay productos en el carrito de compras.");
         }
 
 
     }//GEN-LAST:event_buttonPagarActionPerformed
 
     private void checkTarjetaCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTarjetaCreditoActionPerformed
-        if (checkTarjetaDebito.isSelected() || checkYape.isSelected()) {
-            checkYape.setSelected(false);
+        if (checkTarjetaDebito.isSelected() || checkTransferencia.isSelected()) {
+            checkTransferencia.setSelected(false);
             checkTarjetaDebito.setSelected(false);
         }
     }//GEN-LAST:event_checkTarjetaCreditoActionPerformed
 
     private void checkTarjetaDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTarjetaDebitoActionPerformed
-        if (checkTarjetaCredito.isSelected() || checkYape.isSelected()) {
-            checkYape.setSelected(false);
+        if (checkTarjetaCredito.isSelected() || checkTransferencia.isSelected()) {
+            checkTransferencia.setSelected(false);
             checkTarjetaCredito.setSelected(false);
         }
     }//GEN-LAST:event_checkTarjetaDebitoActionPerformed
 
-    private void checkYapeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkYapeActionPerformed
+    private void checkTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTransferenciaActionPerformed
         if (checkTarjetaCredito.isSelected() || checkTarjetaDebito.isSelected()) {
             checkTarjetaDebito.setSelected(false);
             checkTarjetaCredito.setSelected(false);
         }
-    }//GEN-LAST:event_checkYapeActionPerformed
+    }//GEN-LAST:event_checkTransferenciaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonPagar;
     private javax.swing.JCheckBox checkTarjetaCredito;
     private javax.swing.JCheckBox checkTarjetaDebito;
-    private javax.swing.JCheckBox checkYape;
+    private javax.swing.JCheckBox checkTransferencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

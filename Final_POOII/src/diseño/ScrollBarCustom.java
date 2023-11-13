@@ -1,5 +1,6 @@
-package dashboard;
+package diseño;
 
+import diseño.ScrollBarWin11UI;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JScrollBar;
