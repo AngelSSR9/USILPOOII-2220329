@@ -81,6 +81,7 @@ public class Cliente  implements Observer{
         enviarMensaje(producto);
     }
     public void enviarMensaje(Producto producto){
+        //enviar un correo electrónico mediante el protocolo SMTP (Simple Mail Transfer Protocol) utilizando la API JavaMail.
         //Se crea la clase propiedades para luego configurarlo
         Properties properties = new Properties();
         

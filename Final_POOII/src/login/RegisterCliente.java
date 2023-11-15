@@ -171,13 +171,13 @@ public class RegisterCliente extends javax.swing.JFrame {
         nombreTxt = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         title = new javax.swing.JLabel();
-        Text1 = new javax.swing.JPanel();
-        Text2 = new javax.swing.JPanel();
-        Text3 = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
         dniTxt = new javax.swing.JTextField();
         dniLabel = new javax.swing.JLabel();
-        Text4 = new javax.swing.JPanel();
+        roundedPanel1 = new diseño.RoundedPanel();
+        roundedPanel2 = new diseño.RoundedPanel();
+        roundedPanel3 = new diseño.RoundedPanel();
+        roundedPanel4 = new diseño.RoundedPanel();
         txtName = new javax.swing.JLabel();
         lblSlonga = new javax.swing.JLabel();
 
@@ -301,57 +301,6 @@ public class RegisterCliente extends javax.swing.JFrame {
         title.setText("REGISTRESE");
         kGradientPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
-        Text1.setBackground(new java.awt.Color(255, 255, 255));
-        Text1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Text1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Text1MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout Text1Layout = new javax.swing.GroupLayout(Text1);
-        Text1.setLayout(Text1Layout);
-        Text1Layout.setHorizontalGroup(
-            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        Text1Layout.setVerticalGroup(
-            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        kGradientPanel1.add(Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 430, 30));
-
-        Text2.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout Text2Layout = new javax.swing.GroupLayout(Text2);
-        Text2.setLayout(Text2Layout);
-        Text2Layout.setHorizontalGroup(
-            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
-        );
-        Text2Layout.setVerticalGroup(
-            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        kGradientPanel1.add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 430, -1));
-
-        Text3.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout Text3Layout = new javax.swing.GroupLayout(Text3);
-        Text3.setLayout(Text3Layout);
-        Text3Layout.setHorizontalGroup(
-            Text3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
-        );
-        Text3Layout.setVerticalGroup(
-            Text3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        kGradientPanel1.add(Text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
-
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         kGradientPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 410, 20));
 
@@ -376,20 +325,81 @@ public class RegisterCliente extends javax.swing.JFrame {
         dniLabel.setText("DNI");
         kGradientPanel1.add(dniLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
-        Text4.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel1.setRoundBottomLeft(15);
+        roundedPanel1.setRoundBottomRight(15);
+        roundedPanel1.setRoundTopLeft(15);
+        roundedPanel1.setRoundTopRight(15);
 
-        javax.swing.GroupLayout Text4Layout = new javax.swing.GroupLayout(Text4);
-        Text4.setLayout(Text4Layout);
-        Text4Layout.setHorizontalGroup(
-            Text4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
+        roundedPanel1.setLayout(roundedPanel1Layout);
+        roundedPanel1Layout.setHorizontalGroup(
+            roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 430, Short.MAX_VALUE)
         );
-        Text4Layout.setVerticalGroup(
-            Text4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        roundedPanel1Layout.setVerticalGroup(
+            roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(Text4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 430, -1));
+        kGradientPanel1.add(roundedPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 430, 30));
+
+        roundedPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel2.setRoundBottomLeft(15);
+        roundedPanel2.setRoundBottomRight(15);
+        roundedPanel2.setRoundTopLeft(15);
+        roundedPanel2.setRoundTopRight(15);
+
+        javax.swing.GroupLayout roundedPanel2Layout = new javax.swing.GroupLayout(roundedPanel2);
+        roundedPanel2.setLayout(roundedPanel2Layout);
+        roundedPanel2Layout.setHorizontalGroup(
+            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
+        );
+        roundedPanel2Layout.setVerticalGroup(
+            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        kGradientPanel1.add(roundedPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+
+        roundedPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel3.setRoundBottomLeft(15);
+        roundedPanel3.setRoundBottomRight(15);
+        roundedPanel3.setRoundTopLeft(15);
+        roundedPanel3.setRoundTopRight(15);
+
+        javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
+        roundedPanel3.setLayout(roundedPanel3Layout);
+        roundedPanel3Layout.setHorizontalGroup(
+            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
+        );
+        roundedPanel3Layout.setVerticalGroup(
+            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        kGradientPanel1.add(roundedPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+
+        roundedPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel4.setRoundBottomLeft(15);
+        roundedPanel4.setRoundBottomRight(15);
+        roundedPanel4.setRoundTopLeft(15);
+        roundedPanel4.setRoundTopRight(15);
+
+        javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
+        roundedPanel4.setLayout(roundedPanel4Layout);
+        roundedPanel4Layout.setHorizontalGroup(
+            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
+        );
+        roundedPanel4Layout.setVerticalGroup(
+            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        kGradientPanel1.add(roundedPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, -1));
 
         bg.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, 500, 510));
 
@@ -483,10 +493,6 @@ public class RegisterCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_correoTxtActionPerformed
 
-    private void Text1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Text1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Text1MouseClicked
-
     private void dniTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dniTxtMousePressed
         if (dniTxt.getText().equals("Ingrese su dni")) {
             dniTxt.setText("");
@@ -559,10 +565,6 @@ public class RegisterCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Text1;
-    private javax.swing.JPanel Text2;
-    private javax.swing.JPanel Text3;
-    private javax.swing.JPanel Text4;
     private javax.swing.JPanel bg;
     private javax.swing.JLabel correoLabel;
     private javax.swing.JTextField correoTxt;
@@ -582,6 +584,10 @@ public class RegisterCliente extends javax.swing.JFrame {
     private javax.swing.JPasswordField passTxt;
     private javax.swing.JPanel registerBtn;
     private javax.swing.JLabel registerBtnTxt;
+    private diseño.RoundedPanel roundedPanel1;
+    private diseño.RoundedPanel roundedPanel2;
+    private diseño.RoundedPanel roundedPanel3;
+    private diseño.RoundedPanel roundedPanel4;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;
     // End of variables declaration//GEN-END:variables

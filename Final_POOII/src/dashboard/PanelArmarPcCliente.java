@@ -146,8 +146,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblProcesador.setBackground(new java.awt.Color(0, 0, 0));
         lblProcesador.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblProcesador.setForeground(new java.awt.Color(0, 0, 0));
-        lblProcesador.setText("Procesador");
-        btnProcesador.add(lblProcesador, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 80, 30));
+        lblProcesador.setText("PROCESADOR");
+        btnProcesador.add(lblProcesador, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 100, 30));
 
         PanelComponentes.add(btnProcesador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 260, 50));
 
@@ -162,8 +162,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblPlacaMadre.setBackground(new java.awt.Color(0, 0, 0));
         lblPlacaMadre.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblPlacaMadre.setForeground(new java.awt.Color(0, 0, 0));
-        lblPlacaMadre.setText("Placa madre");
-        btnPlacaMadre.add(lblPlacaMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
+        lblPlacaMadre.setText("PLACA MADRE");
+        btnPlacaMadre.add(lblPlacaMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
 
         PanelComponentes.add(btnPlacaMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 40));
 
@@ -178,7 +178,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblMemoriaRAM.setBackground(new java.awt.Color(0, 0, 0));
         lblMemoriaRAM.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblMemoriaRAM.setForeground(new java.awt.Color(0, 0, 0));
-        lblMemoriaRAM.setText("Memoria RAM");
+        lblMemoriaRAM.setText("MEMORIA RAM");
         btnMemoriaRAM.add(lblMemoriaRAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
 
         PanelComponentes.add(btnMemoriaRAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 260, 50));
@@ -194,8 +194,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblDisco.setBackground(new java.awt.Color(0, 0, 0));
         lblDisco.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblDisco.setForeground(new java.awt.Color(0, 0, 0));
-        lblDisco.setText("Discos");
-        btnAlmacenamiento.add(lblDisco, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, -1));
+        lblDisco.setText("ALMACENAMIENTO");
+        btnAlmacenamiento.add(lblDisco, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
 
         PanelComponentes.add(btnAlmacenamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 260, 40));
 
@@ -210,8 +210,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblTarjetaDeVideo.setBackground(new java.awt.Color(0, 0, 0));
         lblTarjetaDeVideo.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblTarjetaDeVideo.setForeground(new java.awt.Color(0, 0, 0));
-        lblTarjetaDeVideo.setText("Tarjeta de video");
-        btnTarjetaDeVideo.add(lblTarjetaDeVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
+        lblTarjetaDeVideo.setText("TARJETA DE VIDEO");
+        btnTarjetaDeVideo.add(lblTarjetaDeVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
         PanelComponentes.add(btnTarjetaDeVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 260, 50));
 
@@ -226,7 +226,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblGabinete.setBackground(new java.awt.Color(0, 0, 0));
         lblGabinete.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblGabinete.setForeground(new java.awt.Color(0, 0, 0));
-        lblGabinete.setText("Gabinete");
+        lblGabinete.setText("GABINETE");
         btnGabinete.add(lblGabinete, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
         PanelComponentes.add(btnGabinete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 260, 50));
@@ -242,8 +242,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblFuenteDePoder.setBackground(new java.awt.Color(0, 0, 0));
         lblFuenteDePoder.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblFuenteDePoder.setForeground(new java.awt.Color(0, 0, 0));
-        lblFuenteDePoder.setText("Fuente de poder");
-        btnFuenteDePoder.add(lblFuenteDePoder, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
+        lblFuenteDePoder.setText("FUENTE DE PODER");
+        btnFuenteDePoder.add(lblFuenteDePoder, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
         PanelComponentes.add(btnFuenteDePoder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 260, 50));
 
@@ -258,8 +258,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblEnfriamento.setBackground(new java.awt.Color(0, 0, 0));
         lblEnfriamento.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblEnfriamento.setForeground(new java.awt.Color(0, 0, 0));
-        lblEnfriamento.setText("Sistema de enfriamento");
-        btnEnfriamiento.add(lblEnfriamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
+        lblEnfriamento.setText("SISTEMA DE ENFRIAMIENTO");
+        btnEnfriamiento.add(lblEnfriamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         PanelComponentes.add(btnEnfriamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 260, 50));
 
@@ -403,19 +403,26 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
     private void btnAgregarCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCarritoMouseClicked
 
-        for(Producto producto : productosElegidos){
-            Object o[] = new Object[3];
-            o[0] = carrito.getIdCarrito();
-            o[1] = producto.getId();
-            o[2] = 1;
-            DetalleCarritoDAO d =  new DetalleCarritoDAO();
-            d.agregar(o);
-            int stockActualizado = producto.getStock() - 1 ;
-            producto.setStock(stockActualizado);
-            ProductoDAO p = new ProductoDAO();
-            p.actualizarStock(producto.getId(), stockActualizado);
+        if(productosElegidos.size()==8){
+            for(Producto producto : productosElegidos){
+                Object o[] = new Object[3];
+                o[0] = carrito.getIdCarrito();
+                o[1] = producto.getId();
+                o[2] = 1;
+                DetalleCarritoDAO d =  new DetalleCarritoDAO();
+                d.agregar(o);
+                int stockActualizado = producto.getStock() - 1 ;
+                producto.setStock(stockActualizado);
+                ProductoDAO p = new ProductoDAO();
+                p.actualizarStock(producto.getId(), stockActualizado);
+            }
+            JOptionPane.showMessageDialog(null, "Productos en el carrito");
+            productosElegidos.removeAll(productosElegidos);
         }
-        JOptionPane.showMessageDialog(null, "Productos en el carrito");
+        else{
+            int faltan = 8- productosElegidos.size();
+            JOptionPane.showMessageDialog(null, "Te falta seleccionar "+ faltan+" productos");
+        }
     }//GEN-LAST:event_btnAgregarCarritoMouseClicked
 
     private void btnAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarritoActionPerformed

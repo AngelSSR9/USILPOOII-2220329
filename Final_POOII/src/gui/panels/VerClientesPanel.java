@@ -31,7 +31,7 @@ public class VerClientesPanel extends javax.swing.JPanel {
     public VerClientesPanel() {
         
         initComponents();
-        Constantes.listarClientes(this);
+        listarClientes();
     }
       
     public void listarClientes(){
