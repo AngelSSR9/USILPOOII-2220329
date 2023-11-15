@@ -5,13 +5,15 @@
 package gui.panels;
 
 import clases.Cliente;
-import clases.command.Constantes;
+import clases.Constantes;
 import gui.frames.EditarDatosFrame;
 import javax.swing.table.DefaultTableModel;
-import clases.command.Command;
 import conexionBD.ClienteDAO;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -24,17 +26,14 @@ public class VerClientesPanel extends javax.swing.JPanel {
      */
     private ClienteDAO clienteDAO = new ClienteDAO();
     public DefaultTableModel modelo = new DefaultTableModel();
+    TableRowSorter<DefaultTableModel> sorter;
+    
     public VerClientesPanel() {
         
         initComponents();
         Constantes.listarClientes(this);
     }
-    
-    private void executeCommand(Command command) {
-        command.execute();
-
-    }
-    
+      
     public void listarClientes(){
         List<Cliente> lista = clienteDAO.listar();
         System.out.println(lista.size());
@@ -50,6 +49,23 @@ public class VerClientesPanel extends javax.swing.JPanel {
         }
         
         tablaClientes.setModel(modelo);
+        tablaClientes.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(modelo);
+        tablaClientes.setRowSorter(sorter);
+    }
+    
+    private void buscar() {
+        try {
+            String textoBusqueda = txtBuscar.getText().toLowerCase(); // Convertir a minúsculas
+
+
+                // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
+                RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
+                //filtra las coincidencias
+                sorter.setRowFilter(filtro);
+
+        } catch (Exception e) {
+        }
     }
     
     /**
@@ -62,13 +78,45 @@ public class VerClientesPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
-        btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setText("Clientes Registrados");
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0,0));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,18 +127,6 @@ public class VerClientesPanel extends javax.swing.JPanel {
             }
         ));
         jScrollPane1.setViewportView(tablaClientes);
-
-        btnModificar.setText("Modificar");
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModificarMouseClicked(evt);
-            }
-        });
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
 
         btnBorrar.setText("Borrar");
         btnBorrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,12 +151,13 @@ public class VerClientesPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(316, 316, 316)
-                        .addComponent(btnBorrar)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnModificar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(87, 87, 87)
+                                .addComponent(btnBorrar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -128,26 +165,19 @@ public class VerClientesPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnBorrar))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(30, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBorrar)
+                        .addGap(46, 46, 46))))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        EditarDatosFrame edit = new EditarDatosFrame();
-        edit.setVisible(true);
-        
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarMouseClicked
         // TODO add your handling code here:
@@ -168,12 +198,47 @@ public class VerClientesPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+
+        buscar();
+        // TODO add your handling code here:
+        //Con prog funcional
+        //String buscar = buscarTxt.getText();
+        /*List<Cliente> clientesActuales = productoDAO.listar();
+        List<Cliente> clientesEncontrados = clientesActuales.stream()
+        .filter(cliente -> cliente.getNombre().contains(buscar))
+        .collect(Collectors.toList());
+
+        for (Cliente cliente : clientesActuales) {
+            if (cliente.getNombre().contains(buscar)) {
+                clientesEncontrados.add(cliente);
+            }
+        }
+        limpiarTabla();
+        if (!clientesEncontrados.isEmpty()) {
+
+            modelo = (DefaultTableModel) tablaProductos.getModel();
+            Object[] ob = new Object[5];
+            clientesEncontrados.forEach(cliente -> {
+                ob[0] = cliente.getId();
+                ob[1] = cliente.getDNI();
+                ob[2] = cliente.getNombre();
+                ob[3] = cliente.getTelefono();
+                ob[4] = cliente.getDireccion();
+                modelo.addRow(ob);
+            });
+            tablaProductos.setModel(modelo);
+        }*/
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
