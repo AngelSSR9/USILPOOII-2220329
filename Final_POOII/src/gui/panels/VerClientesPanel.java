@@ -26,14 +26,17 @@ public class VerClientesPanel extends javax.swing.JPanel {
      */
     private ClienteDAO clienteDAO = new ClienteDAO();
     public DefaultTableModel modelo = new DefaultTableModel();
-    TableRowSorter<DefaultTableModel> sorter;
+    TableRowSorter<DefaultTableModel> sorte;
     
     public VerClientesPanel() {
         
         initComponents();
-        Constantes.listarClientes(this);
+        listarClientes();
     }
-      
+    
+    
+    
+    
     public void listarClientes(){
         List<Cliente> lista = clienteDAO.listar();
         System.out.println(lista.size());
@@ -50,8 +53,8 @@ public class VerClientesPanel extends javax.swing.JPanel {
         
         tablaClientes.setModel(modelo);
         tablaClientes.setAutoCreateRowSorter(true);
-        sorter = new TableRowSorter<>(modelo);
-        tablaClientes.setRowSorter(sorter);
+        sorte = new TableRowSorter<>(modelo);
+        tablaClientes.setRowSorter(sorte);
     }
     
     private void buscar() {
@@ -62,7 +65,7 @@ public class VerClientesPanel extends javax.swing.JPanel {
                 // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
                 RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
                 //filtra las coincidencias
-                sorter.setRowFilter(filtro);
+                sorte.setRowFilter(filtro);
 
         } catch (Exception e) {
         }
