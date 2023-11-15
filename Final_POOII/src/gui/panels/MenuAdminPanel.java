@@ -69,6 +69,11 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
         sliderOpciones.setBackground(new java.awt.Color(51, 204, 255));
         sliderOpciones.setForeground(new java.awt.Color(0, 204, 255));
+        sliderOpciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                sliderOpcionesMouseExited(evt);
+            }
+        });
         sliderOpciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         OpcionRegistroPc.setBackground(new java.awt.Color(51, 204, 255));
@@ -287,6 +292,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(pc);  // Agrega la imagen al panel
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionAgregarPcMouseClicked
 
     private void OpcionAgregarPcMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseEntered
@@ -306,6 +312,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(vnts);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionVentasDelDiaMouseClicked
 
     private void OpcionVentasDelDiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseEntered
@@ -325,6 +332,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(clnts);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionVerClientesMouseClicked
 
     private void opcionVerClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseEntered
@@ -344,11 +352,13 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(anun);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionAnunciarMouseClicked
 
     private void opcionAnunciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseEntered
         // TODO add your handling code here:
         opcionAnunciar.setBackground(new Color(102,255,255));
+        
     }//GEN-LAST:event_opcionAnunciarMouseEntered
 
     private void opcionAnunciarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseExited
@@ -358,11 +368,16 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionRegistrarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionRegistrarProductosMouseClicked
         // TODO add your handling code here:
+        int posicion = this.sliderOpciones.getX();
+            
+            
+        
         this.regProd = new RegistroProductosPanel();
         panelContenido.removeAll();
         panelContenido.add(regProd);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
         
     }//GEN-LAST:event_opcionRegistrarProductosMouseClicked
 
@@ -383,6 +398,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(agg);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionAgregarProductosMouseClicked
 
     private void opcionAgregarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseEntered
@@ -402,6 +418,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(regPc);
         panelContenido.revalidate();
         panelContenido.repaint();
+        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionRegistroPcMouseClicked
 
     private void OpcionRegistroPcMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionRegistroPcMouseEntered
@@ -413,6 +430,10 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         OpcionRegistroPc.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_OpcionRegistroPcMouseExited
+
+    private void sliderOpcionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sliderOpcionesMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sliderOpcionesMouseExited
 
     public JButton getBtnCerrarOpciones() {
         return btnCerrarOpciones;

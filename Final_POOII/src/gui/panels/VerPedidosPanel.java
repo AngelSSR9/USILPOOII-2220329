@@ -5,12 +5,13 @@
 package gui.panels;
 
 import clases.Producto;
-import clases.command.Constantes;
 import javax.swing.table.DefaultTableModel;
-import clases.command.Command;
 import conexionBD.ProductoDAO;
 import gui.frames.FrameMostrarVentas;
 import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -22,8 +23,9 @@ public class VerPedidosPanel extends javax.swing.JPanel {
      * Creates new form VentasDelDiaPanel
      */
     private ProductoDAO productoDAO = new ProductoDAO();
-    
     public DefaultTableModel modelo = new DefaultTableModel();
+    TableRowSorter<DefaultTableModel> sorter;
+    
     public VerPedidosPanel() {
         
         initComponents();
@@ -45,6 +47,23 @@ public class VerPedidosPanel extends javax.swing.JPanel {
         }
         
         tablaPedidos.setModel(modelo);
+        tablaPedidos.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(modelo);
+        tablaPedidos.setRowSorter(sorter);
+    }
+    
+    private void buscar() {
+        try {
+            String textoBusqueda = buscarTxt.getText().toLowerCase(); // Convertir a minúsculas
+
+
+                // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
+                RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
+                //filtra las coincidencias
+                sorter.setRowFilter(filtro);
+
+        } catch (Exception e) {
+        }
     }
     
     /**
@@ -56,10 +75,43 @@ public class VerPedidosPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        buscarTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPedidos = new javax.swing.JTable();
         btnVerDetalles = new javax.swing.JButton();
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0,0));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+
+        buscarTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                buscarTxtKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buscarTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel1.setText("Pedidos Totales");
@@ -91,7 +143,9 @@ public class VerPedidosPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 519, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
                 .addComponent(btnVerDetalles)
                 .addGap(269, 269, 269))
             .addGroup(layout.createSequentialGroup()
@@ -101,8 +155,8 @@ public class VerPedidosPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,10 +164,16 @@ public class VerPedidosPanel extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnVerDetalles)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(btnVerDetalles)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,10 +192,46 @@ public class VerPedidosPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVerDetallesMouseClicked
 
+    private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
+
+        buscar();
+        // TODO add your handling code here:
+        //Con prog funcional
+        //String buscar = buscarTxt.getText();
+        /*List<Cliente> clientesActuales = productoDAO.listar();
+        List<Cliente> clientesEncontrados = clientesActuales.stream()
+        .filter(cliente -> cliente.getNombre().contains(buscar))
+        .collect(Collectors.toList());
+
+        for (Cliente cliente : clientesActuales) {
+            if (cliente.getNombre().contains(buscar)) {
+                clientesEncontrados.add(cliente);
+            }
+        }
+        limpiarTabla();
+        if (!clientesEncontrados.isEmpty()) {
+
+            modelo = (DefaultTableModel) tablaProductos.getModel();
+            Object[] ob = new Object[5];
+            clientesEncontrados.forEach(cliente -> {
+                ob[0] = cliente.getId();
+                ob[1] = cliente.getDNI();
+                ob[2] = cliente.getNombre();
+                ob[3] = cliente.getTelefono();
+                ob[4] = cliente.getDireccion();
+                modelo.addRow(ob);
+            });
+            tablaProductos.setModel(modelo);
+        }*/
+    }//GEN-LAST:event_buscarTxtKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerDetalles;
+    private javax.swing.JTextField buscarTxt;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tablaPedidos;
     // End of variables declaration//GEN-END:variables

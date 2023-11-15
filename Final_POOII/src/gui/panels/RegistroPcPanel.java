@@ -11,9 +11,12 @@ import conexionBD.PcDAO;
 import conexionBD.ProductoDAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -28,6 +31,7 @@ public class RegistroPcPanel extends javax.swing.JPanel {
     PcDAO pcDAO = new PcDAO();
     DetallesPcDAO detallesPcDAO = new DetallesPcDAO();
     DefaultTableModel modelo = new DefaultTableModel();
+    TableRowSorter<DefaultTableModel> sorter;
     
     public RegistroPcPanel() {
         initComponents();
@@ -49,6 +53,23 @@ public class RegistroPcPanel extends javax.swing.JPanel {
         }
         
         tablaPc.setModel(modelo);
+        tablaPc.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(modelo);
+        tablaPc.setRowSorter(sorter);
+    }
+    
+    private void buscar() {
+        try {
+            String textoBusqueda = buscarTxt.getText().toLowerCase(); // Convertir a minúsculas
+
+
+                // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
+                RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
+                //filtra las coincidencias
+                sorter.setRowFilter(filtro);
+
+        } catch (Exception e) {
+        }
     }
     
 
@@ -66,6 +87,9 @@ public class RegistroPcPanel extends javax.swing.JPanel {
         txtStock = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         btnStock = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        buscarTxt = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -87,14 +111,14 @@ public class RegistroPcPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tablaPc);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 620, 303));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 620, 303));
 
         txtStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtStockActionPerformed(evt);
             }
         });
-        add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 78, 53));
+        add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 78, 53));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +126,7 @@ public class RegistroPcPanel extends javax.swing.JPanel {
                 btnEliminarActionPerformed(evt);
             }
         });
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 110, 54));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 110, 54));
 
         btnStock.setText("Cambiar Stock");
         btnStock.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +134,39 @@ public class RegistroPcPanel extends javax.swing.JPanel {
                 btnStockActionPerformed(evt);
             }
         });
-        add(btnStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 110, 54));
+        add(btnStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 110, 54));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0,0));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+
+        buscarTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                buscarTxtKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buscarTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, 55));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
@@ -170,10 +226,46 @@ public class RegistroPcPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnStockActionPerformed
 
+    private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
+
+        buscar();
+        // TODO add your handling code here:
+        //Con prog funcional
+        //String buscar = buscarTxt.getText();
+        /*List<Cliente> clientesActuales = productoDAO.listar();
+        List<Cliente> clientesEncontrados = clientesActuales.stream()
+        .filter(cliente -> cliente.getNombre().contains(buscar))
+        .collect(Collectors.toList());
+
+        for (Cliente cliente : clientesActuales) {
+            if (cliente.getNombre().contains(buscar)) {
+                clientesEncontrados.add(cliente);
+            }
+        }
+        limpiarTabla();
+        if (!clientesEncontrados.isEmpty()) {
+
+            modelo = (DefaultTableModel) tablaProductos.getModel();
+            Object[] ob = new Object[5];
+            clientesEncontrados.forEach(cliente -> {
+                ob[0] = cliente.getId();
+                ob[1] = cliente.getDNI();
+                ob[2] = cliente.getNombre();
+                ob[3] = cliente.getTelefono();
+                ob[4] = cliente.getDireccion();
+                modelo.addRow(ob);
+            });
+            tablaProductos.setModel(modelo);
+        }*/
+    }//GEN-LAST:event_buscarTxtKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnStock;
+    private javax.swing.JTextField buscarTxt;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPc;
     private javax.swing.JTextField txtStock;
