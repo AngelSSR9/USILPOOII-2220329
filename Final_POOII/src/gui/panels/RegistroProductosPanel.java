@@ -1,17 +1,14 @@
 package gui.panels;
 
-import clases.Cliente;
+import clases.Constantes;
 import clases.Producto;
-import clases.command.Constantes;
 import conexionBD.ProductoDAO;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.swing.JButton;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import clases.command.Command;
-import clases.observer.TiendaSubject;
-import conexionBD.ClienteDAO;
+import javax.swing.table.TableRowSorter;
 
 
 public class RegistroProductosPanel extends javax.swing.JPanel {
@@ -20,14 +17,11 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     public DefaultTableModel modelo = new DefaultTableModel();
     public int id;
     ProductoDAO productoDAO = new ProductoDAO();
+    TableRowSorter<DefaultTableModel> sorter;
 
     public RegistroProductosPanel() {
         initComponents();
         listarProductos();
-    }
-    private void executeCommand(Command command) {
-        command.execute();
-
     }
 
     //********************************************************************************************
@@ -89,6 +83,9 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         }
         
         tablaProductos.setModel(modelo);
+        tablaProductos.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(modelo);
+        tablaProductos.setRowSorter(sorter);
     }
     
     public void modificarProducto(){
@@ -110,6 +107,20 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             System.out.println("Mensajes Enviados");
             JOptionPane.showMessageDialog(null, "Mesajes enviados");
             */
+        }
+    }
+    
+    private void buscar() {
+        try {
+            String textoBusqueda = buscarTxt.getText().toLowerCase(); // Convertir a minúsculas
+
+
+                // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
+                RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
+                //filtra las coincidencias
+                sorter.setRowFilter(filtro);
+
+        } catch (Exception e) {
         }
     }
 
@@ -348,7 +359,6 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             String stock = tablaProductos.getValueAt(fila, 6).toString();
             
             
-            
             idTxt.setText(String.valueOf(id));
             marcaTxt.setText(marca);
             modeloTxt.setText(modelo);
@@ -360,9 +370,11 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaProductosMouseClicked
 
     private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
-        // TODO add your handling code here:
+        
+        buscar();
+// TODO add your handling code here:
         //Con prog funcional
-        String buscar = buscarTxt.getText();
+        //String buscar = buscarTxt.getText();
         /*List<Cliente> clientesActuales = productoDAO.listar();
         List<Cliente> clientesEncontrados = clientesActuales.stream()
                 .filter(cliente -> cliente.getNombre().contains(buscar))

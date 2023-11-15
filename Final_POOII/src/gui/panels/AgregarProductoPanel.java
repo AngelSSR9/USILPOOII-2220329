@@ -5,6 +5,7 @@
 package gui.panels;
 
 import clases.Cliente;
+import clases.Constantes;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -12,13 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import clases.command.Command;
-import clases.command.Constantes;
-import clases.observer.TiendaSubject;
-import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
-import java.util.List;
-import javax.swing.JTextField;
 
 /**
  *

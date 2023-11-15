@@ -5,9 +5,9 @@
 package gui.panels;
 
 import clases.Cliente;
+import clases.Constantes;
 import clases.PC;
 import clases.Producto;
-import clases.command.Constantes;
 import clases.observer.TiendaSubject;
 import conexionBD.ClienteDAO;
 import conexionBD.DetallesPcDAO;
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -61,10 +62,6 @@ public class AgregarPc extends javax.swing.JPanel {
         for(Producto a : listaRom){
             cBoxMemRom.addItem(a.getTipo()+" marca "+a.getMarca());
         }
-        List<Producto> listaMoBo =  productoDAO.obtenerProductosPorTipo("motherboard");
-        for(Producto a : listaMoBo){
-            cBoMoBo.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
         List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("procesador");
         for(Producto a : listaPro){
             cBoxProce.addItem(a.getTipo()+" marca "+a.getMarca());
@@ -80,7 +77,6 @@ public class AgregarPc extends javax.swing.JPanel {
         for(Producto a : listaMouse){
             cBoxMouse.addItem(a.getTipo()+" marca "+a.getMarca());
         }
-        
         
         List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("tarjeta grafica");
         cBoxTarjGraf.addItem("sin seleccionar");
@@ -531,7 +527,7 @@ public class AgregarPc extends javax.swing.JPanel {
         if(agregarCom("memoria ram", cBoxMemRam)== null || agregarCom("memoria rom", cBoxMemRom)== null || agregarCom("procesador", cBoxProce)==null || agregarCom("motherboard", cBoMoBo)==null){
             JOptionPane.showMessageDialog(this, "El stock esta en 0");
         }else{
-            
+            int stockAct = Integer.parseInt(txtStock.getText());
             int id=agregarPcBD();
             
             List<Producto> prod = new ArrayList<Producto>();
@@ -557,15 +553,37 @@ public class AgregarPc extends javax.swing.JPanel {
             
             
             Object[] o = new Object[2];
-            for(int a=0;a<prod.size();a++){
-                
-                try {
-                    o[0] = id;
-                    o[1] = prod.get(a).getId();
-                    detPc.agregar(o);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            
+            
+            //crea lista para comprobar que todos los elementos existar
+            boolean todosLosProductosExisten = prod.stream().allMatch(i->productoDAO.comprobarProducto(i.getId()));
+            if(todosLosProductosExisten){
+                //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
+                boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock()>=stockAct);
+                        
+                if(confirm){
+                    
+                        for(int a=0;a<prod.size();a++){
+
+                        try {
+                            o[0] = id;
+                            o[1] = prod.get(a).getId();
+                            detPc.agregar(o);
+                            
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+                        }
+                    }
+                    
+                    for(Producto i : prod){
+                        productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);
+                    }
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
                 }
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
             }
             
             for(Producto a: prod){
