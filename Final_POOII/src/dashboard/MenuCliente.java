@@ -21,7 +21,7 @@ public class MenuCliente extends javax.swing.JFrame {
     PanelProcesarCompra panelProcesarCompra;
     CarritoPanel carritoPanel;
     PanelProductos productosPanel;
-    PanelArmarPC panelArmarPc;
+    PanelArmarPcCliente panelArmarPc;
     PanelHistorialPedidos panelHistorialPedidos;
     OptionsClient optionsClient = new OptionsClient();
     Cliente cliente = new Cliente();
@@ -44,7 +44,7 @@ public class MenuCliente extends javax.swing.JFrame {
         carritoPanel = new CarritoPanel(cliente);
         productosPanel = new PanelProductos(cliente);
         panelProcesarCompra = new PanelProcesarCompra(cliente);
-        panelArmarPc = new PanelArmarPC(cliente);
+        panelArmarPc = new PanelArmarPcCliente(cliente);
         panelHistorialPedidos = new PanelHistorialPedidos(cliente);
       
         carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
@@ -261,7 +261,7 @@ public class MenuCliente extends javax.swing.JFrame {
 
     private void panelArmaPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelArmaPcMouseClicked
         if(panelArmarPc == null){
-            panelArmarPc = new PanelArmarPC(cliente);
+            panelArmarPc = new PanelArmarPcCliente(cliente);
         }
         dashboardView.removeAll();
         dashboardView.add(panelArmarPc);

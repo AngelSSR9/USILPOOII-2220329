@@ -13,12 +13,13 @@ import conexionBD.CarritoDAO;
 import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
 import java.awt.Font;
-import dashboard.MenuCliente;
+import dashboard.NewMenuCliente;
+import diseño.RoundedPanel;
 import java.security.Principal;
 
 public class LoginCliente extends javax.swing.JFrame {
     
-    MenuCliente principal = new MenuCliente();
+    NewMenuCliente principal = new NewMenuCliente();
     
     public LoginCliente() {
         
@@ -48,11 +49,11 @@ public class LoginCliente extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         dniTxt = new javax.swing.JTextField();
         passTxt = new javax.swing.JPasswordField();
-        Text1 = new javax.swing.JPanel();
-        Text2 = new javax.swing.JPanel();
-        loginBtn = new javax.swing.JPanel();
-        loginBtnTxt = new javax.swing.JLabel();
         lblRegistrarse = new javax.swing.JLabel();
+        dniTxtPanel = new diseño.RoundedPanel();
+        passTxtPanel = new diseño.RoundedPanel();
+        loginBtn = new diseño.RoundedPanel();
+        loginBtnTxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,43 +163,66 @@ public class LoginCliente extends javax.swing.JFrame {
         });
         kGradientPanel1.add(passTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 410, 30));
 
-        Text1.setBackground(new java.awt.Color(255, 255, 255));
-        Text1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Text1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblRegistrarse.setBackground(new java.awt.Color(255, 0, 255));
+        lblRegistrarse.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        lblRegistrarse.setForeground(new java.awt.Color(0, 204, 0));
+        lblRegistrarse.setText("Registrese");
+        lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Text1MouseClicked(evt);
+                lblRegistrarseMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblRegistrarseMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblRegistrarseMouseExited(evt);
             }
         });
+        kGradientPanel1.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
 
-        javax.swing.GroupLayout Text1Layout = new javax.swing.GroupLayout(Text1);
-        Text1.setLayout(Text1Layout);
-        Text1Layout.setHorizontalGroup(
-            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        Text1Layout.setVerticalGroup(
-            Text1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        dniTxtPanel.setBackground(new java.awt.Color(255, 255, 255));
+        dniTxtPanel.setRoundBottomLeft(15);
+        dniTxtPanel.setRoundBottomRight(15);
+        dniTxtPanel.setRoundTopLeft(15);
+        dniTxtPanel.setRoundTopRight(15);
 
-        kGradientPanel1.add(Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 450, 30));
-
-        Text2.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout Text2Layout = new javax.swing.GroupLayout(Text2);
-        Text2.setLayout(Text2Layout);
-        Text2Layout.setHorizontalGroup(
-            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dniTxtPanelLayout = new javax.swing.GroupLayout(dniTxtPanel);
+        dniTxtPanel.setLayout(dniTxtPanelLayout);
+        dniTxtPanelLayout.setHorizontalGroup(
+            dniTxtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 450, Short.MAX_VALUE)
         );
-        Text2Layout.setVerticalGroup(
-            Text2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dniTxtPanelLayout.setVerticalGroup(
+            dniTxtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        kGradientPanel1.add(dniTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 450, 30));
+
+        passTxtPanel.setBackground(new java.awt.Color(255, 255, 255));
+        passTxtPanel.setRoundBottomLeft(15);
+        passTxtPanel.setRoundBottomRight(15);
+        passTxtPanel.setRoundTopLeft(15);
+        passTxtPanel.setRoundTopRight(15);
+
+        javax.swing.GroupLayout passTxtPanelLayout = new javax.swing.GroupLayout(passTxtPanel);
+        passTxtPanel.setLayout(passTxtPanelLayout);
+        passTxtPanelLayout.setHorizontalGroup(
+            passTxtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+        passTxtPanelLayout.setVerticalGroup(
+            passTxtPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        kGradientPanel1.add(passTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, 30));
 
         loginBtn.setBackground(new java.awt.Color(255, 255, 255));
+        loginBtn.setRoundBottomLeft(15);
+        loginBtn.setRoundBottomRight(15);
+        loginBtn.setRoundTopLeft(15);
+        loginBtn.setRoundTopRight(15);
 
         loginBtnTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         loginBtnTxt.setForeground(new java.awt.Color(0, 0, 0));
@@ -227,27 +251,10 @@ public class LoginCliente extends javax.swing.JFrame {
         );
         loginBtnLayout.setVerticalGroup(
             loginBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginBtnTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(loginBtnTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, -1, -1));
-
-        lblRegistrarse.setBackground(new java.awt.Color(255, 0, 255));
-        lblRegistrarse.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        lblRegistrarse.setForeground(new java.awt.Color(0, 204, 0));
-        lblRegistrarse.setText("Registrese");
-        lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseExited(evt);
-            }
-        });
-        kGradientPanel1.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
+        kGradientPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 100, 50));
 
         bg.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
 
@@ -377,10 +384,6 @@ public class LoginCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_passTxtMousePressed
 
-    private void Text1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Text1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Text1MouseClicked
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -421,11 +424,10 @@ public class LoginCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Text1;
-    private javax.swing.JPanel Text2;
     private javax.swing.JPanel bg;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JTextField dniTxt;
+    private diseño.RoundedPanel dniTxtPanel;
     private javax.swing.JLabel exit;
     private javax.swing.JLabel favicon;
     private javax.swing.JLabel imgLogo;
@@ -435,10 +437,11 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblMsjNoHayCuenta;
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblSlonga;
-    private javax.swing.JPanel loginBtn;
+    private diseño.RoundedPanel loginBtn;
     private javax.swing.JLabel loginBtnTxt;
     private javax.swing.JLabel passLabel;
     private javax.swing.JPasswordField passTxt;
+    private diseño.RoundedPanel passTxtPanel;
     private javax.swing.JPanel pnl_overlay;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;

@@ -81,6 +81,7 @@ public class Cliente  implements Observer{
         enviarMensaje(producto);
     }
     public void enviarMensaje(Producto producto){
+        //enviar un correo electrónico mediante el protocolo SMTP (Simple Mail Transfer Protocol) utilizando la API JavaMail.
         //Se crea la clase propiedades para luego configurarlo
         Properties properties = new Properties();
         
@@ -109,6 +110,7 @@ public class Cliente  implements Observer{
             htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", producto.getTipo()+" "+producto.getMarca()+" "+producto.getModelo());
             htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(producto.getStock()));
             htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(producto.getPrecio()));
+            htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", producto.getDescripcion());
             
             // Creamos un cuerpo multipart para incluir texto HTML y la imagen
             MimeMultipart multipart = new MimeMultipart("related");
@@ -121,9 +123,23 @@ public class Cliente  implements Observer{
             
             // Creamos la parte de la imagen
             MimeBodyPart imagePart = new MimeBodyPart();
+            MimeBodyPart logoPart = new MimeBodyPart();
+            
+            InputStream imgLogo = getClass().getResourceAsStream("/correo/images/imagenTienda-removebg-preview.png");
+            //Convertir a bytes la imagen
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = imgLogo.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
             
             Image imagenProducto = producto.getImagen();
             InputStream imgStream = ImageUtils.convertImageToInputStream(imagenProducto, "png");
+            
+            logoPart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));
+            logoPart.setHeader("Content-ID", "<imagen321>"); // Coincide con el CID en el contenido HTML
             
             //se crea un datahandler, que sirva para gstionar el contenido de la imagen, esta imagen debe de estar en bytes, luego se coloca en la imagen
             imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imgStream, "image/png")));
@@ -131,6 +147,7 @@ public class Cliente  implements Observer{
             
             //se agrega otra parte al multipart
             multipart.addBodyPart(imagePart);
+            multipart.addBodyPart(logoPart);
             
             // se Establece el contenido del mensaje
             message.setContent(multipart);
