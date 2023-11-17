@@ -12,19 +12,24 @@ import javax.swing.table.TableRowSorter;
 
 
 public class RegistroProductosPanel extends javax.swing.JPanel {
-    
     RegistroProductosPanel app;
     public DefaultTableModel modelo = new DefaultTableModel();
     public int id;
     ProductoDAO productoDAO = new ProductoDAO();
     TableRowSorter<DefaultTableModel> sorter;
-
+    /**
+     * constructor del panel
+     */
     public RegistroProductosPanel() {
         initComponents();
         listarProductos();
     }
 
-    //********************************************************************************************
+    /**
+     * 
+     * @return devuelve true si se envio existosmente los cambios a la BD,
+     * en caso contrario devolverá falso
+     */
     private boolean modificarProductoBD() {
         Object[] o = new Object[9];
         String marca = marcaTxt.getText();
@@ -36,9 +41,6 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         String rutaImagen = imagenTxt.getText();
         String descripcion = mDescripcion.getText();
         String id = idTxt.getText();
-        
-        
-        //String direccion = direccionTxt.getText();
         try {
            
             o[0] = marca;
@@ -50,9 +52,6 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             o[6] = rutaImagen;
             o[7] = descripcion;
             o[8] = Integer.parseInt(id);
-            
-            
-            
 
             productoDAO.actualizar(o);
 
@@ -64,52 +63,45 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         }
 
     }
-    
+    /**
+     * lista en la tabla todos los productos y se establecen modelos
+     */
     public void listarProductos() {
         List<Producto> lista = productoDAO.listar();
         System.out.println(lista.size());
         modelo = (DefaultTableModel) tablaProductos.getModel();
         Object[] ob = new Object[7];
-        for (int i = 0; i < lista.size(); i++) {
-            ob[0] = lista.get(i).getId();
-            ob[1] = lista.get(i).getMarca();
-            ob[2] = lista.get(i).getModelo();
-            ob[3] = lista.get(i).getPrecio();
-            ob[4] = lista.get(i).getCategoria();
-            ob[5] = lista.get(i).getTipo();
-            ob[6] = lista.get(i).getStock();
-            
+        lista.forEach((t) -> {
+            ob[0] = t.getId();
+            ob[1] = t.getMarca();
+            ob[2] = t.getModelo();
+            ob[3] = t.getPrecio();
+            ob[4] = t.getCategoria();
+            ob[5] = t.getTipo();
+            ob[6] = t.getStock();
             modelo.addRow(ob);
-        }
+        });
         
         tablaProductos.setModel(modelo);
         tablaProductos.setAutoCreateRowSorter(true);
         sorter = new TableRowSorter<>(modelo);
         tablaProductos.setRowSorter(sorter);
     }
-    
+    /**
+     * verifica si se cambio correctamente la bd para limpiar los campos.
+     */
     public void modificarProducto(){
         boolean confirm = modificarProductoBD();
         if (confirm) {
             Constantes.limpiarPanel(jPanel1);
             Constantes.limpiarTabla(modelo);
             listarProductos();
-            // Obtener la lista de clientes, añadir y notificarlos OBserver
-            /*
-            ClienteDAO clienteDAO = new ClienteDAO();
-            TiendaSubject tienda = TiendaSubject.getInstancia();
-            List<Cliente> clientes = clienteDAO.listar();
-            for (Cliente cliente : clientes) {
-                tienda.añadir(cliente);
-            }
-            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
-            tienda.notificar();
-            System.out.println("Mensajes Enviados");
-            JOptionPane.showMessageDialog(null, "Mesajes enviados");
-            */
         }
     }
     
+    /**
+     * filtra las filas segun lo escrito en el txtBuscar
+     */
     private void buscar() {
         try {
             String textoBusqueda = buscarTxt.getText().toLowerCase(); // Convertir a minúsculas
@@ -346,7 +338,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
-        int fila = tablaProductos.getSelectedRow();
+        int fila = tablaProductos.getSelectedRow(); // indice de fila seleccionada
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
         } else {
@@ -370,36 +362,8 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaProductosMouseClicked
 
     private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
-        
+
         buscar();
-// TODO add your handling code here:
-        //Con prog funcional
-        //String buscar = buscarTxt.getText();
-        /*List<Cliente> clientesActuales = productoDAO.listar();
-        List<Cliente> clientesEncontrados = clientesActuales.stream()
-                .filter(cliente -> cliente.getNombre().contains(buscar))
-                .collect(Collectors.toList());
-
-        for (Cliente cliente : clientesActuales) {
-            if (cliente.getNombre().contains(buscar)) {
-                clientesEncontrados.add(cliente);
-            }
-        }
-        limpiarTabla();
-        if (!clientesEncontrados.isEmpty()) {
-
-            modelo = (DefaultTableModel) tablaProductos.getModel();
-            Object[] ob = new Object[5];
-            clientesEncontrados.forEach(cliente -> {
-                ob[0] = cliente.getId();
-                ob[1] = cliente.getDNI();
-                ob[2] = cliente.getNombre();
-                ob[3] = cliente.getTelefono();
-                ob[4] = cliente.getDireccion();
-                modelo.addRow(ob);
-            });
-            tablaProductos.setModel(modelo);
-        }*/
     }//GEN-LAST:event_buscarTxtKeyReleased
 
     private void tipoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoTxtActionPerformed

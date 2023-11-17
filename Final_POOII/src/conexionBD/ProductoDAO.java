@@ -217,6 +217,8 @@ public class ProductoDAO  {
         return p;
     }
     
+    
+    
     public Producto obtenerProductoPorCategoria(String categoria){
         String query = "SELECT * FROM Productos WHERE categoría = ?";
         Producto p = null;
