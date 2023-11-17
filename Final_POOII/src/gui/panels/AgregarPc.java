@@ -3,25 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package gui.panels;
-
-import clases.Cliente;
 import clases.Constantes;
 import clases.PC;
 import clases.Producto;
-import clases.observer.TiendaSubject;
-import conexionBD.ClienteDAO;
 import conexionBD.DetallesPcDAO;
 import conexionBD.PcDAO;
 import conexionBD.ProductoDAO;
 import java.awt.Image;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -34,84 +26,79 @@ import javax.swing.JOptionPane;
  */
 public class AgregarPc extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AgregarPc
-     */
+    
     PC pc;
     ProductoDAO productoDAO = new ProductoDAO();
     PcDAO pcDAO = new PcDAO();
     DetallesPcDAO detPc = new DetallesPcDAO();
     String path;
+    /**
+        * Creates new form AgregarPc
+     */
     public AgregarPc() {
         
         initComponents();
         cargarComboBox();
     }
-    
+    /**
+     * Llena todos los combobox con los productos por tipo
+     */
     private void cargarComboBox(){
         
         List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("motherboard");
-        for(Producto a : listaMother){
-            cBoMoBo.addItem(a.getTipo()+"marca "+a.getMarca());
-        }
+        listaMother.forEach((t) -> cBoMoBo.addItem(t.getTipo()+"marca "+t.getMarca()));
+
         List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("memoria ram");
-        for(Producto a : listaRam){
-            cBoxMemRam.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaRam.forEach((t) -> cBoxMemRam.addItem(t.getTipo()+" marca "+t.getMarca()));
+
         List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("memoria rom");
-        for(Producto a : listaRom){
-            cBoxMemRom.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaRom.forEach((t) -> cBoxMemRom.addItem(t.getTipo()+" marca "+t.getMarca()));
+
         List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("procesador");
-        for(Producto a : listaPro){
-            cBoxProce.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaPro.forEach((t) -> cBoxProce.addItem(t.getTipo()+" marca "+t.getMarca()));
+
         List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("refrigeracion");
-        for(Producto a : listaRefr){
-            cBoxRefrig.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
         cBoxRefrig.addItem("sin seleccionar");
+        listaRefr.forEach((t) -> cBoxRefrig.addItem(t.getTipo()+" marca "+t.getMarca()));
+        
         
         List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("mouse");
         cBoxMouse.addItem("sin seleccionar");
-        for(Producto a : listaMouse){
-            cBoxMouse.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaMouse.forEach((t) -> cBoxMouse.addItem(t.getTipo()+" marca "+t.getMarca()));
         
         List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("tarjeta grafica");
         cBoxTarjGraf.addItem("sin seleccionar");
-        for(Producto a : listaTar){
-            cBoxTarjGraf.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
-        
+        listaTar.forEach((t) -> cBoxTarjGraf.addItem(t.getTipo()+" marca "+t.getMarca()));
         
         List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("audifonos");
         cBoxAudif.addItem("sin seleccionar");
-        for(Producto a : listaAud){
-            cBoxAudif.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaAud.forEach((t) -> cBoxAudif.addItem(t.getTipo()+" marca "+t.getMarca()));
         
         List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("teclado");
         cBoxTeclado.addItem("sin seleccionar");
-        for(Producto a : listaTec){
-            cBoxTeclado.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaTec.forEach((t) -> cBoxTeclado.addItem(t.getTipo()+" marca "+t.getMarca()));
         
         List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("monitor");
         cBoxMonitor.addItem("sin seleccionar");
-        for(Producto a : listaMon){
-            cBoxMonitor.addItem(a.getTipo()+" marca "+a.getMarca());
-        }
+        listaMon.forEach((t) -> cBoxMonitor.addItem(t.getTipo()+" marca "+t.getMarca()));
         
     }
-    
+    /**
+     * 
+     * @param prod
+     * @param box
+     * @return devuelve El producto de tipo componente segun el item de combobox seleccionado
+     * si
+     */
     private Producto agregarCom(String prod, JComboBox box){
+        //
         List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
             int selectedIndex = box.getSelectedIndex();
-            
+            //verifica si el indice del item seleccionado esta dentro del rango de la lista de componentes de determinado tipo.
             if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+                //verifica que el stock del componente no sea 0.
                if(valoresEspecificos.get(selectedIndex).getStock()!=0){
-                    String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                   //retorna el producto que esta ubicado un determinada posicion.
                 return valoresEspecificos.get(selectedIndex);
                 }else{
                     return null;
@@ -121,13 +108,21 @@ public class AgregarPc extends javax.swing.JPanel {
             }
         
     }
-    
+    /**
+     * 
+     * @param prod
+     * @param box
+     * @return devuelve el producto de tipo periferico segun el item de combobox seleccionado
+     */
     private Producto agregarPer(String prod, JComboBox box){
         List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
-            int selectedIndex = box.getSelectedIndex()-1;
+            int selectedIndex = box.getSelectedIndex()-1;//el primer elemento del checkbox no tiene valor debido a que puedes no agregar periferico.
+            //verifica si el indice del item seleccionado esta dentro del rango de la lista de periferico de determinado tipo.
             if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+                //verifica que el stock del componente no sea 0.
                 if(valoresEspecificos.get(selectedIndex).getStock()!=0){
                     String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                    //retorna el producto que esta ubicado un determinada posicion.
                 return valoresEspecificos.get(selectedIndex);
                 }else{
                     return null;
@@ -495,10 +490,12 @@ public class AgregarPc extends javax.swing.JPanel {
     private void txtImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImagenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImagenActionPerformed
-
+    
     private void photoSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoSelectionActionPerformed
         // TODO add your handling code here:
-        
+        /**
+         * muestra la imagen en el jlabel.
+         */
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(this);
         File selectedImage = fc.getSelectedFile();
@@ -524,11 +521,11 @@ public class AgregarPc extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        //verifica que ninguno sea nulo
         if(agregarCom("memoria ram", cBoxMemRam)== null || agregarCom("memoria rom", cBoxMemRom)== null || agregarCom("procesador", cBoxProce)==null || agregarCom("motherboard", cBoMoBo)==null){
             JOptionPane.showMessageDialog(this, "El stock esta en 0");
         }else{
-            int stockAct = Integer.parseInt(txtStock.getText());
-            int id=agregarPcBD();
             
             List<Producto> prod = new ArrayList<Producto>();
             prod.add(agregarCom("memoria ram", cBoxMemRam));
@@ -558,11 +555,12 @@ public class AgregarPc extends javax.swing.JPanel {
             //crea lista para comprobar que todos los elementos existar
             boolean todosLosProductosExisten = prod.stream().allMatch(i->productoDAO.comprobarProducto(i.getId()));
             if(todosLosProductosExisten){
+                int stockAct = Integer.parseInt(txtStock.getText());//se guarda el stock puesto.
                 //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
                 boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock()>=stockAct);
                         
                 if(confirm){
-                    
+                        int id=agregarPcBD();
                         for(int a=0;a<prod.size();a++){
 
                         try {
@@ -584,10 +582,6 @@ public class AgregarPc extends javax.swing.JPanel {
                 }
             }else{
                 JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
-            }
-            
-            for(Producto a: prod){
-                System.out.println(a.getModelo());
             }
             
         }

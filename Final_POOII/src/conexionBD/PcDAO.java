@@ -131,34 +131,6 @@ public class PcDAO {
         return r;
     }
     
-    public PC obtenerUltimoPcRegistrado() {
-        String query = "SELECT * FROM pc ORDER BY idPC DESC LIMIT 1";
-        PC p = null;
-        try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                p = new PC();
-                p.setId(rs.getInt(1));
-                p.setNombre(rs.getString(2));
-                p.setStock(rs.getInt(3));
-                byte[] imageData = rs.getBytes(4);
-                    if (imageData != null) {
-                        p.setImagen(ImageIO.read(new ByteArrayInputStream(imageData)));
-                    } else {
-                        // Asignar una imagen en blanco o realizar alguna otra acción adecuada para manejar imágenes nulas.
-                        // Por ejemplo, podrías asignar una imagen por defecto.
-                        p.setImagen(null);
-                    }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error obteniendo el último PC registrado: " + e.toString());
-        }
-
-        return p;
-    }
-    
     public PC obtenerPcPorId(int id){
         String query = "SELECT * FROM pc WHERE idPC = ?";
         PC p = null;

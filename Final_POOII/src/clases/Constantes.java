@@ -172,21 +172,4 @@ public class Constantes {
         }
     }
 
-    
-    public static void listarClientes(VerClientesPanel vnts){
-        List<Cliente> lista = clienteDAO.listar();
-        System.out.println(lista.size());
-        vnts.modelo = (DefaultTableModel) vnts.tablaClientes.getModel();
-        Object[] ob = new Object[4];
-        for (int i = 0; i < lista.size(); i++) {
-            ob[0] = lista.get(i).getId();
-            ob[1] = lista.get(i).getNombre();
-            ob[2] = lista.get(i).getCorreo();
-            ob[3] = lista.get(i).getDni();
-
-            vnts.modelo.addRow(ob);
-        }
-        
-        vnts.tablaClientes.setModel(vnts.modelo);
-    }
 }

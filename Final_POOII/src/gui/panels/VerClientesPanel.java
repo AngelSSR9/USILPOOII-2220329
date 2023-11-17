@@ -26,14 +26,17 @@ public class VerClientesPanel extends javax.swing.JPanel {
      */
     private ClienteDAO clienteDAO = new ClienteDAO();
     public DefaultTableModel modelo = new DefaultTableModel();
-    TableRowSorter<DefaultTableModel> sorter;
+    TableRowSorter<DefaultTableModel> sorte;
     
     public VerClientesPanel() {
         
         initComponents();
         listarClientes();
     }
-      
+    
+    
+    
+    // lista en la tabla los clientes registrados y le establece modelos
     public void listarClientes(){
         List<Cliente> lista = clienteDAO.listar();
         System.out.println(lista.size());
@@ -50,10 +53,10 @@ public class VerClientesPanel extends javax.swing.JPanel {
         
         tablaClientes.setModel(modelo);
         tablaClientes.setAutoCreateRowSorter(true);
-        sorter = new TableRowSorter<>(modelo);
-        tablaClientes.setRowSorter(sorter);
+        sorte = new TableRowSorter<>(modelo);
+        tablaClientes.setRowSorter(sorte);
     }
-    
+    //filtra las filas segun lo escrito en el textBuscar
     private void buscar() {
         try {
             String textoBusqueda = txtBuscar.getText().toLowerCase(); // Convertir a minúsculas
@@ -62,7 +65,7 @@ public class VerClientesPanel extends javax.swing.JPanel {
                 // ignora caracteres especiales para no afectar la busqueda e ignora que sea mayuscula y minuscula
                 RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + Pattern.quote(textoBusqueda));
                 //filtra las coincidencias
-                sorter.setRowFilter(filtro);
+                sorte.setRowFilter(filtro);
 
         } catch (Exception e) {
         }
@@ -201,34 +204,6 @@ public class VerClientesPanel extends javax.swing.JPanel {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
 
         buscar();
-        // TODO add your handling code here:
-        //Con prog funcional
-        //String buscar = buscarTxt.getText();
-        /*List<Cliente> clientesActuales = productoDAO.listar();
-        List<Cliente> clientesEncontrados = clientesActuales.stream()
-        .filter(cliente -> cliente.getNombre().contains(buscar))
-        .collect(Collectors.toList());
-
-        for (Cliente cliente : clientesActuales) {
-            if (cliente.getNombre().contains(buscar)) {
-                clientesEncontrados.add(cliente);
-            }
-        }
-        limpiarTabla();
-        if (!clientesEncontrados.isEmpty()) {
-
-            modelo = (DefaultTableModel) tablaProductos.getModel();
-            Object[] ob = new Object[5];
-            clientesEncontrados.forEach(cliente -> {
-                ob[0] = cliente.getId();
-                ob[1] = cliente.getDNI();
-                ob[2] = cliente.getNombre();
-                ob[3] = cliente.getTelefono();
-                ob[4] = cliente.getDireccion();
-                modelo.addRow(ob);
-            });
-            tablaProductos.setModel(modelo);
-        }*/
     }//GEN-LAST:event_txtBuscarKeyReleased
 
 

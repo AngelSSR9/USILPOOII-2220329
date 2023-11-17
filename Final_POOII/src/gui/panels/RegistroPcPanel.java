@@ -9,7 +9,6 @@ import clases.Producto;
 import conexionBD.DetallesPcDAO;
 import conexionBD.PcDAO;
 import conexionBD.ProductoDAO;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -38,7 +37,9 @@ public class RegistroPcPanel extends javax.swing.JPanel {
         listarProductos();
     }
     
-    
+    /**
+     * Lista los PC en tabla modelo
+     */
     private void listarProductos() {
         List<PC> lista = pcDAO.listar();
         System.out.println(lista.size());
@@ -51,13 +52,16 @@ public class RegistroPcPanel extends javax.swing.JPanel {
             
             modelo.addRow(ob);
         }
-        
+        //establecen los modelos de tablas en tablaPc
         tablaPc.setModel(modelo);
         tablaPc.setAutoCreateRowSorter(true);
         sorter = new TableRowSorter<>(modelo);
         tablaPc.setRowSorter(sorter);
     }
     
+    /**
+     * Filtra las fiilas segun lo escrito en buscarTxt.
+     */
     private void buscar() {
         try {
             String textoBusqueda = buscarTxt.getText().toLowerCase(); // Convertir a minúsculas
@@ -188,33 +192,34 @@ public class RegistroPcPanel extends javax.swing.JPanel {
 
     private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
         // TODO add your handling code here:
-        int fila = tablaPc.getSelectedRow();
+        int fila = tablaPc.getSelectedRow();// indice de la fila seleccionada
         
         if(fila == -1){
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
         }else{
-            System.out.println(tablaPc.getValueAt(fila, 0).toString());
-            int id = Integer.parseInt(tablaPc.getValueAt(fila, 0).toString());
-            //recoge el valor del stock a aumentar
-            final int stockAct = Integer.parseInt(txtStock.getText());
             
-            //crea lista para comprobar que todos los elementos existar
-            List<Integer> idList = detallesPcDAO.obtenerDetallesPorId(id).stream()
+            int id = Integer.parseInt(tablaPc.getValueAt(fila, 0).toString()); //recoge el id de la tabla
+           
+            final int stockAct = Integer.parseInt(txtStock.getText());  //recoge el valor del stock a aumentar
+            
+            //crea lista con los elementos del pc para comprobar que todos los elementos existan
+            List<Integer> prodPcList = detallesPcDAO.obtenerDetallesPorId(id).stream()
                 .map(Producto::getId)
                 .collect(Collectors.toList());
-            boolean todosLosProductosExisten = idList.stream().allMatch(i->productoDAO.comprobarProducto(i));//comprobacion
+            boolean todosLosProductosExisten = prodPcList.stream().allMatch(i->productoDAO.comprobarProducto(i));//verificar si todos existen
             
             if(todosLosProductosExisten){
-                //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
+                //se verifica que todos los elementos que componen la pc tengan suficiente stock
                 boolean prolst = detallesPcDAO.obtenerDetallesPorId(id).stream().allMatch(det->det.getStock()>=stockAct);
                         
                 if(prolst){
-                    int stk= pcDAO.obtenerPcPorId(id).getStock();
-                    pcDAO.actualizarStock(id, stk+stockAct);
+                    
+                    int stk= pcDAO.obtenerPcPorId(id).getStock();// stock que se solicitó
+                    pcDAO.actualizarStock(id, stk+stockAct); //actualiza el stock del pc
                     
                     List<Producto> idListProd = detallesPcDAO.obtenerDetallesPorId(id);
                     for(Producto i : idListProd){
-                        productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);
+                        productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);//actualiza el stock de los productos empleados
                     }
                 }else{
                     JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
@@ -227,36 +232,8 @@ public class RegistroPcPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnStockActionPerformed
 
     private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
-
+        
         buscar();
-        // TODO add your handling code here:
-        //Con prog funcional
-        //String buscar = buscarTxt.getText();
-        /*List<Cliente> clientesActuales = productoDAO.listar();
-        List<Cliente> clientesEncontrados = clientesActuales.stream()
-        .filter(cliente -> cliente.getNombre().contains(buscar))
-        .collect(Collectors.toList());
-
-        for (Cliente cliente : clientesActuales) {
-            if (cliente.getNombre().contains(buscar)) {
-                clientesEncontrados.add(cliente);
-            }
-        }
-        limpiarTabla();
-        if (!clientesEncontrados.isEmpty()) {
-
-            modelo = (DefaultTableModel) tablaProductos.getModel();
-            Object[] ob = new Object[5];
-            clientesEncontrados.forEach(cliente -> {
-                ob[0] = cliente.getId();
-                ob[1] = cliente.getDNI();
-                ob[2] = cliente.getNombre();
-                ob[3] = cliente.getTelefono();
-                ob[4] = cliente.getDireccion();
-                modelo.addRow(ob);
-            });
-            tablaProductos.setModel(modelo);
-        }*/
     }//GEN-LAST:event_buscarTxtKeyReleased
 
 

@@ -195,34 +195,6 @@ public class VerPedidosPanel extends javax.swing.JPanel {
     private void buscarTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarTxtKeyReleased
 
         buscar();
-        // TODO add your handling code here:
-        //Con prog funcional
-        //String buscar = buscarTxt.getText();
-        /*List<Cliente> clientesActuales = productoDAO.listar();
-        List<Cliente> clientesEncontrados = clientesActuales.stream()
-        .filter(cliente -> cliente.getNombre().contains(buscar))
-        .collect(Collectors.toList());
-
-        for (Cliente cliente : clientesActuales) {
-            if (cliente.getNombre().contains(buscar)) {
-                clientesEncontrados.add(cliente);
-            }
-        }
-        limpiarTabla();
-        if (!clientesEncontrados.isEmpty()) {
-
-            modelo = (DefaultTableModel) tablaProductos.getModel();
-            Object[] ob = new Object[5];
-            clientesEncontrados.forEach(cliente -> {
-                ob[0] = cliente.getId();
-                ob[1] = cliente.getDNI();
-                ob[2] = cliente.getNombre();
-                ob[3] = cliente.getTelefono();
-                ob[4] = cliente.getDireccion();
-                modelo.addRow(ob);
-            });
-            tablaProductos.setModel(modelo);
-        }*/
     }//GEN-LAST:event_buscarTxtKeyReleased
 
 
