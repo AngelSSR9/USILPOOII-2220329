@@ -4,9 +4,12 @@ import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
 import clases.DetalleCarrito;
+import clases.PC;
 import clases.Producto;
 import conexionBD.CarritoDAO;
 import conexionBD.DetalleCarritoDAO;
+import conexionBD.DetallesPcDAO;
+import conexionBD.PcDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -21,8 +24,11 @@ import javax.swing.event.ChangeListener;
 
 public class CarritoPanel extends javax.swing.JPanel {
 
+    ProductoDAO productoDAO = new ProductoDAO();
+    DetallesPcDAO detallesPcDAO = new DetallesPcDAO();
+    PcDAO pcDAO = new PcDAO();
     CarritoDAO c = new CarritoDAO();
-    DetalleCarritoDAO d = new DetalleCarritoDAO();
+    DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
     Cliente cliente;
     double total;
 
@@ -46,7 +52,8 @@ public class CarritoPanel extends javax.swing.JPanel {
         panelProductos.removeAll();
 
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
+        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+
         if (listaDetalles.isEmpty()) {
             buttonProcesarCompra.setEnabled(false);
         } else {
@@ -54,40 +61,82 @@ public class CarritoPanel extends javax.swing.JPanel {
         }
 
         total = 0;
+        calcularTotal();
         for (DetalleCarrito detalle : listaDetalles) {
-            ProductoDAO p = new ProductoDAO();
-            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
-            total += producto.getPrecio() * detalle.getCantidad();
-            ProductoCarritoPanel productoPanel = new ProductoCarritoPanel(producto, detalle.getCantidad(), carrito);
-            productoPanel.lblEliminar.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    d.eliminar(carrito.getIdCarrito(), producto.getId());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(CarritoPanel.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (detalle.getIdProducto() != 0) {
+                Producto producto = productoDAO.obtenerProductoPorId(detalle.getIdProducto());
+
+                ProductoCarritoPanel productoPanel = new ProductoCarritoPanel(producto, detalle.getCantidad(), carrito);
+
+                productoPanel.lblEliminar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        detalleCarritoDAO.eliminar(carrito.getIdCarrito(), producto.getId(), 1);
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(CarritoPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        establecerComponentes();
                     }
-                    establecerComponentes();
-                }
-            });
-            
-            productoPanel.spinnerCantidad.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                // Realizar acciones cuando se produce un cambio en el JSpinner
-                //System.out.println(productoPanel.spinnerCantidad.getValue());
-                if((int)productoPanel.spinnerCantidad.getValue() <= producto.getStock()){
-                    d.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId());
-                    calcularTotal();
-                }
+                });
+
+                productoPanel.spinnerCantidad.addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        // Realizar acciones cuando se produce un cambio en el JSpinner
+                        //System.out.println(productoPanel.spinnerCantidad.getValue());
+                        if ((int) productoPanel.spinnerCantidad.getValue() <= producto.getStock()) {
+                            detalleCarritoDAO.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId(), 1);
+                            calcularTotal();
+                        }
+                    }
+                });
+
+                panelProductos.add(productoPanel);
+                panelProductos.revalidate();
+                panelProductos.repaint();
             }
-        });
-            //System.out.println(detalle.getCantidad());
-            panelProductos.add(productoPanel);
-            panelProductos.revalidate();
-            panelProductos.repaint();
+            else{
+                PC pc = pcDAO.obtenerPcPorId(detalle.getIdPC());
+                pc.setPartes(detallesPcDAO.obtenerDetallesPorId(pc.getId()));
+                ProductoCarritoPanel productoPanel = new ProductoCarritoPanel(pc, detalle.getCantidad(), carrito);
+
+                productoPanel.lblEliminar.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        detalleCarritoDAO.eliminar(carrito.getIdCarrito(), pc.getId(), 0);
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(CarritoPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        establecerComponentes();
+                    }
+                });
+
+                productoPanel.spinnerCantidad.addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        // Realizar acciones cuando se produce un cambio en el JSpinner
+                        //System.out.println(productoPanel.spinnerCantidad.getValue());
+                        if ((int) productoPanel.spinnerCantidad.getValue() <= pc.getStock()) {
+                            detalleCarritoDAO.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), pc.getId(), 0);
+                            calcularTotal();
+                        }
+                    }
+                });
+
+                panelProductos.add(productoPanel);
+                panelProductos.revalidate();
+                panelProductos.repaint();
+            }
+
+            
         }
+        
+        
         int cant = listaDetalles.size();
         if (cant == 1 || cant == 2) {
             while (cant < 3) {
@@ -101,19 +150,24 @@ public class CarritoPanel extends javax.swing.JPanel {
 
     public void calcularTotal() {
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
-        List<DetalleCarrito> listaDetalles = d.obtenerDetallesPorId(carrito.getIdCarrito());
-        if (listaDetalles.isEmpty()) {
-            buttonProcesarCompra.setEnabled(false);
-        } else {
-            buttonProcesarCompra.setEnabled(true);
-        }
-        total = 0;
-        for (DetalleCarrito detalle : listaDetalles) {
-            
-            ProductoDAO p = new ProductoDAO();
-            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
-            total += producto.getPrecio() * detalle.getCantidad();
-        }
+        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+        buttonProcesarCompra.setEnabled(!listaDetalles.isEmpty());
+
+        total = listaDetalles.stream()
+                .map(detalle -> {
+                    if (detalle.getIdProducto() != 0) {
+                        Producto producto = productoDAO.obtenerProductoPorId(detalle.getIdProducto());
+                        return producto.getPrecio() * detalle.getCantidad();
+                    } else {
+                        PC pc = pcDAO.obtenerPcPorId(detalle.getIdPC());
+                        pc.setPartes(new DetallesPcDAO().obtenerDetallesPorId(pc.getId()));
+                        return pc.getPartes().stream()
+                                .map(p -> p.getPrecio())
+                                .reduce(0.0, (a, b) -> a + b) * detalle.getCantidad();
+                    }
+
+                })
+                .reduce(0.0, (a, b) -> a + b);
         lblTotal.setText(String.valueOf(total));
     }
 
@@ -141,11 +195,6 @@ public class CarritoPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Carro de compra");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
 
         jLabel2.setText("Precio");
 
@@ -187,21 +236,11 @@ public class CarritoPanel extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setText("Total");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
 
         lblTotal.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
         lblTotal.setText("total");
 
         buttonProcesarCompra.setText("Continuar");
-        buttonProcesarCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonProcesarCompraActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -262,18 +301,6 @@ public class CarritoPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void buttonProcesarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProcesarCompraActionPerformed
-
-    }//GEN-LAST:event_buttonProcesarCompraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

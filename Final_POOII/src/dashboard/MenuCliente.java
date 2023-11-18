@@ -3,15 +3,9 @@ package dashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import clases.Cliente;
-
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.net.URL;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.JOptionPane;
 
 import conexionBD.CarritoDAO;
 
@@ -267,8 +261,6 @@ public class MenuCliente extends javax.swing.JFrame {
         dashboardView.add(panelArmarPc);
         dashboardView.revalidate();
         dashboardView.repaint();
-        
-        System.out.println("Clcik");
     }//GEN-LAST:event_panelArmaPcMouseClicked
 
     private void imgArmaPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgArmaPcMouseClicked
@@ -292,9 +284,6 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprar1MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-        if(c.obtenerCarritoPorIdCliente(cliente.getId()) == null){
-            c.agregar(cliente.getId());
-        }
         
         if(panelProcesarCompra == null){
             panelProcesarCompra = new PanelProcesarCompra(cliente);

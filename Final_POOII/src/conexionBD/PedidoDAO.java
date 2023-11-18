@@ -1,7 +1,5 @@
 package conexionBD;
 
-import clases.CarritoCompras;
-import clases.Cliente;
 import clases.Pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,28 +29,32 @@ public class PedidoDAO {
                 Pedido p = new Pedido();
                 p.setIdPedido(rs.getInt(1));
                 p.setFecha(rs.getDate(2));
-                p.setIdCliente(rs.getInt(3));
+                p.setMetodoPago(rs.getString(3));
+                p.setIdCliente(rs.getInt(4));
                 lista.add(p);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
         return lista;
     }
 
-    public int agregar(Date fecha, int idCliente) {
+    public int agregar(Date fecha, int idCliente, String metodoPago)  {
         int result = 0;
-        String sql = "INSERT INTO pedidos(fecha, idCliente)values(?,?)";
+        String sql = "INSERT INTO pedidos(fecha, metodoPago, idCliente)values(?,?,?)";
         con = cn.obtenerConexion();
         try {
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setObject(1, fecha);
-            ps.setObject(2, idCliente);
-            result = ps.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Pedido agregado correctamente.");
+            ps.setObject(2, metodoPago);
+            ps.setObject(3, idCliente);
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            rs.next();
+            result = rs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
+            System.out.println("Error" + ex.toString());;
         }
 
         return result;
@@ -66,15 +68,38 @@ public class PedidoDAO {
             ps.setInt(1, id);
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error eliminando: " + e.toString());
         }
 
     }
     
-    public Pedido obtenerPedidoPorIdCliente(int idCliente){
+    public Pedido obtenerPedidoPorId(int idPedido){
         Pedido pedido = null;
-        String query = "SELECT * FROM pedidos";
+        String query = "SELECT * FROM pedidos where idPedido =?";
+        try {
+            con = cn.obtenerConexion();
+            ps = con.prepareStatement(query);
+            ps.setObject(1, idPedido);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt(1));
+                pedido.setFecha(rs.getDate(2));
+                pedido.setMetodoPago(rs.getString(3));
+                pedido.setIdCliente(rs.getInt(4));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error obteniendo: " + e.toString());
+        }
+
+        return pedido;
+    }
+    
+    public List<Pedido> obtenerPedidoPorIdCliente(int idCliente){
+        List<Pedido> pedidosCliente = new ArrayList<>();;
+        Pedido pedido;
+        String query = "SELECT * FROM pedidos where idCliente=?";
         try {
             con = cn.obtenerConexion();
             ps = con.prepareStatement(query);
@@ -83,13 +108,15 @@ public class PedidoDAO {
                 pedido = new Pedido();
                 pedido.setIdPedido(rs.getInt(1));
                 pedido.setFecha(rs.getDate(2));
-                pedido.setIdCliente(rs.getInt(3));
+                pedido.setMetodoPago(rs.getString(3));
+                pedido.setIdCliente(rs.getInt(4));
+                pedidosCliente.add(pedido);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo: " + e.toString());
         }
 
-        return pedido;
+        return pedidosCliente;
     }
 
 }

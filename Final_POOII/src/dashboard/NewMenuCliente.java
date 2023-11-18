@@ -6,21 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import clases.Cliente;
 import conexionBD.CarritoDAO;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.URL;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.JOptionPane;
 import login.LoginCliente;
-/**
- *
- * @author david
- */
+
 public class NewMenuCliente extends javax.swing.JFrame {
 
     AnimateBTT cambioColor = new AnimateBTT();
@@ -35,6 +24,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
     
     public NewMenuCliente() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public void setCliente(Cliente cliente){
@@ -162,6 +152,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         btnPCs.setBackground(new java.awt.Color(23, 27, 36));
         btnPCs.setColorGradient(new java.awt.Color(23, 27, 36));
         btnPCs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPCsMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPCsMousePressed(evt);
             }
@@ -247,9 +240,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnCarritoComprasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCarritoComprasMousePressed
         cambioColor.AnimattCarrito();
-        if(c.obtenerCarritoPorIdCliente(cliente.getId()) == null){
-            c.agregar(cliente.getId());
-        }
         
         if(panelProcesarCompra == null){
             panelProcesarCompra = new PanelProcesarCompra(cliente);
@@ -279,9 +269,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnProductosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMousePressed
         cambioColor.AnimattProductos();
-        if(c.obtenerCarritoPorIdCliente(cliente.getId()) == null){
-            c.agregar(cliente.getId());
-        }
         
         if(productosPanel == null){
             productosPanel = new PanelProductos(cliente);
@@ -308,7 +295,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
         dashboardView.revalidate();
         dashboardView.repaint();
         
-        System.out.println("Clcik");
     }//GEN-LAST:event_btnArmarPcMousePressed
 
     private void btnHistorialMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistorialMousePressed
@@ -339,6 +325,10 @@ public class NewMenuCliente extends javax.swing.JFrame {
         logCli.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnPCsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPCsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPCsMouseClicked
 
     /**
      * @param args the command line arguments

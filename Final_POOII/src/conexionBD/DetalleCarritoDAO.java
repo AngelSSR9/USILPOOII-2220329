@@ -30,7 +30,7 @@ public class DetalleCarritoDAO {
                 d.setCantidad(rs.getInt(3));
                 lista.add(d);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
@@ -39,7 +39,14 @@ public class DetalleCarritoDAO {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO detallescarrito(idCarrito, idProducto, cantidad)values(?,?,?)";
+        String sql = "";
+        if((int) o[3] == 1){
+            sql = "INSERT INTO detallescarrito(idCarrito, idProducto, cantidad)values(?,?,?)";
+        }
+        else{
+            sql = "INSERT INTO detallescarrito(idCarrito, idPC, cantidad)values(?,?,?)";
+        }
+       
         con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
@@ -50,15 +57,22 @@ public class DetalleCarritoDAO {
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+            System.out.println("Error: " + ex.toString());;
         }
 
         return result;
     }
 
 
-    public void eliminar(int idCarrito, int idProducto) {
-        String sql = "DELETE FROM detallescarrito WHERE idCarrito =? AND idProducto =?";
+    public void eliminar(int idCarrito, int idProducto, int identidad) {
+        String sql = "";
+        if(identidad == 1){
+            sql = "DELETE FROM detallescarrito WHERE idCarrito =? AND idProducto =?";
+        }
+        else{
+            sql = "DELETE FROM detallescarrito WHERE idCarrito =? AND idPC =?";
+        }
+    
         try {
             con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -66,7 +80,7 @@ public class DetalleCarritoDAO {
             ps.setInt(2, idProducto);
             ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
@@ -97,20 +111,28 @@ public class DetalleCarritoDAO {
                 DetalleCarrito d = new DetalleCarrito();
                 d.setIdCarrito(rs.getInt(1));
                 d.setIdProducto(rs.getInt(2));
-                d.setCantidad(rs.getInt(3));
+                d.setIdPC(rs.getInt(3));
+                d.setCantidad(rs.getInt(4));
                 lista.add(d);
             }
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error detalle x id: " + e.toString());
         }
        
         return lista;
     }
     
-    public int actualizarCantidadProducto(int nuevaCantidad, int idCarrito, int idProducto){
+    public int actualizarCantidadProducto(int nuevaCantidad, int idCarrito, int idProducto, int identidad){
         int r = 0;
-        String sql = "UPDATE detallescarrito SET cantidad=? WHERE idCarrito = ? and idProducto = ?";
+        String sql = "";
+        if(identidad == 1){
+            sql = "UPDATE detallescarrito SET cantidad=? WHERE idCarrito = ? and idProducto = ?";
+        }
+        else {
+            sql = "UPDATE detallescarrito SET cantidad=? WHERE idCarrito = ? and idPC = ?";
+        }
+        
         try {
             con = cn.obtenerConexion();
             ps = con.prepareStatement(sql);
@@ -118,7 +140,7 @@ public class DetalleCarritoDAO {
             ps.setObject(2, idCarrito);
             ps.setObject(3, idProducto);
             r = ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         return r;
