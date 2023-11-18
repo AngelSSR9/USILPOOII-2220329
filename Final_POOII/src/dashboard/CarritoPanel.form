@@ -76,9 +76,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Carro de compra"/>
       </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
 
@@ -189,9 +186,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Total"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel6MouseClicked"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTotal">
           <Properties>
@@ -205,9 +199,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Continuar"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonProcesarCompraActionPerformed"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>

@@ -1,6 +1,7 @@
 package dashboard;
 
 import clases.CarritoCompras;
+import clases.PC;
 import clases.Producto;
 import conexionBD.DetalleCarritoDAO;
 import java.awt.GridBagConstraints;
@@ -11,19 +12,30 @@ import javax.swing.JOptionPane;
 
 public class FrameDetalleProducto extends javax.swing.JFrame {
 
+    PC pc;
     Producto producto;
     CarritoCompras carrito;
-    
+
     public FrameDetalleProducto(Producto producto, CarritoCompras carrito) {
         initComponents();
         setLocationRelativeTo(null);
         this.producto = producto;
-        this.carrito = carrito;        
+        this.carrito = carrito;
         configurarComponentes();
+        establecerInformacion();
     }
-    
-    private void configurarComponentes(){
-        
+
+    public FrameDetalleProducto(PC pc, CarritoCompras carrito) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.pc = pc;
+        this.carrito = carrito;
+        configurarComponentes();
+        establecerInformacion();
+    }
+
+    private void configurarComponentes() {
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -34,16 +46,32 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         panelCantidad.add(lblCantidad, gbc);
         panelSuma.add(jLabel8, gbc);
         panelResta.add(jLabel6, gbc);
-        
-        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(346,
-            316, Image.SCALE_SMOOTH)));
-        lblMarca.setText(producto.getMarca());
-        lblStock.setText(String.valueOf(producto.getStock()));
-        lblNombre.setText(producto.getMarca() + " " + producto.getModelo());
-        lblPrecio.setText(String.valueOf(producto.getPrecio()));
-        lblDescripcion.setText(convertirHtml(producto.getDescripcion()));
+
     }
-    
+
+    private void establecerInformacion() {
+        if (producto != null) {
+            lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(346,
+                    316, Image.SCALE_SMOOTH)));
+            lblMarca.setText(producto.getMarca());
+            lblStock.setText(String.valueOf(producto.getStock()));
+            lblNombre.setText(producto.getMarca() + " " + producto.getModelo());
+            lblPrecio.setText(String.valueOf(producto.getPrecio()));
+            lblDescripcion.setText(convertirHtml(producto.getDescripcion()));
+        } else {
+            lblImagen.setIcon(new ImageIcon(pc.getImagen().getScaledInstance(346,
+                    316, Image.SCALE_SMOOTH)));
+            lblDescripcion.setText("");
+            lblMarca.setText("");
+            lblNombre.setText(pc.getNombre());
+            lblStock.setText(String.valueOf(pc.getStock()));
+            lblPrecio.setText(String.valueOf(pc.getPartes().stream()
+                    .map(p -> p.getPrecio())
+                    .reduce(0.0, (a, b) -> a + b)));
+        }
+
+    }
+
     public static String convertirHtml(String input) {
         StringBuilder htmlBuilder = new StringBuilder("<html>");
 
@@ -60,7 +88,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
 
         return htmlBuilder.toString();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -165,7 +193,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         addToCart.setBackground(new java.awt.Color(0, 153, 153));
         addToCart.setFont(new java.awt.Font("Roboto", 0, 20)); // NOI18N
         addToCart.setForeground(new java.awt.Color(255, 255, 255));
-        addToCart.setText("Add to cart");
+        addToCart.setText("Agregar carrito");
         addToCart.setBorder(null);
         addToCart.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addToCart.addActionListener(new java.awt.event.ActionListener() {
@@ -270,19 +298,29 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
     private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartActionPerformed
         int stock = Integer.parseInt(this.lblStock.getText());
         int cantidad = Integer.parseInt(this.lblCantidad.getText());
-        
-        if(stock < cantidad){
+
+        if (stock < cantidad) {
             JOptionPane.showMessageDialog(null, "No hay suficiente stock!");
-        }
-        else{
-            
-            Object o[] = new Object[3];
-            o[0] = carrito.getIdCarrito();
-            o[1] = producto.getId();
-            o[2] = cantidad;
-            DetalleCarritoDAO d =  new DetalleCarritoDAO();
-            d.agregar(o);
-            
+        } else {
+            Object o[] = new Object[4];
+            DetalleCarritoDAO d = new DetalleCarritoDAO();
+            if (producto != null) {
+                o[0] = carrito.getIdCarrito();
+                o[1] = producto.getId();
+                o[2] = cantidad;
+                o[3] = 1;
+                d = new DetalleCarritoDAO();
+                d.agregar(o);
+            }
+            else{
+                o[0] = carrito.getIdCarrito();
+                o[1] = pc.getId();
+                o[2] = cantidad;
+                o[3] = 0;
+                d = new DetalleCarritoDAO();
+                d.agregar(o);
+            }
+
             JOptionPane.showMessageDialog(null, "Producto añadido al carrito!");
         }
     }//GEN-LAST:event_addToCartActionPerformed

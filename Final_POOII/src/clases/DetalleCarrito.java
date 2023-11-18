@@ -2,7 +2,8 @@ package clases;
 
 public class DetalleCarrito {
     private int idCarrito;
-    private int idProducto;
+    private Integer idProducto = null;
+    private Integer idPC = null;
     private int cantidad;
 
     public DetalleCarrito() {
@@ -22,14 +23,23 @@ public class DetalleCarrito {
         this.idCarrito = idCarrito;
     }
 
-    public int getIdProducto() {
+    public Integer getIdProducto() {
+        System.out.println("idproducto: " + idProducto);
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
 
+    public Integer getIdPC() {
+        return idPC;
+    }
+
+    public void setIdPC(Integer idPC) {
+        this.idPC = idPC;
+    }
+    
     public int getCantidad() {
         return cantidad;
     }
@@ -37,7 +47,7 @@ public class DetalleCarrito {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
-    
+
+
+
 }

@@ -4,8 +4,9 @@ import java.util.Date;
 
 public class Pedido {
     private int idPedido;
-    private Date fecha;
     private int idCliente;
+    private Date fecha;
+    private String metodoPago;
 
     public Pedido(int idPedido, Date fecha, int idCliente) {
         this.idPedido = idPedido;
@@ -39,7 +40,13 @@ public class Pedido {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
     
-    
-   
 }
