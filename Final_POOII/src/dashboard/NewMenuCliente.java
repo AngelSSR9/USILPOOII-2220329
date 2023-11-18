@@ -30,7 +30,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
     PanelProductos productosPanel;
     PanelArmarPcCliente panelArmarPc;
     PanelHistorialPedidos panelHistorialPedidos;
-    OptionsClient optionsClient = new OptionsClient();
+    OptionsClient optionsClient;
     Cliente cliente = new Cliente();
     
     public NewMenuCliente() {
@@ -45,6 +45,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
         panelProcesarCompra = new PanelProcesarCompra(cliente);
         panelArmarPc = new PanelArmarPcCliente(cliente);
         panelHistorialPedidos = new PanelHistorialPedidos(cliente);
+        optionsClient = new OptionsClient(cliente);
       
         carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
             @Override
@@ -321,7 +322,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnAjustesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMousePressed
         cambioColor.AnimattAjustes();
-        optionsClient.setCliente(cliente);
         dashboardView.removeAll();
         dashboardView.add(optionsClient);
         dashboardView.revalidate();

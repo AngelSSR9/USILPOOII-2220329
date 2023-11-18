@@ -11,21 +11,36 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 
+/**
+ * Panel que muestra las opciones disponibles para un cliente, como ver y editar
+ * información personal y revisar el estado de la cuenta.
+ * Permite acceder a la edición de datos personales.
+ */
 public class OptionsClient extends javax.swing.JPanel {
 
+    // Cliente asociado a este panel
+    Cliente cliente;
+    // Panel para la edición de datos del cliente
+    EditarDatosCliente editarDatos = new EditarDatosCliente();
     
-    Cliente cliente = new Cliente();
-    EditarDatosCliente edc = new EditarDatosCliente();
-    public OptionsClient() {
+    /**
+     * Constructor que inicializa los componentes del panel y muestra los datos del cliente.
+     *
+     * @param cliente Cliente para el cual se mostrarán las opciones.
+     */
+    public OptionsClient(Cliente cliente) {
         initComponents();
+        this.cliente = cliente;
+        mostrarDatos();
     }
 
-    
-    public void setCliente(Cliente cliente){
+    /**
+     * Muestra los datos del cliente en el panel.
+     */
+    public final void mostrarDatos(){
         txtUsuario.setText(cliente.getNombre());
         txtCorreo.setText(cliente.getCorreo());
         txtDni.setText(Integer.toString(cliente.getDni()));
-        this.cliente = cliente;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,18 +83,13 @@ public class OptionsClient extends javax.swing.JPanel {
         panelDatosPersonales.add(lblDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 18, -1, -1));
 
         txtUsuario.setForeground(new java.awt.Color(204, 0, 204));
-        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtUsuarioMouseClicked(evt);
-            }
-        });
-        panelDatosPersonales.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 130, 20));
+        panelDatosPersonales.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 20));
 
         txtCorreo.setForeground(new java.awt.Color(204, 0, 204));
         panelDatosPersonales.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 130, 20));
 
         txtDni.setForeground(new java.awt.Color(204, 0, 204));
-        panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 20));
+        panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 130, 20));
 
         lblCorreo.setForeground(new java.awt.Color(153, 0, 153));
         lblCorreo.setText("Correo:");
@@ -133,16 +143,18 @@ public class OptionsClient extends javax.swing.JPanel {
         add(tittleInformacionPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 310, 20));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMouseClicked
-        
-    }//GEN-LAST:event_txtUsuarioMouseClicked
-
+    /**
+     * Acción realizada cuando se hace clic en el botón de editar.
+     * Muestra la ventana de edición de datos personales.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         
         JFrame popupFrame = new JFrame();
         popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        edc.setCliente(this.cliente);
-        popupFrame.getContentPane().add(edc);
+        editarDatos.setCliente(this.cliente);
+        popupFrame.getContentPane().add(editarDatos);
         popupFrame.pack();
         popupFrame.setLocationRelativeTo(this); 
         popupFrame.setVisible(true);

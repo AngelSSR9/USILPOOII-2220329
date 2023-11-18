@@ -23,7 +23,7 @@ public class MenuCliente extends javax.swing.JFrame {
     PanelProductos productosPanel;
     PanelArmarPcCliente panelArmarPc;
     PanelHistorialPedidos panelHistorialPedidos;
-    OptionsClient optionsClient = new OptionsClient();
+    OptionsClient optionsClient;
     Cliente cliente = new Cliente();
 
 
@@ -341,7 +341,7 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_panelProductsMouseClicked
 
     private void panelCarritoComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCarritoComprasMouseClicked
-        optionsClient.setCliente(cliente);
+        
         dashboardView.removeAll();
         dashboardView.add(optionsClient);
         dashboardView.revalidate();
