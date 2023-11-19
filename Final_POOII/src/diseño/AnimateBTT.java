@@ -31,7 +31,6 @@ public class AnimateBTT {
     public void AnimattCarrito() {
         mostrarColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
         establecColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
-        establecColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
         establecColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
         establecColor(NewMenuCliente.btnHistorial, NewMenuCliente.btnHistorial, NewMenuCliente.txtHistorial, "/dashboardimg/historial.png");
         establecColor(NewMenuCliente.btnAjustes, NewMenuCliente.btnAjustes, NewMenuCliente.txtAjustes, "/dashboardimg/ajuste.png");
@@ -39,16 +38,6 @@ public class AnimateBTT {
 
     public void AnimattProductos() {
         mostrarColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
-        establecColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
-        establecColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
-        establecColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
-        establecColor(NewMenuCliente.btnHistorial, NewMenuCliente.btnHistorial, NewMenuCliente.txtHistorial, "/dashboardimg/historial.png");
-        establecColor(NewMenuCliente.btnAjustes, NewMenuCliente.btnAjustes, NewMenuCliente.txtAjustes, "/dashboardimg/ajuste.png");
-    }
-
-    public void AnimattPC() {
-        mostrarColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
-        establecColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
         establecColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
         establecColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
         establecColor(NewMenuCliente.btnHistorial, NewMenuCliente.btnHistorial, NewMenuCliente.txtHistorial, "/dashboardimg/historial.png");
@@ -59,7 +48,6 @@ public class AnimateBTT {
         mostrarColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
         establecColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
         establecColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
-        establecColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
         establecColor(NewMenuCliente.btnHistorial, NewMenuCliente.btnHistorial, NewMenuCliente.txtHistorial, "/dashboardimg/historial.png");
         establecColor(NewMenuCliente.btnAjustes, NewMenuCliente.btnAjustes, NewMenuCliente.txtAjustes, "/dashboardimg/ajuste.png");
     }
@@ -69,7 +57,6 @@ public class AnimateBTT {
         establecColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
         establecColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
         establecColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
-        establecColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
         establecColor(NewMenuCliente.btnAjustes, NewMenuCliente.btnAjustes, NewMenuCliente.txtAjustes, "/dashboardimg/ajuste.png");
     }
     
@@ -79,6 +66,5 @@ public class AnimateBTT {
         establecColor(NewMenuCliente.btnArmarPc, NewMenuCliente.btnArmarPc, NewMenuCliente.txtArmarPC, "/dashboardimg/armar.png");
         establecColor(NewMenuCliente.btnProductos, NewMenuCliente.btnProductos, NewMenuCliente.txtProductos, "/dashboardimg/producto.png");
         establecColor(NewMenuCliente.btnCarritoCompras, NewMenuCliente.btnCarritoCompras, NewMenuCliente.txtCarrito, "/dashboardimg/carro.png");
-        establecColor(NewMenuCliente.btnPCs, NewMenuCliente.btnPCs, NewMenuCliente.txtPc, "/dashboardimg/pc-de-escritorio.png");
     }
 }

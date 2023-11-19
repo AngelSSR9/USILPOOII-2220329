@@ -100,7 +100,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
         kGradientPanel1 = new keeptoo.KGradientPanel();
         PanelComponentes = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        panelHeadComponentes = new javax.swing.JPanel();
         lblComponentes = new javax.swing.JLabel();
         btnProcesador = new javax.swing.JPanel();
         lblProcesador = new javax.swing.JLabel();
@@ -119,12 +119,12 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         btnEnfriamiento = new javax.swing.JPanel();
         lblEnfriamento = new javax.swing.JLabel();
         PanelProductosArmarPC = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        panelHeadProductos = new javax.swing.JPanel();
         lblComponentes1 = new javax.swing.JLabel();
         scrollPanePrincipal = new javax.swing.JScrollPane();
         panelPrincipal = new javax.swing.JPanel();
         PanelPagoPc = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        panelHeadResumen = new javax.swing.JPanel();
         lblResumen = new javax.swing.JLabel();
         btnAgregarCarrito = new javax.swing.JButton();
         lblSistemaEnfriamentoColor = new javax.swing.JLabel();
@@ -140,16 +140,17 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
         PanelComponentes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHeadComponentes.setBackground(new java.awt.Color(0, 0, 0));
+        panelHeadComponentes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblComponentes.setForeground(new java.awt.Color(255, 255, 255));
         lblComponentes.setText("COMPONENTES");
-        jPanel4.add(lblComponentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 17, -1, -1));
+        panelHeadComponentes.add(lblComponentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 17, -1, -1));
 
-        PanelComponentes.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
+        PanelComponentes.add(panelHeadComponentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
 
         btnProcesador.setBackground(new java.awt.Color(255, 255, 255));
+        btnProcesador.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnProcesador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnProcesadorMouseClicked(evt);
@@ -166,6 +167,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnProcesador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 260, 50));
 
         btnPlacaMadre.setBackground(new java.awt.Color(255, 255, 255));
+        btnPlacaMadre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnPlacaMadre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPlacaMadreMouseClicked(evt);
@@ -182,6 +184,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnPlacaMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 40));
 
         btnMemoriaRAM.setBackground(new java.awt.Color(255, 255, 255));
+        btnMemoriaRAM.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnMemoriaRAM.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMemoriaRAMMouseClicked(evt);
@@ -198,6 +201,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnMemoriaRAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 260, 50));
 
         btnAlmacenamiento.setBackground(new java.awt.Color(255, 255, 255));
+        btnAlmacenamiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnAlmacenamiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAlmacenamientoMouseClicked(evt);
@@ -214,6 +218,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnAlmacenamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 260, 40));
 
         btnTarjetaDeVideo.setBackground(new java.awt.Color(255, 255, 255));
+        btnTarjetaDeVideo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnTarjetaDeVideo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnTarjetaDeVideoMouseClicked(evt);
@@ -230,6 +235,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnTarjetaDeVideo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 260, 50));
 
         btnGabinete.setBackground(new java.awt.Color(255, 255, 255));
+        btnGabinete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnGabinete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGabineteMouseClicked(evt);
@@ -246,6 +252,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnGabinete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 260, 50));
 
         btnFuenteDePoder.setBackground(new java.awt.Color(255, 255, 255));
+        btnFuenteDePoder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnFuenteDePoder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnFuenteDePoderMouseClicked(evt);
@@ -262,6 +269,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelComponentes.add(btnFuenteDePoder, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 260, 50));
 
         btnEnfriamiento.setBackground(new java.awt.Color(255, 255, 255));
+        btnEnfriamiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         btnEnfriamiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEnfriamientoMouseClicked(evt);
@@ -272,8 +280,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         lblEnfriamento.setBackground(new java.awt.Color(0, 0, 0));
         lblEnfriamento.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
         lblEnfriamento.setForeground(new java.awt.Color(0, 0, 0));
-        lblEnfriamento.setText("SISTEMA DE ENFRIAMIENTO");
-        btnEnfriamiento.add(lblEnfriamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+        lblEnfriamento.setText("REFRIGERACION");
+        btnEnfriamiento.add(lblEnfriamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
 
         PanelComponentes.add(btnEnfriamiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 260, 50));
 
@@ -281,14 +289,14 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
         PanelProductosArmarPC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHeadProductos.setBackground(new java.awt.Color(0, 0, 0));
+        panelHeadProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblComponentes1.setForeground(new java.awt.Color(255, 255, 255));
         lblComponentes1.setText("PRODUCTOS");
-        jPanel5.add(lblComponentes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+        panelHeadProductos.add(lblComponentes1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
-        PanelProductosArmarPC.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
+        PanelProductosArmarPC.add(panelHeadProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
 
         scrollPanePrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -304,14 +312,14 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         PanelPagoPc.setBackground(new java.awt.Color(255, 255, 255));
         PanelPagoPc.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel6.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHeadResumen.setBackground(new java.awt.Color(0, 0, 0));
+        panelHeadResumen.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblResumen.setForeground(new java.awt.Color(255, 255, 255));
         lblResumen.setText("RESUMEN");
-        jPanel6.add(lblResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+        panelHeadResumen.add(lblResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
 
-        PanelPagoPc.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
+        PanelPagoPc.add(panelHeadResumen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 50));
 
         btnAgregarCarrito.setBackground(new java.awt.Color(51, 51, 255));
         btnAgregarCarrito.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
@@ -466,9 +474,6 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
     private javax.swing.JPanel btnPlacaMadre;
     private javax.swing.JPanel btnProcesador;
     private javax.swing.JPanel btnTarjetaDeVideo;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JLabel lblAlmacenamientoColor;
     private javax.swing.JLabel lblComponentes;
@@ -489,6 +494,9 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
     private javax.swing.JLabel lblSistemaEnfriamentoColor;
     private javax.swing.JLabel lblTarjetaDeVideo;
     private javax.swing.JLabel lblTarjetaDeVideoColor;
+    private javax.swing.JPanel panelHeadComponentes;
+    private javax.swing.JPanel panelHeadProductos;
+    private javax.swing.JPanel panelHeadResumen;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JScrollPane scrollPanePrincipal;
     // End of variables declaration//GEN-END:variables
