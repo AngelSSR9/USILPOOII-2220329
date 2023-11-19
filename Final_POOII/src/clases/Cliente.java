@@ -1,32 +1,32 @@
 package clases;
 
+import clases.observer.ElementoObservado;
 import clases.observer.Observer;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
-import java.util.Scanner;
-import javax.activation.DataHandler;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
-import correo.ImageUtils;
-import java.awt.Image;
+import correo.MensajeCorreo;
 
-public class Cliente  implements Observer{
+/**
+ * Clase que representa a un cliente y actúa como un observador de productos.
+ */
+public class Cliente  implements Observer<ElementoObservado>{
     private String nombre;
     private int dni;
     private int id;
     private String correo;
     private String contraseña;
+    
+    /**
+     * Instancia de la clase encargada de enviar mensajes de correo.
+     */
+    MensajeCorreo mensajeCorreo = new MensajeCorreo();
 
+    /**
+     * Constructor de la clase Cliente.
+     *
+     * @param nombre      El nombre del cliente.
+     * @param dni         El número de identificación del cliente.
+     * @param correo      La dirección de correo electrónico del cliente.
+     * @param contraseña  La contraseña del cliente.
+     */
     public Cliente(String nombre, int dni,String correo, String contraseña) {
         this.nombre = nombre;
         this.dni = dni;
@@ -34,6 +34,9 @@ public class Cliente  implements Observer{
         this.contraseña = contraseña;
     }
     
+    /**
+     * Constructor vacío de la clase Cliente.
+     */
     public Cliente(){}
 
     public String getNombre() {
@@ -76,101 +79,14 @@ public class Cliente  implements Observer{
         this.id = id;
     }
 
+    /**
+     * Método de la interfaz Observer que se llama cuando hay una actualización de
+     * un producto. Envia un mensaje de correo electrónico al cliente.
+     *
+     * @param producto El producto actualizado a ser notificado.
+     */
     @Override
-    public void actualizar(Producto producto) {
-        enviarMensaje(producto);
-    }
-    public void enviarMensaje(Producto producto){
-        //enviar un correo electrónico mediante el protocolo SMTP (Simple Mail Transfer Protocol) utilizando la API JavaMail.
-        //Se crea la clase propiedades para luego configurarlo
-        Properties properties = new Properties();
-        
-        // Configuración del servidor de correo
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        
-        //Se crea una session en la que se pasan las propiedades configuradas
-        Session session = Session.getDefaultInstance(properties);
-        // Creación y envío del correo
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("pruebamonitor7@gmail.com"));
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(getCorreo()));
-            System.out.println("se sta enviando correo a: " + getCorreo());
-            message.setSubject("Nuevo Producto ");
-            message.setText("Se ha subido un nuevo producto","ISO-8859-1","html");
-            
-            InputStream htmlStream = getClass().getResourceAsStream("/correo/correohtml.html");
-            
-            // Crear el contenido HTML como un String
-            String htmlContent = convertInputStreamToString(htmlStream);
-            // Reemplazar los marcadores de posición con valores reales del producto
-            htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", producto.getTipo()+" "+producto.getMarca()+" "+producto.getModelo());
-            htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(producto.getStock()));
-            htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(producto.getPrecio()));
-            htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", producto.getDescripcion());
-            
-            // Creamos un cuerpo multipart para incluir texto HTML y la imagen
-            MimeMultipart multipart = new MimeMultipart("related");
-            //Es una de las partes del multipart
-            MimeBodyPart htmlPart = new MimeBodyPart();
-            //Se coloca el contenido del correo
-            htmlPart.setContent(htmlContent,"text/html" );
-            //se agrega al multipart
-            multipart.addBodyPart(htmlPart);
-            
-            // Creamos la parte de la imagen
-            MimeBodyPart imagePart = new MimeBodyPart();
-            MimeBodyPart logoPart = new MimeBodyPart();
-            
-            InputStream imgLogo = getClass().getResourceAsStream("/correo/images/imagenTienda-removebg-preview.png");
-            //Convertir a bytes la imagen
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = imgLogo.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, bytesRead);
-            }
-            byte[] imageBytes = byteArrayOutputStream.toByteArray();
-            
-            Image imagenProducto = producto.getImagen();
-            InputStream imgStream = ImageUtils.convertImageToInputStream(imagenProducto, "png");
-            
-            logoPart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));
-            logoPart.setHeader("Content-ID", "<imagen321>"); // Coincide con el CID en el contenido HTML
-            
-            //se crea un datahandler, que sirva para gstionar el contenido de la imagen, esta imagen debe de estar en bytes, luego se coloca en la imagen
-            imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imgStream, "image/png")));
-            imagePart.setHeader("Content-ID", "<imagen123>"); // Coincide con el CID en el contenido HTML
-            
-            //se agrega otra parte al multipart
-            multipart.addBodyPart(imagePart);
-            multipart.addBodyPart(logoPart);
-            
-            // se Establece el contenido del mensaje
-            message.setContent(multipart);
-
-            
-            //logica para enviar mensaje
-            Transport mTransport = session.getTransport("smtp");
-            mTransport.connect("pruebamonitor7@gmail.com", "togj fhkc imxh wldz");
-            mTransport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
-            mTransport.close();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        
-    }
-
-    // Método para convertir InputStream a String
-    public String convertInputStreamToString(InputStream inputStream) throws IOException {
-        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
-            return scanner.useDelimiter("\\A").next();
-        }
-                
+    public void actualizar(ElementoObservado objeto) {
+        mensajeCorreo.enviarMensaje(objeto, getCorreo());
     }
 }

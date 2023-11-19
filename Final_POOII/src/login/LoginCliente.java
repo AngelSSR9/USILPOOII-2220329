@@ -1,32 +1,31 @@
 package login;
 
-
-
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import clases.*;
-import conexionBD.CarritoDAO;
+import clases.Cliente;
 import conexionBD.ClienteDAO;
-import conexionBD.ProductoDAO;
-import java.awt.Font;
 import dashboard.NewMenuCliente;
-import diseño.RoundedPanel;
-import java.security.Principal;
-
+/**
+ * Clase que representa la ventana de inicio de sesión para clientes.
+ */
 public class LoginCliente extends javax.swing.JFrame {
     
-    NewMenuCliente principal = new NewMenuCliente();
-    
+    // Instancias de clases
+    NewMenuCliente menuPrincipal = new NewMenuCliente();
+    Autenticacion autenticacion = new Autenticacion();
+    RegisterCliente registerCliente = new RegisterCliente();
+    Validacion validacion = new Validacion();
+    /**
+     * Constructor de la clase LoginCliente.
+     */
     public LoginCliente() {
         
         initComponents();
         setVisible(true);
         setLocationRelativeTo(null);
         title.requestFocusInWindow();
+        setResizable(false); //Evita que el usuario modifque el tamaño
     }
     
     @SuppressWarnings("unchecked")
@@ -35,13 +34,11 @@ public class LoginCliente extends javax.swing.JFrame {
 
         bg = new javax.swing.JPanel();
         lblMsjNoHayCuenta = new javax.swing.JLabel();
-        pnl_overlay = new javax.swing.JPanel();
+        backgroundImg = new javax.swing.JPanel();
         imgLogo = new javax.swing.JLabel();
         txtName = new javax.swing.JLabel();
         lblSlonga = new javax.swing.JLabel();
-        exit = new javax.swing.JLabel();
-        kGradientPanel1 = new keeptoo.KGradientPanel();
-        favicon = new javax.swing.JLabel();
+        PanelLogin = new keeptoo.KGradientPanel();
         title = new javax.swing.JLabel();
         dniLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -68,77 +65,52 @@ public class LoginCliente extends javax.swing.JFrame {
         lblMsjNoHayCuenta.setText("¿No tiene una cuenta?");
         bg.add(lblMsjNoHayCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 430, -1, -1));
 
-        pnl_overlay.setBackground(new java.awt.Color(255, 255, 255));
-        pnl_overlay.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                pnl_overlayMouseDragged(evt);
-            }
-        });
-        pnl_overlay.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnl_overlayMousePressed(evt);
-            }
-        });
-        pnl_overlay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        backgroundImg.setBackground(new java.awt.Color(255, 255, 255));
+        backgroundImg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         imgLogo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         imgLogo.setForeground(new java.awt.Color(255, 255, 255));
         imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Logo.jpeg"))); // NOI18N
-        pnl_overlay.add(imgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, 190));
+        backgroundImg.add(imgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, 190));
 
         txtName.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         txtName.setForeground(new java.awt.Color(102, 102, 102));
         txtName.setText("TIENDA XXXXXXXXXXXX");
-        pnl_overlay.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, -1));
+        backgroundImg.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, -1));
 
         lblSlonga.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblSlonga.setForeground(new java.awt.Color(102, 102, 102));
         lblSlonga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSlonga.setText("La tienda que vende algo xd");
         lblSlonga.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnl_overlay.add(lblSlonga, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 252, 20));
+        backgroundImg.add(lblSlonga, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 252, 20));
 
-        exit.setBackground(new java.awt.Color(231, 73, 134));
-        exit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        exit.setForeground(new java.awt.Color(231, 73, 134));
-        exit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exit.setText("X");
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitMouseClicked(evt);
-            }
-        });
-        pnl_overlay.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 26, 28));
+        bg.add(backgroundImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 470, 550));
 
-        bg.add(pnl_overlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 470, 550));
-
-        kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        favicon.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        kGradientPanel1.add(favicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        PanelLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         title.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
         title.setText("INICIAR SESION");
-        kGradientPanel1.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
+        PanelLogin.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, -1));
 
         dniLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         dniLabel.setForeground(new java.awt.Color(255, 255, 255));
         dniLabel.setText("DNI");
-        kGradientPanel1.add(dniLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+        PanelLogin.add(dniLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        kGradientPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 450, 10));
+        PanelLogin.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 450, 10));
 
         passLabel.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         passLabel.setForeground(new java.awt.Color(255, 255, 255));
         passLabel.setText("CONTRASEÑA");
-        kGradientPanel1.add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        PanelLogin.add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        kGradientPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 450, 10));
+        PanelLogin.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 450, 10));
 
         dniTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         dniTxt.setForeground(new java.awt.Color(204, 204, 204));
@@ -150,7 +122,7 @@ public class LoginCliente extends javax.swing.JFrame {
                 dniTxtMousePressed(evt);
             }
         });
-        kGradientPanel1.add(dniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
+        PanelLogin.add(dniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 410, 30));
 
         passTxt.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         passTxt.setForeground(new java.awt.Color(204, 204, 204));
@@ -161,24 +133,19 @@ public class LoginCliente extends javax.swing.JFrame {
                 passTxtMousePressed(evt);
             }
         });
-        kGradientPanel1.add(passTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 410, 30));
+        PanelLogin.add(passTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 410, 30));
 
         lblRegistrarse.setBackground(new java.awt.Color(255, 0, 255));
         lblRegistrarse.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblRegistrarse.setForeground(new java.awt.Color(0, 204, 0));
         lblRegistrarse.setText("Registrese");
+        lblRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblRegistrarseMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseExited(evt);
-            }
         });
-        kGradientPanel1.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
+        PanelLogin.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, -1, -1));
 
         dniTxtPanel.setBackground(new java.awt.Color(255, 255, 255));
         dniTxtPanel.setRoundBottomLeft(15);
@@ -197,7 +164,7 @@ public class LoginCliente extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(dniTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 450, 30));
+        PanelLogin.add(dniTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 450, 30));
 
         passTxtPanel.setBackground(new java.awt.Color(255, 255, 255));
         passTxtPanel.setRoundBottomLeft(15);
@@ -216,7 +183,7 @@ public class LoginCliente extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(passTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, 30));
+        PanelLogin.add(passTxtPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, 30));
 
         loginBtn.setBackground(new java.awt.Color(255, 255, 255));
         loginBtn.setRoundBottomLeft(15);
@@ -254,9 +221,9 @@ public class LoginCliente extends javax.swing.JFrame {
             .addComponent(loginBtnTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        kGradientPanel1.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 100, 50));
+        PanelLogin.add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 350, 100, 50));
 
-        bg.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
+        bg.add(PanelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,96 +239,77 @@ public class LoginCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Cambia el color del boton del mouse al pasar sobre este
+     * @param evt 
+     */
     private void loginBtnTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseEntered
         loginBtn.setBackground(new Color(225,217,217));
     }//GEN-LAST:event_loginBtnTxtMouseEntered
 
+    /**
+     * Cambia el color del boton del mouses al pasar sobre este
+     * @param evt 
+     */
     private void loginBtnTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseExited
         loginBtn.setBackground(new Color(255,255,255));
     }//GEN-LAST:event_loginBtnTxtMouseExited
 
+    /**
+     * Método que se ejecuta cuando se hace clic en el botón de inicio de sesión.
+     * @param evt Evento de ratón asociado al clic.
+     */
     private void loginBtnTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginBtnTxtMouseClicked
         
-        int dni = Integer.parseInt(dniTxt.getText());
+        String dniTexto = dniTxt.getText();
         String password = String.valueOf(passTxt.getPassword());
         
+        // Validación de campos
+        if(!validacion.validarIngreso(dniTexto, password)){
+            return;
+        }
+        int dni = Integer.parseInt(dniTxt.getText());
+        
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
         
-        if(cliente!=null){
-            if (autenticarCliente(dni, password)) {
-                // Devuelve true si las credenciales son válidas y false en caso contrario.
-                CarritoDAO c = new CarritoDAO();
-                CarritoCompras car = c.obtenerCarritoPorIdCliente(cliente.getId());
-                if(car == null){
-                    c.agregar(cliente.getId());
-                }
-                principal.setCliente(cliente);
-                this.setVisible(false);
-                principal.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        setVisible(true);
-                    }
-                });
-                principal.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Comtraseña Incorrecta. Por favor, inténtelo de nuevo.");
-            }
+        // Llama al método de autenticación
+        if (!autenticacion.autenticarCliente(dni, password, cliente)) {
+            return; // Detiene la ejecución si la validación no es exitosa
         }
         else{
-            JOptionPane.showMessageDialog(null, "Cuenta inexistente. Por favor, inténtelo de nuevo.");
-        }               
+            menuPrincipal.setCliente(cliente);
+            this.setVisible(false);
+            menuPrincipal.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    setVisible(true);
+                }
+            });
+            menuPrincipal.setVisible(true);
+        }           
     }//GEN-LAST:event_loginBtnTxtMouseClicked
 
-    private boolean autenticarCliente(int dni, String password) {
-        // Aquí llama al método de ClienteDAO para verificar las credenciales en la base de datos.
-        // Devuelve true si las credenciales son válidas y false en caso contrario.
-        ClienteDAO clienteDAO = new ClienteDAO();
-
-        Cliente cliente = clienteDAO.obtenerClientePorDNI(dni);
-        principal.setCliente(cliente);
-        return cliente != null && cliente.getContraseña().equals(password);
-
-    }
     
+    /**
+     * hace visible el Register si no cuenta con una cuenta
+     * @param evt 
+     */
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        RegisterCliente regCli = new RegisterCliente();
-        regCli.addWindowListener(new WindowAdapter(){
+        registerCliente.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e){
                 setVisible(true);
             }
         });
-        regCli.setVisible(true);
+        registerCliente.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
 
-    private void lblRegistrarseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseEntered
-        // TODO add your handling code here:
-        lblRegistrarse.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_lblRegistrarseMouseEntered
-
-    private void lblRegistrarseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseExited
-        // TODO add your handling code here:
-        lblRegistrarse.setCursor(Cursor.getDefaultCursor());
-    }//GEN-LAST:event_lblRegistrarseMouseExited
-
-    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_exitMouseClicked
-
-    private void pnl_overlayMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_overlayMouseDragged
-        // TODO add your handling code here:int x = evt.getXOnScreen();
-
-    }//GEN-LAST:event_pnl_overlayMouseDragged
-
-    private void pnl_overlayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_overlayMousePressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_pnl_overlayMousePressed
-
+    /**
+     * Cambia el texto "Ingrese su dni" al hacer click para ingresar el dni.
+     * @param evt El evento del mouse.
+    */
     private void dniTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dniTxtMousePressed
         if (dniTxt.getText().equals("Ingrese su dni")) {
             dniTxt.setText("");
@@ -373,6 +321,10 @@ public class LoginCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dniTxtMousePressed
 
+    /**
+     * Cambia el texto "********" al hacer click para ingresar la contraseña.
+     * @param evt El evento del mouse.
+    */
     private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
         if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
@@ -424,16 +376,15 @@ public class LoginCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KGradientPanel PanelLogin;
+    private javax.swing.JPanel backgroundImg;
     private javax.swing.JPanel bg;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JTextField dniTxt;
     private diseño.RoundedPanel dniTxtPanel;
-    private javax.swing.JLabel exit;
-    private javax.swing.JLabel favicon;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JLabel lblMsjNoHayCuenta;
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblSlonga;
@@ -442,7 +393,6 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JLabel passLabel;
     private javax.swing.JPasswordField passTxt;
     private diseño.RoundedPanel passTxtPanel;
-    private javax.swing.JPanel pnl_overlay;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;
     // End of variables declaration//GEN-END:variables

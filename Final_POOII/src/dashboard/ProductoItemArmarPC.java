@@ -6,34 +6,34 @@ package dashboard;
 
 import clases.CarritoCompras;
 import clases.Producto;
-import conexionBD.DetalleCarritoDAO;
-import conexionBD.ProductoDAO;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- *
- * @author david
+ * La clase ProductoItemArmarPC representa un elemento individual en la interfaz de usuario
+ * para la selección de productos al armar una PC. Contiene información sobre el producto,
+ * como su nombre, imagen y precio. Permite a los usuarios seleccionar productos y agregarlos al carrito de compras.
  */
 public class ProductoItemArmarPC extends javax.swing.JPanel {
 
-    Producto producto;
-    CarritoCompras carrito;
-    List<Producto> productos;
+    // Atributos que almacenan información sobre el producto, carrito y productos seleccionados
+    private Producto producto;
+    private CarritoCompras carrito;
+    private List<Producto> productos;
     
+    /**
+     * Constructor para ProductoItemArmarPC.
+     *
+     * @param producto El producto asociado a este elemento.
+     * @param carrito El carrito de compras actual del usuario.
+     * @param productos La lista de productos seleccionados.
+     */
     public ProductoItemArmarPC(Producto producto, CarritoCompras carrito, List<Producto> productos) {
         initComponents();
         this.producto = producto;
@@ -41,7 +41,12 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
         this.productos = productos;
     }
     
-    
+    /**
+     * Cambia el color del texto de la etiqueta y maneja la lógica cuando se hace clic en el panel.
+     *
+     * @param text La etiqueta cuyo color se cambiará.
+     * @return La lista actualizada de productos seleccionados.
+     */
     public List cambiarColor(JLabel text) {
         panelProducto.addMouseListener(new MouseAdapter() {
                 @Override
@@ -62,25 +67,48 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
         return productos;
     }
     
+    /**
+     * Establece la información del producto en la interfaz gráfica.
+     */
     public void setInformacion() {
         setNombreProducto(producto.getMarca() + " " + producto.getModelo());
         setPrecioProducto(producto.getPrecio());
         setImagenProducto(producto.getImagen());
     }
 
+    /**
+     * Establece el nombre del producto en la etiqueta correspondiente.
+     *
+     * @param nombre El nombre del producto.
+     */
     public void setNombreProducto(String nombre) {
         lblNombre.setText(nombre);
     }
 
+    /**
+     * Establece la imagen del producto en la etiqueta correspondiente.
+     *
+     * @param imagen La imagen del producto.
+     */
     public void setImagenProducto(Image imagen) {
         lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(80,
             68, Image.SCALE_SMOOTH)));
     }
 
+    /**
+     * Establece el precio del producto en la etiqueta correspondiente.
+     *
+     * @param precio El precio del producto.
+     */
     public void setPrecioProducto(double precio) {
         lblPrecio.setText(String.valueOf(precio));
     }
 
+    /**
+     * Devuelve la etiqueta de la imagen del producto.
+     *
+     * @return La etiqueta de la imagen del producto.
+     */
     public JLabel getLblImagen() {
         return lblImagen;
     }
@@ -109,11 +137,6 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
 
         panelProducto.setBackground(new java.awt.Color(255, 255, 255));
         panelProducto.setForeground(new java.awt.Color(255, 255, 255));
-        panelProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panelProductoMouseClicked(evt);
-            }
-        });
 
         lblImagen.setBackground(new java.awt.Color(255, 255, 255));
         lblImagen.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,10 +188,6 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
             .addComponent(panelProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void panelProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelProductoMouseClicked
-        
-    }//GEN-LAST:event_panelProductoMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         

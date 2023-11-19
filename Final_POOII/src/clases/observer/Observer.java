@@ -4,9 +4,15 @@ package clases.observer;
 import clases.Producto;
 
 /**
+ * La interfaz Observer define el contrato que deben seguir los observadores.
  *
- * @author david
+ * @param <T> El tipo de objeto que el observador maneja, debe extender de ElementoObservado.
  */
-public interface Observer {
-    abstract void actualizar(Producto producto);
+public interface Observer <T extends ElementoObservado> {
+    /**
+     * Método que se llama cuando hay una actualización.
+     *
+     * @param objeto El objeto actualizado a ser notificado.
+     */
+    abstract void actualizar(T objeto);
 }

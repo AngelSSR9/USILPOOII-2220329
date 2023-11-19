@@ -4,15 +4,22 @@ package clases.observer;
 import clases.Producto;
 import java.util.ArrayList;
 
-
-public class TiendaSubject implements Subject{
+/**
+ * La clase TiendaSubject implementa la interfaz Subject y actúa como el sujeto
+ * observado en el patrón Observer.
+ */
+public class TiendaSubject implements Subject<ElementoObservado>{
     
-    //private static final long serialVersionUID = 1L;
     private static TiendaSubject instancia;
     private ArrayList<Observer> observadores = new ArrayList<>();
     
     private TiendaSubject() {}
-
+    
+    /**
+     * Método estático para obtener la instancia única de TiendaSubject.
+     *
+     * @return La instancia única de TiendaSubject.
+     */
     public static TiendaSubject getInstancia() {
         if (instancia == null) {
             instancia = new TiendaSubject();
@@ -31,9 +38,9 @@ public class TiendaSubject implements Subject{
     }
 
     @Override
-    public void notificar(Producto producto) {
+    public void notificar(ElementoObservado objeto) {
         for (Observer observer : observadores) {
-            observer.actualizar(producto);
+            observer.actualizar(objeto);
         }
     }
 }

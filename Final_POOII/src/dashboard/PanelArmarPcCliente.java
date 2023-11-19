@@ -12,38 +12,49 @@ import conexionBD.DetalleCarritoDAO;
 import conexionBD.ProductoDAO;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import diseño.ScrollBarCustom;
 
 /**
- *
- * @author david
+ * La clase PanelArmarPcCliente representa el panel principal para armar una PC.
+ * Permite a los usuarios seleccionar diferentes componentes y agregarlos al carrito de compras.
  */
 public class PanelArmarPcCliente extends javax.swing.JPanel {
 
-    ProductoDAO productoDAO = new ProductoDAO();
-    CarritoDAO c = new CarritoDAO();
-    CarritoCompras carrito;
-    List<Producto> productosElegidos = new ArrayList<>();
+    // Instancias de DAO para la interacción con la base de datos
+    private ProductoDAO productoDAO = new ProductoDAO();
+    private CarritoDAO carritoDAO = new CarritoDAO();
     
-    String componenteVar;
-    JLabel nombreVar;
+    // Carrito de compras actual del usuario
+    private CarritoCompras carrito;
     
+    // Lista para almacenar productos seleccionados
+    private List<Producto> productosElegidos = new ArrayList<>();
+    
+    // Variables para almacenar el tipo de componente seleccionado y su etiqueta correspondiente
+    private String componenteSeleccionado;
+    private JLabel nombreDelComponenteSeleccionado;
+    
+    
+    /**
+     * Constructor para PanelArmarPcCliente.
+     * Inicializa el panel y configura el estado inicial.
+     *
+     * @param cliente El usuario actual.
+     */
     public PanelArmarPcCliente(Cliente cliente) {
         initComponents();
-        this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        this.carrito = carritoDAO.obtenerCarritoPorIdCliente(cliente.getId());
         iniciar();
     }
     
+    /**
+     * Inicializa el diseño del panel.
+     */
     private void iniciar(){
         scrollPanePrincipal.setVerticalScrollBar(new ScrollBarCustom());
         GridLayout layout = new GridLayout(0, 2);
@@ -51,17 +62,20 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         layout.setVgap(5);
         panelPrincipal.setLayout(layout);
     }
-
-    public void establecerItems() throws IOException, SQLException {
+    
+    /**
+     * Actualiza los productos mostrados según el tipo de componente seleccionado.
+     */
+    public void establecerItems(){
         panelPrincipal.removeAll();
         List<Producto> productos = productoDAO.listar();
         for (Producto p : productos) {
-            if(p.getTipo().equals(componenteVar)){
+            if(p.getTipo().equals(componenteSeleccionado)){
                 ProductoItemArmarPC panel = new ProductoItemArmarPC(p,carrito,productosElegidos);
                 panel.setInformacion();
                 System.out.println(p.toString());
                 panelPrincipal.add(panel);
-                productosElegidos = panel.cambiarColor(nombreVar);
+                productosElegidos = panel.cambiarColor(nombreDelComponenteSeleccionado);
             }
         }
 
@@ -308,11 +322,6 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
                 btnAgregarCarritoMouseClicked(evt);
             }
         });
-        btnAgregarCarrito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarCarritoActionPerformed(evt);
-            }
-        });
         PanelPagoPc.add(btnAgregarCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 150, 40));
 
         lblSistemaEnfriamentoColor.setFont(new java.awt.Font("Dubai Light", 1, 14)); // NOI18N
@@ -401,6 +410,12 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         clasificarItems(lblGabinete, lblGabineteColor);
     }//GEN-LAST:event_btnGabineteMouseClicked
 
+    /**
+     * Maneja el evento cuando se hace clic en el botón "Agregar al carrito".
+     * Agrega los productos seleccionados al carrito de compras y actualiza la base de datos.
+     *
+     * @param evt El evento del ratón que desencadena la acción.
+     */
     private void btnAgregarCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarCarritoMouseClicked
 
         if(productosElegidos.size()==8){
@@ -425,18 +440,17 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarCarritoMouseClicked
 
-    private void btnAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarritoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarCarritoActionPerformed
-
+    /**
+     * Clasifica el tipo de componente seleccionado y actualiza los productos mostrados en consecuencia.
+     *
+     * @param name La etiqueta que representa el tipo de componente seleccionado.
+     * @param nameColor La etiqueta que representa el color del tipo de componente seleccionado.
+     */
     public void clasificarItems(JLabel name, JLabel nameColor){
-        this.componenteVar = name.getText();
-        this.nombreVar = nameColor;
-        try {
-           establecerItems();
-        } catch (IOException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+        this.componenteSeleccionado = name.getText();
+        this.nombreDelComponenteSeleccionado = nameColor;
+        establecerItems();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
