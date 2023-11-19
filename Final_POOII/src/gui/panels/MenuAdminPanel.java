@@ -50,7 +50,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes9 = new javax.swing.JLabel();
         BarraSup = new javax.swing.JPanel();
         btnCerrarOpciones = new javax.swing.JButton();
-        btnOpciones2 = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
         barraSup = new javax.swing.JPanel();
 
@@ -87,7 +86,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes10.setText("Registro Pc");
         OpcionRegistroPc.add(LblComponentes10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 40));
 
-        sliderOpciones.add(OpcionRegistroPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 170, 50));
+        sliderOpciones.add(OpcionRegistroPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 150, 50));
 
         opcionRegistrarProductos.setBackground(new java.awt.Color(51, 204, 255));
         opcionRegistrarProductos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,7 +111,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes7.setText("productos");
         opcionRegistrarProductos.add(LblComponentes7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 20));
 
-        sliderOpciones.add(opcionRegistrarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 170, 50));
+        sliderOpciones.add(opcionRegistrarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 150, 50));
 
         opcionAnunciar.setBackground(new java.awt.Color(51, 204, 255));
         opcionAnunciar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,7 +132,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes5.setText("Anunciar");
         opcionAnunciar.add(LblComponentes5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(opcionAnunciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 170, 50));
+        sliderOpciones.add(opcionAnunciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, -1, 50));
 
         OpcionAgregarPc.setBackground(new java.awt.Color(51, 204, 255));
         OpcionAgregarPc.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +153,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes2.setText("Agregar Pc");
         OpcionAgregarPc.add(LblComponentes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 120, 40));
 
-        sliderOpciones.add(OpcionAgregarPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 170, 50));
+        sliderOpciones.add(OpcionAgregarPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 150, 50));
 
         OpcionVentasDelDia.setBackground(new java.awt.Color(51, 204, 255));
         OpcionVentasDelDia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -175,7 +174,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes3.setText("VEr pedidos");
         OpcionVentasDelDia.add(LblComponentes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(OpcionVentasDelDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 170, -1));
+        sliderOpciones.add(OpcionVentasDelDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, -1, -1));
 
         opcionVerClientes.setBackground(new java.awt.Color(51, 204, 255));
         opcionVerClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +195,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes4.setText("VEr clientes");
         opcionVerClientes.add(LblComponentes4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
 
-        sliderOpciones.add(opcionVerClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 170, 40));
+        sliderOpciones.add(opcionVerClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, 40));
 
         opcionAgregarProductos.setBackground(new java.awt.Color(51, 204, 255));
         opcionAgregarProductos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -221,9 +220,9 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         LblComponentes9.setText("productos");
         opcionAgregarProductos.add(LblComponentes9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, 20));
 
-        sliderOpciones.add(opcionAgregarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 170, 50));
+        sliderOpciones.add(opcionAgregarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 150, 50));
 
-        add(sliderOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 170, 570));
+        add(sliderOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 580));
 
         BarraSup.setBackground(new java.awt.Color(51, 51, 255));
         BarraSup.setForeground(new java.awt.Color(51, 51, 255));
@@ -239,16 +238,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         });
         BarraSup.add(btnCerrarOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, 30, 30));
 
-        btnOpciones2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/botonOpciones.png"))); // NOI18N
-        btnOpciones2.setBorderPainted(false);
-        btnOpciones2.setContentAreaFilled(false);
-        btnOpciones2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpciones2ActionPerformed(evt);
-            }
-        });
-        BarraSup.add(btnOpciones2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, 30, 30));
-
         add(BarraSup, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 40));
 
         panelContenido.setBackground(new java.awt.Color(204, 204, 204));
@@ -256,7 +245,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         barraSup.setBackground(new java.awt.Color(204, 204, 204));
         panelContenido.add(barraSup);
 
-        add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 853, 496));
+        add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 853, 496));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCerrarOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarOpcionesActionPerformed
@@ -267,16 +256,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
             frame.dispose();
     }//GEN-LAST:event_btnCerrarOpcionesActionPerformed
 
-    private void btnOpciones2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpciones2ActionPerformed
-        // TODO add your handling code here:
-        int posicion = this.sliderOpciones.getX();
-        if (posicion > -1) {
-            Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
-        } else {
-            Animacion.Animacion.mover_derecha(-188, 0, 2, 2, sliderOpciones);
-        }
-    }//GEN-LAST:event_btnOpciones2ActionPerformed
-
     private void OpcionAgregarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseClicked
         // TODO add your handling code here:
         // Se muestra AgregarPc en el panelContenido
@@ -285,7 +264,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(pc);  // Agrega la imagen al panel
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionAgregarPcMouseClicked
 
     private void OpcionAgregarPcMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseEntered
@@ -306,7 +284,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(vnts);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionVentasDelDiaMouseClicked
 
     private void OpcionVentasDelDiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseEntered
@@ -327,7 +304,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(clnts);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionVerClientesMouseClicked
 
     private void opcionVerClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseEntered
@@ -348,7 +324,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(anun);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionAnunciarMouseClicked
 
     private void opcionAnunciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseEntered
@@ -373,7 +348,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(regProd);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
         
     }//GEN-LAST:event_opcionRegistrarProductosMouseClicked
 
@@ -395,7 +369,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(agg);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_opcionAgregarProductosMouseClicked
 
     private void opcionAgregarProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseEntered
@@ -416,7 +389,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         panelContenido.add(regPc);
         panelContenido.revalidate();
         panelContenido.repaint();
-        Animacion.Animacion.mover_izquierda(0, -188, 2, 2, sliderOpciones);
     }//GEN-LAST:event_OpcionRegistroPcMouseClicked
 
     private void OpcionRegistroPcMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionRegistroPcMouseEntered
@@ -459,7 +431,6 @@ public class MenuAdminPanel extends javax.swing.JPanel {
     private javax.swing.JPanel OpcionVentasDelDia;
     private javax.swing.JPanel barraSup;
     private javax.swing.JButton btnCerrarOpciones;
-    private javax.swing.JButton btnOpciones2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel opcionAgregarProductos;
     private javax.swing.JPanel opcionAnunciar;

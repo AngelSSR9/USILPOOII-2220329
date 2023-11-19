@@ -4,7 +4,6 @@
  */
 package gui.panels;
 
-import clases.Cliente;
 import clases.Constantes;
 import java.awt.Image;
 import java.io.File;
@@ -14,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import conexionBD.ProductoDAO;
+import java.awt.List;
 
 /**
  *
@@ -330,11 +330,20 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
 
     private void precioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioTxtActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_precioTxtActionPerformed
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
         // TODO add your handling code here:
-        agregarProducto();
+        java.util.List<String> text = java.util.List.of(marcaTxt.getText(), modeloTxt.getText(), precioTxt.getText(), stockTxt.getText()
+                                        ,mDescription.getText(), imagenTxt.getText());
+        
+        if(text.stream().allMatch(t -> !t.isEmpty()) && catCombo.getSelectedItem()!=null && boxTipo.getSelectedItem().toString()!=null){
+            agregarProducto();
+        }else{
+            JOptionPane.showMessageDialog(this, "Debes llenar todos los casilleros");
+        }
+        
 
     }//GEN-LAST:event_LogInButtonActionPerformed
 

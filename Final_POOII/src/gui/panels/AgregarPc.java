@@ -201,7 +201,7 @@ public class AgregarPc extends javax.swing.JPanel {
         cBoxTeclado = new javax.swing.JComboBox<>();
         cBoxMonitor = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnNuevaPc = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         selectedPhoto = new javax.swing.JLabel();
         updatePanel = new javax.swing.JPanel();
@@ -237,10 +237,10 @@ public class AgregarPc extends javax.swing.JPanel {
 
         jLabel10.setText("Monitor");
 
-        jButton1.setText("Nueva Pc");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevaPc.setText("Nueva Pc");
+        btnNuevaPc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNuevaPcActionPerformed(evt);
             }
         });
 
@@ -406,8 +406,7 @@ public class AgregarPc extends javax.swing.JPanel {
                                 .addComponent(jLabel6)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNuevaPc, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(173, 173, 173))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(93, 93, 93)
@@ -474,7 +473,7 @@ public class AgregarPc extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cBoxTeclado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnNuevaPc, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -519,81 +518,87 @@ public class AgregarPc extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cBoMoBoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnNuevaPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPcActionPerformed
         // TODO add your handling code here:
-        
-        //verifica que ninguno sea nulo
-        if(agregarCom("MEMORIA RAM", cBoxMemRam)== null || agregarCom("ALMACENAMIENTO", cBoxMemRom)== null || agregarCom("PROCESADOR", cBoxProce)==null || agregarCom("PLACA MADRE", cBoMoBo)==null){
-            JOptionPane.showMessageDialog(this, "El stock esta en 0");
+        List<String> text = List.of(txtNombre.getText(), txtStock.getText(), txtImagen.getText());
+        if(text.stream().anyMatch(t->t.isEmpty())) {
+            JOptionPane.showMessageDialog(this, "Llena los espacios vacios");
         }else{
-            
-            List<Producto> prod = new ArrayList<Producto>();
-
-            prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
-            prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
-            prod.add(agregarCom("PROCESADOR", cBoxProce));
-            prod.add(agregarCom("PLACA MADRE", cBoMoBo));
-            if(agregarPer("REFRIGERACION", cBoxTarjGraf)!=null){
-                prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
-            }
-            if(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf) != null){
-                prod.add(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf));
-            }
-            if(agregarPer("MOUSE", cBoxMouse)!=null){
-                prod.add(agregarPer("MOUSE", cBoxMouse));
-            }
-            if(agregarPer("AUDIFONOS", cBoxAudif)!=null){
-                prod.add(agregarPer("AUDIFONOS", cBoxAudif));
-            }
-            if(agregarPer("TECLADO", cBoxTeclado)!=null){
-                prod.add(agregarPer("TECLADO", cBoxTeclado));
-            }
-            if(agregarPer("MONITOR", cBoxMonitor)!=null){
-                prod.add(agregarPer("MONITOR", cBoxMonitor));
-            }
-            
-            
-            Object[] o = new Object[2];
-            
-            
-            //crea lista para comprobar que todos los elementos existar
-            boolean todosLosProductosExisten = prod.stream().allMatch(i->productoDAO.comprobarProducto(i.getId()));
-            if(todosLosProductosExisten){
-                int stockAct = Integer.parseInt(txtStock.getText());//se guarda el stock puesto.
-                //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
-                boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock()>=stockAct);
-                        
-                if(confirm){
-                        int id=agregarPcBD();
-                        for(int a=0;a<prod.size();a++){
-
-                        try {
-                            o[0] = id;
-                            o[1] = prod.get(a).getId();
-                            detPc.agregar(o);
-                            
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
-                        }
-                    }
-                    
-                    for(Producto i : prod){
-                        productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);
-                    }
-                    
-                }else{
-                    JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
-                }
+                //verifica que ninguno sea nulo
+            if(agregarCom("MEMORIA RAM", cBoxMemRam)== null || agregarCom("ALMACENAMIENTO", cBoxMemRom)== null || agregarCom("PROCESADOR", cBoxProce)==null || agregarCom("PLACA MADRE", cBoMoBo)==null){
+                JOptionPane.showMessageDialog(this, "El stock esta en 0");
             }else{
-                JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
-            }
-            
-        }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+                List<Producto> prod = new ArrayList<Producto>();
+
+                prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
+                prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
+                prod.add(agregarCom("PROCESADOR", cBoxProce));
+                prod.add(agregarCom("PLACA MADRE", cBoMoBo));
+                if(agregarPer("REFRIGERACION", cBoxTarjGraf)!=null){
+                    prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
+                }
+                if(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf) != null){
+                    prod.add(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf));
+                }
+                if(agregarPer("MOUSE", cBoxMouse)!=null){
+                    prod.add(agregarPer("MOUSE", cBoxMouse));
+                }
+                if(agregarPer("AUDIFONOS", cBoxAudif)!=null){
+                    prod.add(agregarPer("AUDIFONOS", cBoxAudif));
+                }
+                if(agregarPer("TECLADO", cBoxTeclado)!=null){
+                    prod.add(agregarPer("TECLADO", cBoxTeclado));
+                }
+                if(agregarPer("MONITOR", cBoxMonitor)!=null){
+                    prod.add(agregarPer("MONITOR", cBoxMonitor));
+                }
+
+
+                Object[] o = new Object[2];
+
+
+                //crea lista para comprobar que todos los elementos existar
+                boolean todosLosProductosExisten = prod.stream().allMatch(i->productoDAO.comprobarProducto(i.getId()));
+                if(todosLosProductosExisten){
+                    int stockAct = Integer.parseInt(txtStock.getText());//se guarda el stock puesto.
+                    //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
+                    boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock()>=stockAct);
+
+                    if(confirm){
+                            int id=agregarPcBD();
+                            for(int a=0;a<prod.size();a++){
+
+                            try {
+                                o[0] = id;
+                                o[1] = prod.get(a).getId();
+                                detPc.agregar(o);
+
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+                            }
+                        }
+
+                        for(Producto i : prod){
+                            productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);
+                        }
+
+                    }else{
+                        JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
+                }
+
+            }
+        }
+        
+
+    }//GEN-LAST:event_btnNuevaPcActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNuevaPc;
     public javax.swing.JComboBox<String> cBoMoBo;
     public javax.swing.JComboBox<String> cBoxAudif;
     public javax.swing.JComboBox<String> cBoxMemRam;
@@ -604,7 +609,6 @@ public class AgregarPc extends javax.swing.JPanel {
     public javax.swing.JComboBox<String> cBoxRefrig;
     public javax.swing.JComboBox<String> cBoxTarjGraf;
     public javax.swing.JComboBox<String> cBoxTeclado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
