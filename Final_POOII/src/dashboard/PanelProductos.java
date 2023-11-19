@@ -4,24 +4,27 @@ import diseño.MenuCustom;
 import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
+import clases.PC;
 import clases.Producto;
 import conexionBD.CarritoDAO;
+import conexionBD.PcDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
 import java.util.List;
-import java.util.function.Predicate;
 import javaswingdev.MenuEvent;
 import javax.swing.JPanel;
 
 public class PanelProductos extends javax.swing.JPanel {
-
+    PcDAO pcDAO = new PcDAO();
     ProductoDAO productoDAO = new ProductoDAO();
     CarritoDAO c = new CarritoDAO();
     CarritoCompras carrito;
+    Cliente cliente;
     List<Producto> productos;
 
     public PanelProductos(Cliente cliente) {
         initComponents();
+        this.cliente = cliente;
         this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
         iniciar();
     }
@@ -29,17 +32,14 @@ public class PanelProductos extends javax.swing.JPanel {
     private void iniciar() {
         MenuCustom menu = new MenuCustom();
         menu.addItem("Periféricos", "Monitor", "Mouse", "Teclado", "Audifono", "Mousepad");
-        menu.addItem("Componentes", "Procesador", "Tarjeta Video", "Memoria RAM", "Placas Madre", "Almacenamiento");
+        menu.addItem("Componentes", "Procesador", "Tarjeta de Video", "Memoria RAM", "Placa Madre", "Almacenamiento");
+        menu.addItem("PC");
         //menu.setMenuHeight(40);
         menu.addEvent(new MenuEvent() {
             @Override
             public void selected(int index, int subIndex, boolean menuItem) {
-                //System.out.println("Entra a evento");
-                //System.out.println(menu.getMenuNameAt(index, subIndex).trim().toUpperCase());
                 if(menuItem)
                     establecerItemsFiltrados(menu.getMenuNameAt(index, subIndex).trim().toUpperCase());
-                
-                //add(panelAux);
             }
 
         });
@@ -53,43 +53,29 @@ public class PanelProductos extends javax.swing.JPanel {
     }
 
     public void establecerItems() {
+        setCarrito();
         panelPrincipal.removeAll();
         productos = productoDAO.listar();
         establecerProductos(productos);
     }
 
     public void establecerItemsFiltrados(String tipo) {
-        establecerProductos(filtrar(tipo));
+        if(tipo.equals("PC"))
+            establecerPCS();
+        else
+            establecerProductos(filtrar(tipo));
     }
 
     private List<Producto> filtrar(String tipo) {
-        System.out.println("Nombre item seleccionado: " + tipo);
+        //System.out.println("Nombre item seleccionado: " + tipo);
         return productos.stream()
-                .filter(new Predicate<Producto>() {
-                    @Override
-                    public boolean test(Producto t) {
-                        //System.out.println("Tipo producto: " + t.getTipo());
-                        
-                        
-                        if(t.getTipo().equals(tipo)){
-                            return true;
-                        }
-                        else{
-                            return false;
-                        }
-                    }
-
-                })
-                .toList();
+                .filter(p -> p.getTipo().toUpperCase().equals(tipo)).toList();
     }
 
     private void establecerProductos(List<Producto> productosList) {
         panelPrincipal.removeAll();
-        for (Producto p : productosList) {
-            PanelItem panel = new PanelItem(p, carrito);
-            panel.setInformacion();
-            panelPrincipal.add(panel);
-        }
+
+        productosList.stream().forEach(p -> panelPrincipal.add(new PanelItem(p, carrito)));
 
         // Agregamos paneles ficticios vacíos para completar una fila
         int totalPaneles = productosList.size();
@@ -101,6 +87,29 @@ public class PanelProductos extends javax.swing.JPanel {
                 panelPrincipal.repaint();
             }
         }
+    }
+    
+    private void establecerPCS(){
+        panelPrincipal.removeAll();
+
+        List<PC> listaPC = pcDAO.listar();
+        listaPC.stream().forEach(p -> panelPrincipal.add(new PanelItem(p, carrito)));
+
+        // Agregamos paneles ficticios vacíos para completar una fila
+        int totalPaneles = listaPC.size();
+        int panelesFaltantes = 5 - totalPaneles;
+        if (panelesFaltantes > 0) {
+            for (int i = 0; i < panelesFaltantes; i++) {
+                panelPrincipal.add(new JPanel());
+                panelPrincipal.revalidate();
+                panelPrincipal.repaint();
+            }
+        }
+        
+    }
+    
+    public void setCarrito(){
+        this.carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
     }
 
     @SuppressWarnings("unchecked")

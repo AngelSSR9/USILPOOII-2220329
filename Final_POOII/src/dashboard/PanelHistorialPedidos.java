@@ -33,7 +33,7 @@ public class PanelHistorialPedidos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     
     public void listarProductosDeCliente(){
-        Pedido pedido = pedidoCon.obtenerPedidoPorIdCliente(cliente.getId());
+        //Pedido pedido = pedidoCon.obtenerPedidoPorIdCliente(cliente.getId());
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

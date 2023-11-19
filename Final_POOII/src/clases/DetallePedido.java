@@ -3,6 +3,7 @@ package clases;
 public class DetallePedido {
     private int idPedido;
     private int idProducto;
+    private int idPC;
     private int cantidad;
     private double precioVenta;
 
@@ -12,8 +13,6 @@ public class DetallePedido {
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
     }
-
-    
 
     public DetallePedido() {
     }
@@ -50,6 +49,12 @@ public class DetallePedido {
         this.precioVenta = precioVenta;
     }
 
-    
+    public int getIdPC() {
+        return idPC;
+    }
+
+    public void setIdPC(int idPC) {
+        this.idPC = idPC;
+    }
     
 }

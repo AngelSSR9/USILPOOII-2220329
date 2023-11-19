@@ -1,8 +1,8 @@
 package dashboard;
 
 import clases.CarritoCompras;
+import clases.PC;
 import clases.Producto;
-import conexionBD.DetalleCarritoDAO;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,10 +16,10 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class ProductoCarritoPanel extends javax.swing.JPanel {
+
     private final int radioEsquinas = 15;
-    DetalleCarritoDAO d = new DetalleCarritoDAO();
     Producto producto;
-    CarritoCompras carrito;
+    PC pc;
     int cantidad;
 
     public ProductoCarritoPanel(Producto producto, int cantidad, CarritoCompras carrito) {
@@ -28,35 +28,54 @@ public class ProductoCarritoPanel extends javax.swing.JPanel {
         setOpaque(false);
         this.producto = producto;
         this.cantidad = cantidad;
-        this.carrito = carrito;
+        establecerComponentes();
+    }
+
+    public ProductoCarritoPanel(PC pc, int cantidad, CarritoCompras carrito) {
+        super();
+        initComponents();
+        setOpaque(false);
+        this.pc = pc;
+        this.cantidad = cantidad;
         establecerComponentes();
     }
 
     private void establecerComponentes() {
-        
+
+        if (producto != null) {
+            SpinnerModel model = new SpinnerNumberModel(1, 1, producto.getStock(), 1); // valor inicial, mínimo, máximo y paso
+            spinnerCantidad.setModel(model);
+            lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(137,
+                    105, Image.SCALE_SMOOTH)));
+            lblModelo.setText(producto.getMarca() + " " + producto.getModelo());
+            lblPrecio.setText(String.valueOf(producto.getPrecio()));
+            spinnerCantidad.setValue(cantidad);
+            lblSubtotal.setText(String.valueOf(cantidad * producto.getPrecio()));
+        } else {
+            SpinnerModel model = new SpinnerNumberModel(1, 1, pc.getStock(), 1); // valor inicial, mínimo, máximo y paso
+            spinnerCantidad.setModel(model);
+            double precioPC = pc.getPartes().stream()
+                    .map(p -> p.getPrecio())
+                    .reduce(0.0, (a, b) -> a + b);
+            lblImagen.setIcon(new ImageIcon(pc.getImagen().getScaledInstance(137,
+                    105, Image.SCALE_SMOOTH)));
+            lblModelo.setText(pc.getNombre());
+            lblPrecio.setText(String.valueOf(precioPC));
+            spinnerCantidad.setValue(cantidad);
+            lblSubtotal.setText(String.valueOf(cantidad * precioPC));
+        }
+
         //CONFIGURACION JSPINNER
-        SpinnerModel model = new SpinnerNumberModel(1, 1, producto.getStock(), 1); // valor inicial, mínimo, máximo y paso
-        spinnerCantidad.setModel(model);
         JComponent editor = spinnerCantidad.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {
             JTextField textField = ((JSpinner.DefaultEditor) editor).getTextField();
-            //textField.setEnabled(false);
             textField.setFocusable(false);
             textField.setEditable(false);
         }
 
-        
-        
-        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(137,
-            105, Image.SCALE_SMOOTH)));
-        lblModelo.setText(producto.getMarca() + " " + producto.getModelo());
-        lblPrecio.setText(String.valueOf(producto.getPrecio()));
-        spinnerCantidad.setValue(cantidad);
-        lblSubtotal.setText(String.valueOf(cantidad * producto.getPrecio()));
-
     }
-    
-        @Override
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();

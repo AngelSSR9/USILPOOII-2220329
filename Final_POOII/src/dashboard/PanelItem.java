@@ -1,7 +1,9 @@
 package dashboard;
 
 import clases.CarritoCompras;
+import clases.PC;
 import clases.Producto;
+import conexionBD.DetallesPcDAO;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,15 +11,36 @@ import javax.swing.JLabel;
 public class PanelItem extends javax.swing.JPanel {
 
     Producto producto;
+    PC pc;
     CarritoCompras carrito;
         
     public PanelItem(Producto producto, CarritoCompras carrito) {
         initComponents();
         this.producto = producto;
         this.carrito = carrito;
+        setInformacionProducto();
     }
 
-    public void setInformacion() {
+    public PanelItem(PC p, CarritoCompras carrito) {
+        initComponents();
+        this.pc = p;
+        this.carrito = carrito;
+        DetallesPcDAO detallesPcDAO = new DetallesPcDAO();
+        this.pc.setPartes(detallesPcDAO.obtenerDetallesPorId(pc.getId()));
+        setInformacionPC();
+    }
+    
+    public void setInformacionPC(){
+        setNombreProducto(pc.getNombre());
+        setPrecioProducto(pc.getPartes().stream()
+                .map(p -> p.getPrecio())
+                .reduce(0.0,(a,b) -> a+b));
+        setDescripcionProducto("");
+        
+        setImagenProducto(pc.getImagen());
+    }
+
+    public void setInformacionProducto() {
         setNombreProducto(producto.getMarca() + " " + producto.getModelo());
         setPrecioProducto(producto.getPrecio());
         setDescripcionProducto(producto.getTipo());
@@ -29,7 +52,7 @@ public class PanelItem extends javax.swing.JPanel {
     }
 
     public void setImagenProducto(Image imagen) {
-        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(203,
+        lblImagen.setIcon(new ImageIcon(imagen.getScaledInstance(203,
             169, Image.SCALE_SMOOTH)));
     }
 
@@ -108,8 +131,15 @@ public class PanelItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagenMouseClicked
-        FrameDetalleProducto f = new FrameDetalleProducto(producto, carrito);
-        f.setVisible(true);
+        if(producto != null){
+            FrameDetalleProducto f = new FrameDetalleProducto(producto, carrito);
+            f.setVisible(true);
+        }
+        else{
+            FrameDetalleProducto f = new FrameDetalleProducto(pc, carrito);
+            f.setVisible(true);
+        }
+        
     }//GEN-LAST:event_lblImagenMouseClicked
 
 

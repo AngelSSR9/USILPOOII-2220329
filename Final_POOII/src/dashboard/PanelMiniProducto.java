@@ -1,11 +1,12 @@
 package dashboard;
 
+import clases.PC;
 import clases.Producto;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class PanelMiniProducto extends javax.swing.JPanel {
-    
+    PC pc;
     Producto producto;
     int cantidad;
     
@@ -13,14 +14,29 @@ public class PanelMiniProducto extends javax.swing.JPanel {
         initComponents();
         this.producto = producto;
         this.cantidad = cantidad;
-        setInformacion();
+        setInformacionProducto();
+    }
+
+    public PanelMiniProducto(PC pc, int cantidad) {
+        initComponents();
+        this.pc = pc;
+        this.cantidad = cantidad;
+        setInformacionPC();
     }
     
-    public void setInformacion() {
+    public void setInformacionProducto() {
         setNombreProducto(producto.getMarca() + " " + producto.getModelo());
         setPrecioProducto(producto.getPrecio());
         setImagenProducto(producto.getImagen());
         setMarcaProducto(producto.getMarca());
+        setCantidadProducto(cantidad);
+    }
+    
+    public void setInformacionPC(){
+        setNombreProducto(pc.getNombre());
+        setPrecioProducto(pc.getPartes().stream().map(p -> p.getPrecio()).reduce(0.0, (a,b) -> a+b));
+        setImagenProducto(pc.getImagen());
+        setMarcaProducto("");
         setCantidadProducto(cantidad);
     }
 
@@ -29,7 +45,7 @@ public class PanelMiniProducto extends javax.swing.JPanel {
     }
 
     public void setImagenProducto(Image imagen) {
-        lblImagen.setIcon(new ImageIcon(producto.getImagen().getScaledInstance(88,
+        lblImagen.setIcon(new ImageIcon(imagen.getScaledInstance(88,
             80, Image.SCALE_SMOOTH)));
     }
 

@@ -45,40 +45,40 @@ public class AgregarPc extends javax.swing.JPanel {
      */
     private void cargarComboBox(){
         
-        List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("motherboard");
+        List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("PLACA MADRE");
         listaMother.forEach((t) -> cBoMoBo.addItem(t.getTipo()+"marca "+t.getMarca()));
 
-        List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("memoria ram");
+        List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("MEMORIA RAM");
         listaRam.forEach((t) -> cBoxMemRam.addItem(t.getTipo()+" marca "+t.getMarca()));
 
-        List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("memoria rom");
+        List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("ALMACENAMIENTO");
         listaRom.forEach((t) -> cBoxMemRom.addItem(t.getTipo()+" marca "+t.getMarca()));
 
-        List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("procesador");
+        List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("PROCESADOR");
         listaPro.forEach((t) -> cBoxProce.addItem(t.getTipo()+" marca "+t.getMarca()));
 
-        List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("refrigeracion");
+        List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("REFRIGERACION");
         cBoxRefrig.addItem("sin seleccionar");
         listaRefr.forEach((t) -> cBoxRefrig.addItem(t.getTipo()+" marca "+t.getMarca()));
         
         
-        List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("mouse");
+        List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("MOUSE");
         cBoxMouse.addItem("sin seleccionar");
         listaMouse.forEach((t) -> cBoxMouse.addItem(t.getTipo()+" marca "+t.getMarca()));
         
-        List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("tarjeta grafica");
+        List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("TARJETA DE VIDEO");
         cBoxTarjGraf.addItem("sin seleccionar");
         listaTar.forEach((t) -> cBoxTarjGraf.addItem(t.getTipo()+" marca "+t.getMarca()));
         
-        List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("audifonos");
+        List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("AUDIFONOS");
         cBoxAudif.addItem("sin seleccionar");
         listaAud.forEach((t) -> cBoxAudif.addItem(t.getTipo()+" marca "+t.getMarca()));
         
-        List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("teclado");
+        List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("TECLADO");
         cBoxTeclado.addItem("sin seleccionar");
         listaTec.forEach((t) -> cBoxTeclado.addItem(t.getTipo()+" marca "+t.getMarca()));
         
-        List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("monitor");
+        List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("MONITOR");
         cBoxMonitor.addItem("sin seleccionar");
         listaMon.forEach((t) -> cBoxMonitor.addItem(t.getTipo()+" marca "+t.getMarca()));
         
@@ -523,32 +523,33 @@ public class AgregarPc extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         //verifica que ninguno sea nulo
-        if(agregarCom("memoria ram", cBoxMemRam)== null || agregarCom("memoria rom", cBoxMemRom)== null || agregarCom("procesador", cBoxProce)==null || agregarCom("motherboard", cBoMoBo)==null){
+        if(agregarCom("MEMORIA RAM", cBoxMemRam)== null || agregarCom("ALMACENAMIENTO", cBoxMemRom)== null || agregarCom("PROCESADOR", cBoxProce)==null || agregarCom("PLACA MADRE", cBoMoBo)==null){
             JOptionPane.showMessageDialog(this, "El stock esta en 0");
         }else{
             
             List<Producto> prod = new ArrayList<Producto>();
-            prod.add(agregarCom("memoria ram", cBoxMemRam));
-            prod.add(agregarCom("memoria rom", cBoxMemRom));
-            prod.add(agregarCom("procesador", cBoxProce));
-            prod.add(agregarCom("motherboard", cBoMoBo));
-            if(agregarPer("refrigeracion", cBoxRefrig)!=null){
-                prod.add(agregarPer("refrigeracion", cBoxTarjGraf));
+
+            prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
+            prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
+            prod.add(agregarCom("PROCESADOR", cBoxProce));
+            prod.add(agregarCom("PLACA MADRE", cBoMoBo));
+            if(agregarPer("REFRIGERACION", cBoxTarjGraf)!=null){
+                prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
             }
-            if(agregarPer("tarjeta grafica", cBoxTarjGraf)!=null){
-                prod.add(agregarPer("tarjeta grafica", cBoxTarjGraf));
+            if(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf) != null){
+                prod.add(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf));
             }
-            if(agregarPer("mouse", cBoxMouse)!=null){
-                prod.add(agregarPer("mouse", cBoxMouse));
+            if(agregarPer("MOUSE", cBoxMouse)!=null){
+                prod.add(agregarPer("MOUSE", cBoxMouse));
             }
-            if(agregarPer("audifonos", cBoxAudif)!=null){
-                prod.add(agregarPer("audifonos", cBoxAudif));
+            if(agregarPer("AUDIFONOS", cBoxAudif)!=null){
+                prod.add(agregarPer("AUDIFONOS", cBoxAudif));
             }
-            if(agregarPer("teclado", cBoxTeclado)!=null){
-                prod.add(agregarPer("teclado", cBoxTeclado));
+            if(agregarPer("TECLADO", cBoxTeclado)!=null){
+                prod.add(agregarPer("TECLADO", cBoxTeclado));
             }
-            if(agregarPer("monitor", cBoxMonitor)!=null){
-                prod.add(agregarPer("monitor", cBoxMonitor));
+            if(agregarPer("MONITOR", cBoxMonitor)!=null){
+                prod.add(agregarPer("MONITOR", cBoxMonitor));
             }
             
             

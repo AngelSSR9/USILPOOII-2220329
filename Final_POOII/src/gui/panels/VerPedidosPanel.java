@@ -4,12 +4,15 @@
  */
 package gui.panels;
 
+import clases.Pedido;
 import clases.Producto;
+import conexionBD.PedidoDAO;
 import javax.swing.table.DefaultTableModel;
 import conexionBD.ProductoDAO;
 import gui.frames.FrameMostrarVentas;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -22,7 +25,8 @@ public class VerPedidosPanel extends javax.swing.JPanel {
     /**
      * Creates new form VentasDelDiaPanel
      */
-    private ProductoDAO productoDAO = new ProductoDAO();
+   
+    private PedidoDAO pedidoDAO = new PedidoDAO();
     public DefaultTableModel modelo = new DefaultTableModel();
     TableRowSorter<DefaultTableModel> sorter;
     
@@ -34,14 +38,14 @@ public class VerPedidosPanel extends javax.swing.JPanel {
     
     
     public void listarPedidos(){
-        List<Producto> lista = productoDAO.listar();
+        List<Pedido> lista = pedidoDAO.listar();
         modelo = (DefaultTableModel) tablaPedidos.getModel();
         Object[] ob = new Object[4];
         for (int i = 0; i < lista.size(); i++) {
-            ob[0] = lista.get(i).getId();
-            ob[1] = lista.get(i).getMarca();
-            ob[2] = lista.get(i).getModelo();
-            ob[3] = lista.get(i).getPrecio();
+            ob[0] = lista.get(i).getIdPedido();
+            ob[1] = lista.get(i).getIdCliente();
+            ob[2] = lista.get(i).getFecha();
+            ob[3] = lista.get(i).getMetodoPago();
 
             modelo.addRow(ob);
         }
@@ -121,7 +125,7 @@ public class VerPedidosPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "ID de cliente", "Fecha de generado", "Metodo de pago", "Fecha de pago"
+                "ID", "ID de cliente", "Fecha de pago", "Metodo de pago"
             }
         ));
         jScrollPane1.setViewportView(tablaPedidos);
@@ -182,10 +186,15 @@ public class VerPedidosPanel extends javax.swing.JPanel {
         int fila = tablaPedidos.getSelectedRow();
         if(fila !=-1){
             int idPed = Integer.parseInt(tablaPedidos.getValueAt(fila, 0).toString());
+            Pedido pedido = pedidoDAO.obtenerPedidoPorId(idPed);
+            FrameMostrarVentas mostVen = new FrameMostrarVentas(pedido);
+            mostVen.setVisible(true);
+        }else{
+            JOptionPane.showConfirmDialog(this, "Debe seleccionar una fila");
         }
         
-        FrameMostrarVentas mostVen = new FrameMostrarVentas();
-        mostVen.setVisible(true);
+        
+        
     }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnVerDetallesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerDetallesMouseClicked

@@ -32,6 +32,7 @@ public class DetallePedidoDAO {
                 d.setIdProducto(rs.getInt(2));
                 d.setCantidad(rs.getInt(3));
                 d.setPrecioVenta(rs.getDouble(4));
+                d.setIdPC(rs.getInt(5));
                 lista.add(d);
             }
         } catch (Exception e) {
@@ -43,7 +44,15 @@ public class DetallePedidoDAO {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precioVenta)values(?,?,?,?)";
+        String sql = "";
+        
+        if((int) o[4] ==  1){
+            sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precioVenta)values(?,?,?,?)";
+        }
+        else{
+            sql = "INSERT INTO detallespedidos(idPedido, idPC, cantidad, precioVenta)values(?,?,?,?)";
+        }
+        
         con = cn.obtenerConexion();
         try {
             ps = con.prepareStatement(sql);
@@ -54,7 +63,8 @@ public class DetallePedidoDAO {
             result = ps.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
+            System.out.println("Er: " + ex.toString());
+            //JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
         }
 
         return result;
