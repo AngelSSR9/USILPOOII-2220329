@@ -2,6 +2,7 @@
 package correo;
 
 import clases.Producto;
+import clases.observer.ElementoObservado;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class MensajeCorreo {
      * @param producto       El producto del cual se enviará la notificación.
      * @param correoCliente  La dirección de correo electrónico del cliente a la que se envia el correo.
      */
-    public void enviarMensaje(Producto producto, String correoCliente) {
+    public void enviarMensaje(ElementoObservado elementoObservado, String correoCliente) {
         try {
              // Configuración de propiedades para el servidor SMTP
             Properties properties = new Properties();
@@ -63,10 +64,10 @@ public class MensajeCorreo {
             // Cargar el contenido HTML
             InputStream htmlStream = getClass().getResourceAsStream(HTML_TEMPLATE_PATH);
             String htmlContent = convertInputStreamToString(htmlStream);
-            htmlContent = replacePlaceholders(htmlContent, producto);
+            htmlContent = replacePlaceholders(htmlContent, elementoObservado);
 
             // Crear el cuerpo multipart para incluir texto HTML y la imagen
-            MimeMultipart multipart = createMultipart(htmlContent, producto);
+            MimeMultipart multipart = createMultipart(htmlContent, elementoObservado);
 
             // Establecer el contenido del mensaje
             message.setContent(multipart);
@@ -88,15 +89,15 @@ public class MensajeCorreo {
         }
     }
 
-    private String replacePlaceholders(String htmlContent, Producto producto) {
-        htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", producto.getTipo() + " " + producto.getMarca() + " " + producto.getModelo());
-        htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(producto.getStock()));
-        htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(producto.getPrecio()));
-        htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", producto.getDescripcion());
+    private String replacePlaceholders(String htmlContent, ElementoObservado elementoObservado) {
+        htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", elementoObservado.obtenerNombre());
+        htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(elementoObservado.obtenerStock()));
+        htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(elementoObservado.obtenerPrecio()));
+        htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", elementoObservado.obtenerDescripcion());
         return htmlContent;
     }
 
-    private MimeMultipart createMultipart(String htmlContent, Producto producto) throws MessagingException, IOException {
+    private MimeMultipart createMultipart(String htmlContent, ElementoObservado elementoObservado) throws MessagingException, IOException {
         MimeMultipart multipart = new MimeMultipart("related");
 
         // Parte HTML
@@ -106,7 +107,7 @@ public class MensajeCorreo {
 
         // Parte de la imagen del producto
         MimeBodyPart imagePart = new MimeBodyPart();
-        Image imagenProducto = producto.getImagen();
+        Image imagenProducto = elementoObservado.obtenerImagen();
         InputStream imgStream = ImageUtils.convertImageToInputStream(imagenProducto, "png");
         byte[] imageBytes = convertInputStreamToBytes(imgStream);
         imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));

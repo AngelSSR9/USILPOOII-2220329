@@ -4,11 +4,14 @@ import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
 import clases.DetalleCarrito;
+import clases.PC;
 import clases.Pedido;
 import clases.Producto;
 import conexionBD.CarritoDAO;
 import conexionBD.DetalleCarritoDAO;
 import conexionBD.DetallePedidoDAO;
+import conexionBD.DetallesPcDAO;
+import conexionBD.PcDAO;
 import conexionBD.PedidoDAO;
 import conexionBD.ProductoDAO;
 import java.awt.GridLayout;
@@ -24,10 +27,14 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
     DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
     DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
     PedidoDAO pedidoDAO = new PedidoDAO();
-    ProductoDAO p = new ProductoDAO();
+    ProductoDAO productoDAO = new ProductoDAO();
+    PcDAO pcDAO = new PcDAO();
+    DetallesPcDAO detallesPcDAO = new DetallesPcDAO();
     CarritoCompras carrito;
     CarritoDAO c = new CarritoDAO();
     Cliente cliente;
+    int idPedido = 0;
+    double total = 0;
 
     public PanelProcesarCompra(Cliente cliente) {
         initComponents();
@@ -44,18 +51,27 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
             panelProductos.removeAll();
 
             List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
-            double total = 0;
+            calcularTotal();
             int cant = 0;
             for (DetalleCarrito detalle : listaDetalles) {
 
-                Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
-                total += producto.getPrecio() * detalle.getCantidad();
-                PanelMiniProducto productoPanel = new PanelMiniProducto(producto, detalle.getCantidad());
-                //System.out.println(detalle.getCantidad());
-                panelProductos.add(productoPanel);
-                panelProductos.revalidate();
-                panelProductos.repaint();
-                cant++;
+                if (detalle.getIdProducto() != 0) {
+                    Producto producto = productoDAO.obtenerProductoPorId(detalle.getIdProducto());
+                    PanelMiniProducto productoPanel = new PanelMiniProducto(producto, detalle.getCantidad());
+                    panelProductos.add(productoPanel);
+                    panelProductos.revalidate();
+                    panelProductos.repaint();
+                    cant++;
+                } else {
+                    PC pc = pcDAO.obtenerPcPorId(detalle.getIdPC());
+                    pc.setPartes(detallesPcDAO.obtenerDetallesPorId(pc.getId()));
+                    PanelMiniProducto productoPanel = new PanelMiniProducto(pc, detalle.getCantidad());
+                    panelProductos.add(productoPanel);
+                    panelProductos.revalidate();
+                    panelProductos.repaint();
+                    cant++;
+                }
+
             }
             if (listaDetalles.size() == 1) {
                 for (int i = 0; i < 2; i++) {
@@ -63,39 +79,78 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                     panelProductos.add(pan);
                 }
             }
-            lblTotal.setText(String.valueOf(total));
+            //lblTotal.setText(String.valueOf(total));
             lblNumeroProductos.setText(String.valueOf(cant));
         }
 
     }
 
-    private void generarPedido() {
-        guardarNuevaVenta();
+    public void calcularTotal() {
+        CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
+        List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+
+        total = listaDetalles.stream()
+                .map(detalle -> {
+                    if (detalle.getIdProducto() != 0) {
+                        Producto producto = productoDAO.obtenerProductoPorId(detalle.getIdProducto());
+                        return producto.getPrecio() * detalle.getCantidad();
+                    } else {
+                        PC pc = pcDAO.obtenerPcPorId(detalle.getIdPC());
+                        pc.setPartes(new DetallesPcDAO().obtenerDetallesPorId(pc.getId()));
+                        return pc.getPartes().stream()
+                                .map(p -> p.getPrecio())
+                                .reduce(0.0, (a, b) -> a + b) * detalle.getCantidad();
+                    }
+
+                })
+                .reduce(0.0, (a, b) -> a + b);
+        lblTotal.setText(String.valueOf(total));
+    }
+
+    private void generarPedido(String metodoPago) {
+        guardarNuevaVenta(metodoPago);
         guardarDetallesVenta();
         eliminarCarrito();
+        crearNuevoCarrito();
         panelProductos.removeAll();
         lblNumeroProductos.setText("0");
         lblTotal.setText("0");
     }
 
-    public void guardarNuevaVenta() {
-        pedidoDAO.agregar(new Date(), carrito.getIdCliente());
+    public void guardarNuevaVenta(String metodoPago) {
+        idPedido = pedidoDAO.agregar(new Date(), carrito.getIdCliente(), metodoPago);
     }
 
     public void guardarDetallesVenta() {
-
-        Pedido pedido = pedidoDAO.obtenerPedidoPorIdCliente(carrito.getIdCliente());
+        Pedido pedido = pedidoDAO.obtenerPedidoPorId(idPedido);
         List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
         for (DetalleCarrito detalle : listaDetalles) {
-            Producto producto = p.obtenerProductoPorId(detalle.getIdProducto());
-            p.actualizarStock(producto.getId(), producto.getStock() - detalle.getCantidad());
+            Object[] o = new Object[5];
+            if (detalle.getIdProducto() != 0) {
+                Producto producto = productoDAO.obtenerProductoPorId(detalle.getIdProducto());
+                productoDAO.actualizarStock(producto.getId(), producto.getStock() - detalle.getCantidad());
 
-            Object[] o = new Object[4];
-            o[0] = pedido.getIdPedido();
-            o[1] = producto.getId();
-            o[2] = detalle.getCantidad();
-            o[3] = producto.getPrecio();
-            detallePedidoDAO.agregar(o);
+                o[0] = pedido.getIdPedido();
+                o[1] = producto.getId();
+                o[2] = detalle.getCantidad();
+                o[3] = producto.getPrecio();
+                o[4] = 1;
+                detallePedidoDAO.agregar(o);
+            } else {
+                PC pc = pcDAO.obtenerPcPorId(detalle.getIdPC());
+                pc.setPartes(detallesPcDAO.obtenerDetallesPorId(pc.getId()));
+                pcDAO.actualizarStock(pc.getId(), pc.getStock() - detalle.getCantidad());
+
+                o[0] = pedido.getIdPedido();
+                o[1] = pc.getId();
+                o[2] = detalle.getCantidad();
+                o[3] = pc.getPartes().stream()
+                        .map(p -> p.getPrecio())
+                        .reduce(0.0,(a, b) -> a + b);
+                o[4] = 0;
+                detallePedidoDAO.agregar(o);
+            }
+
         }
     }
 
@@ -103,6 +158,10 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         detalleCarritoDAO.eliminarTodosDetalles(carrito.getIdCarrito());
         c.eliminar(carrito.getIdCarrito());
         establecerProductos();
+    }
+
+    public void crearNuevoCarrito() {
+        c.agregar(cliente.getId());
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +201,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Tarjteta de crédito");
+        jLabel4.setText("Tarjeta de crédito");
 
         checkTarjetaCredito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,7 +234,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Tarjteta de débito");
+        jLabel5.setText("Tarjeta de débito");
 
         checkTarjetaDebito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -410,15 +469,18 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                             checkTarjetaCredito.setSelected(false);
                             checkTarjetaDebito.setSelected(false);
                             JOptionPane.showMessageDialog(null, "Pedido Finalizado\nGracias por su compra !");
-                            generarPedido();
-                        }
+                            if(checkTarjetaCredito.isSelected())
+                                generarPedido("Tarjeta Crédito");
+                            else
+                                generarPedido("Tarjeta Débito");
+                        }   
 
                     });
                     frame.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
                     checkTransferencia.setSelected(false);
-                    generarPedido();
+                    generarPedido("Transferencia Bancaria");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un medio de pago.");

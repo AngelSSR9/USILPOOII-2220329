@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * La clase TiendaSubject implementa la interfaz Subject y actúa como el sujeto
  * observado en el patrón Observer.
  */
-public class TiendaSubject implements Subject{
+public class TiendaSubject implements Subject<ElementoObservado>{
     
     private static TiendaSubject instancia;
     private ArrayList<Observer> observadores = new ArrayList<>();
@@ -38,9 +38,9 @@ public class TiendaSubject implements Subject{
     }
 
     @Override
-    public void notificar(Producto producto) {
+    public void notificar(ElementoObservado objeto) {
         for (Observer observer : observadores) {
-            observer.actualizar(producto);
+            observer.actualizar(objeto);
         }
     }
 }

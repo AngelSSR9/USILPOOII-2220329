@@ -1,12 +1,13 @@
 package clases;
 
+import clases.observer.ElementoObservado;
 import clases.observer.Observer;
 import correo.MensajeCorreo;
 
 /**
  * Clase que representa a un cliente y actúa como un observador de productos.
  */
-public class Cliente  implements Observer{
+public class Cliente  implements Observer<ElementoObservado>{
     private String nombre;
     private int dni;
     private int id;
@@ -85,7 +86,7 @@ public class Cliente  implements Observer{
      * @param producto El producto actualizado a ser notificado.
      */
     @Override
-    public void actualizar(Producto producto) {
-        mensajeCorreo.enviarMensaje(producto, getCorreo());
+    public void actualizar(ElementoObservado objeto) {
+        mensajeCorreo.enviarMensaje(objeto, getCorreo());
     }
 }

@@ -1,11 +1,12 @@
 package clases;
 
+import clases.observer.ElementoObservado;
 import java.awt.Image;
 
 /**
  * Se crea una clase Producto.
  */
-public class Producto {
+public class Producto implements ElementoObservado{
     
     private double precio;
     private String marca;
@@ -151,5 +152,30 @@ public class Producto {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @Override
+    public String obtenerNombre() {
+        return this.getTipo()+this.getMarca()+this.getModelo();
+    }
+
+    @Override
+    public int obtenerStock() {
+        return this.getStock();
+    }
+
+    @Override
+    public Image obtenerImagen() {
+        return this.getImagen();
+    }
+
+    @Override
+    public double obtenerPrecio() {
+        return this.getPrecio();
+    }
+
+    @Override
+    public String obtenerDescripcion() {
+        return this.getDescripcion();
     }
 }

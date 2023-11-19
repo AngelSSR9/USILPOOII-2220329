@@ -2,6 +2,7 @@
 package gui.panels;
 
 import clases.Cliente;
+import clases.PC;
 import clases.Producto;
 import clases.observer.TiendaSubject;
 import conexionBD.ClienteDAO;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import clases.observer.Subject;
+import conexionBD.PcDAO;
 
 /**
  * Panel para realizar anuncios de productos y PCs.
@@ -19,6 +21,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
 
     // DAO para acceder a la base de datos de productos
     ProductoDAO productoDAO = new ProductoDAO();
+    PcDAO pcDAO = new PcDAO();
     
     public AnunciarPanel() {
         initComponents();
@@ -29,9 +32,13 @@ public class AnunciarPanel extends javax.swing.JPanel {
      * Método para cargar los combos con los productos y PCs disponibles.
      */
     public final void cargarCombos(){
-        List<Producto> lista = productoDAO.listar();
-        for(Producto producto : lista){
+        List<Producto> listaProductos = productoDAO.listar();
+        for(Producto producto : listaProductos){
             productosComboBox.addItem(producto.getTipo()+" "+producto.getMarca());
+        }
+        List<PC> listaPcs = pcDAO.listar();
+        for(PC pc : listaPcs){
+            pcComboBox.addItem(pc.getNombre());
         }
     }
     /**
@@ -78,6 +85,11 @@ public class AnunciarPanel extends javax.swing.JPanel {
         });
 
         btnAnunciarPc.setText("Anunciar PC");
+        btnAnunciarPc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnunciarPcMouseClicked(evt);
+            }
+        });
 
         lblElegirProducto.setFont(new java.awt.Font("Myanmar Text", 0, 18)); // NOI18N
         lblElegirProducto.setText("Elija un producto");
@@ -158,7 +170,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
     private void btnAnunciarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarProdMouseClicked
         
         Producto productoEncontrado = encontrarProducto(productosComboBox);
-        // Obtener la lista de clientes, añadir y notificarlos OBserver
+        // Obtener la listaProductos de clientes, añadir y notificarlos OBserver
         ClienteDAO clienteDAO = new ClienteDAO();
         Subject tienda = TiendaSubject.getInstancia();
         List<Cliente> clientes = clienteDAO.listar();
@@ -171,10 +183,25 @@ public class AnunciarPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Mesajes enviados");    
     }//GEN-LAST:event_btnAnunciarProdMouseClicked
 
+    private void btnAnunciarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarPcMouseClicked
+        PC pcEncontrada = encontrarPc(pcComboBox);
+        // Obtener la lista de clientes, añadir y notificarlos como Observer
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Subject tienda = TiendaSubject.getInstancia();
+        List<Cliente> clientes = clienteDAO.listar();
+        for (Cliente cliente : clientes) {
+            tienda.añadir(cliente);
+        }
+        JOptionPane.showMessageDialog(null, "Espere a que los correos se envíen");
+        tienda.notificar(pcEncontrada);
+        System.out.println("Mensajes Enviados");
+        JOptionPane.showMessageDialog(null, "Mensajes enviados");
+    }//GEN-LAST:event_btnAnunciarPcMouseClicked
+
     /**
      * Método para encontrar un producto seleccionado en el combo.
      *
-     * @param box ComboBox que contiene la lista de productos
+     * @param box ComboBox que contiene la listaProductos de productos
      * @return Producto seleccionado o null si no hay stock
      */
     private Producto encontrarProducto(JComboBox box){
@@ -191,6 +218,21 @@ public class AnunciarPanel extends javax.swing.JPanel {
                 return null;
             }
         
+    }
+    
+    private PC encontrarPc (JComboBox box){
+        List<PC> valoresEspecificos = pcDAO.listar();
+        int selectedIndex = box.getSelectedIndex();
+
+        if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+            if (valoresEspecificos.get(selectedIndex).getStock() != 0) {
+                return valoresEspecificos.get(selectedIndex);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

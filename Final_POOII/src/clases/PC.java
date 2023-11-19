@@ -1,14 +1,18 @@
 package clases;
 
+import clases.observer.ElementoObservado;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class PC {
+public class PC implements ElementoObservado{
     private int id;
     private String nombre;
     private int stock;
     private Image imagen;
-    
     private List<Producto> partes;
     
     public void add(Producto p){
@@ -55,4 +59,33 @@ public class PC {
         this.partes = partes;
     }
 
+    @Override
+    public String obtenerNombre() {
+        return this.getNombre();
+    }
+
+    @Override
+    public int obtenerStock() {
+        return this.getStock();
+    }
+
+    @Override
+    public Image obtenerImagen() {
+        return this.getImagen();
+    }
+
+    @Override
+    public double obtenerPrecio() {
+        return 00;
+    }
+
+    @Override
+    public String obtenerDescripcion() {
+        // Convierte la lista de productos a una cadena
+        String descripcion = getPartes().stream()
+                .map(producto -> producto.getTipo() + " " + producto.getMarca() + " " + producto.getModelo())
+                .collect(Collectors.joining("\n"));
+
+        return "Componentes: " + descripcion;
+    }
 }

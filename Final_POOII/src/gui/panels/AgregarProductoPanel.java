@@ -41,7 +41,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         String precio = precioTxt.getText();
         String stock = stockTxt.getText();
         String categoria = (String) catCombo.getSelectedItem();
-        String tipo = tipoTxt.getText();
+        String tipo = (String)boxTipo.getSelectedItem();
         String rutaImagen = imagenTxt.getText();
         String descripcion = mDescription.getText();
 
@@ -105,6 +105,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         LogInButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         tipoTxt = new javax.swing.JTextField();
+        boxTipo = new javax.swing.JComboBox<>();
 
         updatePanel.setBackground(new java.awt.Color(255, 255, 255));
         updatePanel.setPreferredSize(new java.awt.Dimension(853, 496));
@@ -198,6 +199,11 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         catCombo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         catCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Periferico", "Componente" }));
         catCombo.setSelectedIndex(-1);
+        catCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                catComboActionPerformed(evt);
+            }
+        });
         updatePanel.add(catCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, -1));
 
         mDescription.setColumns(20);
@@ -264,6 +270,8 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         });
         updatePanel.add(tipoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 110, -1));
 
+        updatePanel.add(boxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 120, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,9 +336,33 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoTxtActionPerformed
 
+    private void catComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catComboActionPerformed
+        String item = (String) catCombo.getSelectedItem();
+        if(item.equals("Componente")){
+            boxTipo.removeAllItems();
+            boxTipo.addItem("PROCESADOR");
+            boxTipo.addItem("PLACA MADRE");
+            boxTipo.addItem("TARJETA DE VIDEO");
+            boxTipo.addItem("MEMORIA RAM");
+            boxTipo.addItem("ALMACENAMIENTO");
+            boxTipo.addItem("REFRIGERACION");
+            boxTipo.addItem("FUENTE DE PODER");
+        }
+        else if(item.equals("Periferico")){
+            boxTipo.removeAllItems();
+            boxTipo.addItem("MONITOR");
+            boxTipo.addItem("MOUSE");
+            boxTipo.addItem("TECLADO");
+            boxTipo.addItem("AUDIFONOS");
+            boxTipo.addItem("MOUSEPAD");
+        }
+             
+    }//GEN-LAST:event_catComboActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogInButton;
+    private javax.swing.JComboBox<String> boxTipo;
     public javax.swing.JComboBox<String> catCombo;
     public javax.swing.JTextField imagenTxt;
     private javax.swing.JLabel jLabel10;
