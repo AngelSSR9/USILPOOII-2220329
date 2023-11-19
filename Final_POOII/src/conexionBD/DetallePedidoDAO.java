@@ -32,6 +32,7 @@ public class DetallePedidoDAO {
                 d.setIdProducto(rs.getInt(2));
                 d.setCantidad(rs.getInt(3));
                 d.setPrecioVenta(rs.getDouble(4));
+                d.setIdPC(rs.getInt(5));
                 lista.add(d);
             }
         } catch (Exception e) {

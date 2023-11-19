@@ -342,6 +342,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
         } else {
+            
             id = Integer.parseInt(tablaProductos.getValueAt(fila, 0).toString());
             String marca = tablaProductos.getValueAt(fila, 1).toString();
             String modelo = tablaProductos.getValueAt(fila, 2).toString();
@@ -350,7 +351,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
             String tipo = tablaProductos.getValueAt(fila, 5).toString();
             String stock = tablaProductos.getValueAt(fila, 6).toString();
             
-            
+            // llena los cuadros de textos con los datos de la fila seleccionada.
             idTxt.setText(String.valueOf(id));
             marcaTxt.setText(marca);
             modeloTxt.setText(modelo);

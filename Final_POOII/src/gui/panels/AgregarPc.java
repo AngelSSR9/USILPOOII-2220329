@@ -528,6 +528,7 @@ public class AgregarPc extends javax.swing.JPanel {
         }else{
             
             List<Producto> prod = new ArrayList<Producto>();
+
             prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
             prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
             prod.add(agregarCom("PROCESADOR", cBoxProce));

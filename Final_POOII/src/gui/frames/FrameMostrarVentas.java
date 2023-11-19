@@ -4,6 +4,19 @@
  */
 package gui.frames;
 
+import clases.DetalleCarrito;
+import clases.DetallePedido;
+import clases.PC;
+import clases.Pedido;
+import clases.Producto;
+import conexionBD.DetallePedidoDAO;
+import conexionBD.DetallesPcDAO;
+import conexionBD.PcDAO;
+import conexionBD.ProductoDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author henry
@@ -13,8 +26,50 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
     /**
      * Creates new form FrameMostrarVentas
      */
-    public FrameMostrarVentas() {
+    private Pedido pedido;
+    private DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
+    private ProductoDAO productoDAO = new ProductoDAO();
+    private PcDAO pcDAO = new PcDAO();
+    private DetallesPcDAO detPCDAO = new DetallesPcDAO();
+    public DefaultTableModel modelo = new DefaultTableModel();
+    
+    public FrameMostrarVentas(Pedido pedido) {
         initComponents();
+        this.pedido = pedido;
+        jLabel3.setText(pedido.getFecha().toString());
+        listarDetalles();
+        
+    }
+    
+    private void listarDetalles(){
+        List<DetallePedido> lst = detallePedidoDAO.obtenerDetallesPorId(pedido.getIdPedido());
+        modelo =(DefaultTableModel) detallesTabla.getModel();
+        Object[] o = new Object[4];
+        for (DetallePedido d : lst) {
+            Producto p = productoDAO.obtenerProductoPorId(d.getIdProducto());
+            PC pc = pcDAO.obtenerPcPorId(d.getIdPC());
+            if(p!=null){
+                o[0] = p.getTipo()+ " marca "+p.getMarca();
+                o[1] = null;
+                o[2] = d.getCantidad();
+                o[3] = p.getPrecio();
+                modelo.addRow(o);
+            }else if(pc!=null){
+                o[0] = null;
+                o[1] = pc.getNombre();
+                o[2] = d.getCantidad();
+                double precioTotal = detPCDAO.obtenerDetallesPorId(pc.getId()).stream()
+                                                                                  .mapToDouble(ob->ob.getPrecio())
+                                                                                  .reduce((o1,o2)->o1+o2).getAsDouble();
+                o[3] = precioTotal;
+                modelo.addRow(o);
+            }else{
+                JOptionPane.showMessageDialog(this, "Error al cargar la tabla", "Error", ERROR);
+            }
+            
+        }
+        detallesTabla.setModel(modelo);
+        
     }
 
     /**
@@ -30,7 +85,7 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        detallesTabla = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("DETALLES DE VENTA");
@@ -39,18 +94,15 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
 
         jLabel4.setText("TOTAL:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        detallesTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Producto", "PC", "Cantidad", "Precio"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("PC");
-        }
+        jScrollPane1.setViewportView(detallesTabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,16 +170,17 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameMostrarVentas().setVisible(true);
+                Pedido pedidoEjemplo = new Pedido();
+                new FrameMostrarVentas(pedidoEjemplo).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable detallesTabla;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

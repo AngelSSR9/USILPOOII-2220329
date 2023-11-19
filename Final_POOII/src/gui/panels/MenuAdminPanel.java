@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class MenuAdminPanel extends javax.swing.JPanel {
-
+    
     private RegistroProductosPanel regProd;
     private VerPedidosPanel vnts;
     private VerClientesPanel clnts;
@@ -17,21 +17,13 @@ public class MenuAdminPanel extends javax.swing.JPanel {
     private AnunciarPanel anun;
     private AgregarPc pc;
     private RegistroPcPanel regPc;
-
+    /**
+     * constructor del panel
+     */
     public MenuAdminPanel() {
         initComponents();
-        cargarComboBoxProductos();
-        cargarComboBoxColores();
         
         
-    }
-
-    private void cargarComboBoxProductos() {
-
-    }
-
-    private void cargarComboBoxColores() {
-
     }
 
     @SuppressWarnings("unchecked")
@@ -287,6 +279,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void OpcionAgregarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionAgregarPcMouseClicked
         // TODO add your handling code here:
+        // Se muestra AgregarPc en el panelContenido
         this.pc = new AgregarPc();
         panelContenido.removeAll();  // Elimina cualquier componente anterior
         panelContenido.add(pc);  // Agrega la imagen al panel
@@ -307,6 +300,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void OpcionVentasDelDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionVentasDelDiaMouseClicked
         // TODO add your handling code here:
+        // Se muestra VerPedidosPanel en el panelContenido
         this.vnts = new VerPedidosPanel();
         panelContenido.removeAll();
         panelContenido.add(vnts);
@@ -327,6 +321,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionVerClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionVerClientesMouseClicked
         // TODO add your handling code here:
+        // Se muestra VerClientesPanel en el panelContenido
         this.clnts = new VerClientesPanel();
         panelContenido.removeAll();
         panelContenido.add(clnts);
@@ -347,6 +342,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionAnunciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAnunciarMouseClicked
         // TODO add your handling code here:
+        // Se muestra AnunciarPanel en el panelContenido
         this.anun = new AnunciarPanel();
         panelContenido.removeAll();
         panelContenido.add(anun);
@@ -371,7 +367,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
         int posicion = this.sliderOpciones.getX();
             
             
-        
+        // Se muestra RegistroProductosPanel en el panelContenido
         this.regProd = new RegistroProductosPanel();
         panelContenido.removeAll();
         panelContenido.add(regProd);
@@ -393,6 +389,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void opcionAgregarProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcionAgregarProductosMouseClicked
         // TODO add your handling code here:
+        // Se muestra AgregarProductoPanel en el panelContenido
         this.agg = new AgregarProductoPanel();
         panelContenido.removeAll();
         panelContenido.add(agg);
@@ -413,6 +410,7 @@ public class MenuAdminPanel extends javax.swing.JPanel {
 
     private void OpcionRegistroPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OpcionRegistroPcMouseClicked
         // TODO add your handling code here:
+        // Se muestra RegistroPcPanel en el panelContenido
         this.regPc = new RegistroPcPanel();
         panelContenido.removeAll();
         panelContenido.add(regPc);
