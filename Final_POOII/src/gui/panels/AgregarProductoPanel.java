@@ -33,7 +33,11 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
     public AgregarProductoPanel() {
         initComponents();
     }
-
+    /**
+     * 
+     * @return devuelve true si se cambis la BD existosamente
+     * en caso contrario devuelve false
+     */
     private boolean agregarProductoBD() {
         Object[] o = new Object[8];
         String marca = marcaTxt.getText();
@@ -66,7 +70,9 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
             return false;
         }
     }
-
+    /**
+     * Limpia los compenente si se cambio la BD
+     */
     public void agregarProducto() {
         boolean confirm = agregarProductoBD();
         if (confirm) {

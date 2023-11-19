@@ -532,8 +532,11 @@ public class AgregarPc extends javax.swing.JPanel {
             prod.add(agregarCom("memoria rom", cBoxMemRom));
             prod.add(agregarCom("procesador", cBoxProce));
             prod.add(agregarCom("motherboard", cBoMoBo));
-            if(agregarPer("refrigeracion", cBoxTarjGraf)!=null){
+            if(agregarPer("refrigeracion", cBoxRefrig)!=null){
                 prod.add(agregarPer("refrigeracion", cBoxTarjGraf));
+            }
+            if(agregarPer("tarjeta grafica", cBoxTarjGraf)!=null){
+                prod.add(agregarPer("tarjeta grafica", cBoxTarjGraf));
             }
             if(agregarPer("mouse", cBoxMouse)!=null){
                 prod.add(agregarPer("mouse", cBoxMouse));

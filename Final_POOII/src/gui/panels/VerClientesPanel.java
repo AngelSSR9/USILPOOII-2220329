@@ -36,7 +36,9 @@ public class VerClientesPanel extends javax.swing.JPanel {
     
     
     
-    // lista en la tabla los clientes registrados y le establece modelos
+    /**
+     * lista en la tabla los clientes registrados y le establece modelos
+     */
     public void listarClientes(){
         List<Cliente> lista = clienteDAO.listar();
         System.out.println(lista.size());
@@ -56,7 +58,9 @@ public class VerClientesPanel extends javax.swing.JPanel {
         sorte = new TableRowSorter<>(modelo);
         tablaClientes.setRowSorter(sorte);
     }
-    //filtra las filas segun lo escrito en el textBuscar
+    /**
+     * filtra las filas segun lo escrito en el textBuscar
+     */
     private void buscar() {
         try {
             String textoBusqueda = txtBuscar.getText().toLowerCase(); // Convertir a minúsculas
