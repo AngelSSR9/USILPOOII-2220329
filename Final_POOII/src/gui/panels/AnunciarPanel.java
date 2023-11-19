@@ -4,6 +4,7 @@ package gui.panels;
 import clases.Cliente;
 import clases.PC;
 import clases.Producto;
+import clases.observer.ElementoObservado;
 import clases.observer.TiendaSubject;
 import conexionBD.ClienteDAO;
 import conexionBD.ProductoDAO;
@@ -74,8 +75,6 @@ public class AnunciarPanel extends javax.swing.JPanel {
 
         tituloAnunciarProductos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tituloAnunciarProductos.setText("ANUNCIAR PRODUCTOS");
-
-        pcComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnAnunciarProd.setText("Anunciar producto");
         btnAnunciarProd.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,7 +168,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
      */
     private void btnAnunciarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarProdMouseClicked
         
-        Producto productoEncontrado = encontrarProducto(productosComboBox);
+        ElementoObservado productoEncontrado = encontrarProducto(productosComboBox);
         // Obtener la listaProductos de clientes, añadir y notificarlos OBserver
         ClienteDAO clienteDAO = new ClienteDAO();
         Subject tienda = TiendaSubject.getInstancia();
@@ -184,7 +183,7 @@ public class AnunciarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAnunciarProdMouseClicked
 
     private void btnAnunciarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarPcMouseClicked
-        PC pcEncontrada = encontrarPc(pcComboBox);
+        ElementoObservado pcEncontrada = encontrarPc(pcComboBox);
         // Obtener la lista de clientes, añadir y notificarlos como Observer
         ClienteDAO clienteDAO = new ClienteDAO();
         Subject tienda = TiendaSubject.getInstancia();

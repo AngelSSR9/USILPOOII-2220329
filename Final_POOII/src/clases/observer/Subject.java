@@ -4,7 +4,8 @@ package clases.observer;
 
 /**
  * La interfaz Subject define el contrato que deben seguir los sujetos observados.
- * @param 
+ *
+ * @param <T> El tipo de objeto que el sujeto observado maneja, debe extender de ElementoObservado.
  */
 public interface Subject <T extends ElementoObservado> {
     /**
@@ -22,8 +23,7 @@ public interface Subject <T extends ElementoObservado> {
     /**
      * Notifica a todos los observadores sobre un cambio en el sujeto observado.
      *
-     * @param objeto
-     * @param producto El producto que ha experimentado un cambio.
+     * @param objeto El objeto que ha experimentado un cambio.
      */
     abstract void notificar(T objeto);
 }

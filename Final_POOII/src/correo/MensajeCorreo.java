@@ -1,7 +1,6 @@
 
 package correo;
 
-import clases.Producto;
 import clases.observer.ElementoObservado;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
@@ -39,8 +38,8 @@ public class MensajeCorreo {
     /**
      * Envía un mensaje de correo electrónico con información sobre un nuevo producto.
      *
-     * @param producto       El producto del cual se enviará la notificación.
-     * @param correoCliente  La dirección de correo electrónico del cliente a la que se envia el correo.
+     * @param elementoObservado El objeto observado del cual se enviará la notificación.
+     * @param correoCliente     La dirección de correo electrónico del cliente a la que se envía el correo.
      */
     public void enviarMensaje(ElementoObservado elementoObservado, String correoCliente) {
         try {
@@ -83,20 +82,43 @@ public class MensajeCorreo {
         }
     }
 
+    /**
+     * Convierte un flujo de entrada en una cadena.
+     *
+     * @param inputStream El flujo de entrada a convertir.
+     * @return La cadena resultante.
+     * @throws IOException Si hay un error al leer el flujo de entrada.
+     */
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
             return scanner.useDelimiter("\\A").next();
         }
     }
 
+    /**
+     * Reemplaza los marcadores de posición en el contenido HTML con los valores del objeto observado.
+     *
+     * @param htmlContent        El contenido HTML con marcadores de posición.
+     * @param elementoObservado El objeto observado que proporciona los valores para reemplazar.
+     * @return El contenido HTML con los marcadores de posición reemplazados.
+     */
     private String replacePlaceholders(String htmlContent, ElementoObservado elementoObservado) {
-        htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", elementoObservado.obtenerNombre());
-        htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(elementoObservado.obtenerStock()));
-        htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(elementoObservado.obtenerPrecio()));
-        htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", elementoObservado.obtenerDescripcion());
+        htmlContent = htmlContent.replace("{PRODUCTO_NOMBRE}", elementoObservado.cargarNombre());
+        htmlContent = htmlContent.replace("{PRODUCTO_STOCK}", Integer.toString(elementoObservado.cargarStock()));
+        htmlContent = htmlContent.replace("{PRODUCTO_PRECIO}", Double.toString(elementoObservado.cargarPrecio()));
+        htmlContent = htmlContent.replace("{PRODUCTO_DESCRIPCION}", elementoObservado.cargarDescripcion());
         return htmlContent;
     }
 
+    /**
+     * Crea la parte multipart del mensaje que incluye texto HTML y la imagen del producto.
+     *
+     * @param htmlContent        El contenido HTML del mensaje.
+     * @param elementoObservado El objeto observado que proporciona la imagen del producto o pc.
+     * @return La parte multipart del mensaje.
+     * @throws MessagingException Si hay un error al construir la parte multipart.
+     * @throws IOException       Si hay un error al leer la imagen del producto o pc.
+     */
     private MimeMultipart createMultipart(String htmlContent, ElementoObservado elementoObservado) throws MessagingException, IOException {
         MimeMultipart multipart = new MimeMultipart("related");
 
@@ -105,9 +127,9 @@ public class MensajeCorreo {
         htmlPart.setContent(htmlContent, "text/html");
         multipart.addBodyPart(htmlPart);
 
-        // Parte de la imagen del producto
+        // Parte de la imagen del producto o pc
         MimeBodyPart imagePart = new MimeBodyPart();
-        Image imagenProducto = elementoObservado.obtenerImagen();
+        Image imagenProducto = elementoObservado.cargarImagen();
         InputStream imgStream = ImageUtils.convertImageToInputStream(imagenProducto, "png");
         byte[] imageBytes = convertInputStreamToBytes(imgStream);
         imagePart.setDataHandler(new DataHandler(new ByteArrayDataSource(imageBytes, "image/png")));
@@ -125,6 +147,13 @@ public class MensajeCorreo {
         return multipart;
     }
 
+    /**
+     * Convierte un flujo de entrada en un array de bytes.
+     *
+     * @param inputStream El flujo de entrada a convertir.
+     * @return El array de bytes resultante.
+     * @throws IOException Si hay un error al leer el flujo de entrada.
+     */
     private byte[] convertInputStreamToBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];

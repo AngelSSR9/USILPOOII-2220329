@@ -155,27 +155,27 @@ public class Producto implements ElementoObservado{
     }
 
     @Override
-    public String obtenerNombre() {
-        return this.getTipo()+this.getMarca()+this.getModelo();
+    public String cargarNombre() {
+        return this.getTipo()+" "+ this.getMarca()+" "+this.getModelo();
     }
 
     @Override
-    public int obtenerStock() {
+    public int cargarStock() {
         return this.getStock();
     }
 
     @Override
-    public Image obtenerImagen() {
+    public Image cargarImagen() {
         return this.getImagen();
     }
 
     @Override
-    public double obtenerPrecio() {
+    public double cargarPrecio() {
         return this.getPrecio();
     }
 
     @Override
-    public String obtenerDescripcion() {
+    public String cargarDescripcion() {
         return this.getDescripcion();
     }
 }
