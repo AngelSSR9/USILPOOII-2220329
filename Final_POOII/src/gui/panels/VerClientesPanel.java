@@ -189,11 +189,13 @@ public class VerClientesPanel extends javax.swing.JPanel {
     private void btnBorrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBorrarMouseClicked
         // TODO add your handling code here:
         int fila = tablaClientes.getSelectedRow();
-        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+        System.out.println(fila);
+        
         
         if(fila ==-1){
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
         }else{
+            int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
             clienteDAO.eliminar(id);
         }
         Constantes.limpiarTabla(modelo);

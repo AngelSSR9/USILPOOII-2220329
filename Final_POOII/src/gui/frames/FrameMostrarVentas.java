@@ -44,6 +44,7 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
     private void listarDetalles(){
         List<DetallePedido> lst = detallePedidoDAO.obtenerDetallesPorId(pedido.getIdPedido());
         modelo =(DefaultTableModel) detallesTabla.getModel();
+        double aux = 0;
         Object[] o = new Object[4];
         for (DetallePedido d : lst) {
             Producto p = productoDAO.obtenerProductoPorId(d.getIdProducto());
@@ -53,6 +54,7 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
                 o[1] = null;
                 o[2] = d.getCantidad();
                 o[3] = p.getPrecio();
+                aux+=p.getPrecio()*d.getCantidad();
                 modelo.addRow(o);
             }else if(pc!=null){
                 o[0] = null;
@@ -62,12 +64,12 @@ public class FrameMostrarVentas extends javax.swing.JFrame {
                                                                                   .mapToDouble(ob->ob.getPrecio())
                                                                                   .reduce((o1,o2)->o1+o2).getAsDouble();
                 o[3] = precioTotal;
+                aux+=precioTotal*d.getCantidad();
                 modelo.addRow(o);
-            }else{
-                JOptionPane.showMessageDialog(this, "Error al cargar la tabla", "Error", ERROR);
             }
             
         }
+        jLabel3.setText(""+aux);
         detallesTabla.setModel(modelo);
         
     }

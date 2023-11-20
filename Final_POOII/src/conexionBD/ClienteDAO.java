@@ -11,25 +11,25 @@ import javax.swing.JOptionPane;
 
 public class ClienteDAO  {
    
-    Connection con;
-    Conexion cn = Conexion.obtenerInstancia();
-    PreparedStatement ps;
-    ResultSet rs;
+    Connection connection;
+    Conexion conexion = Conexion.obtenerInstancia();
+    PreparedStatement preparedStatement;
+    ResultSet resultSet;
 
     public List listar() {
         List<Cliente> lista = new ArrayList<>();
         String query = "SELECT * FROM Clientes";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 Cliente c = new Cliente();
-                c.setId(rs.getInt(1));
-                c.setNombre(rs.getString(2));
-                c.setCorreo(rs.getString(3));
-                c.setContraseña(rs.getString(4));
-                c.setDni(rs.getInt(5));
+                c.setId(resultSet.getInt(1));
+                c.setNombre(resultSet.getString(2));
+                c.setCorreo(resultSet.getString(3));
+                c.setContraseña(resultSet.getString(4));
+                c.setDni(resultSet.getInt(5));
                 lista.add(c);
             }
         } catch (Exception e) {
@@ -42,14 +42,14 @@ public class ClienteDAO  {
     public int agregar(Object[] o) {
         int result = 0;
         String sql = "INSERT INTO Clientes(nombre, correo, contraseña, dni)values(?,?,?,?)";
-        con = cn.obtenerConexion();
+        connection = conexion.obtenerConexion();
         try {
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
-            ps.setObject(4, o[3]);
-            result = ps.executeUpdate();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, o[0]);
+            preparedStatement.setObject(2, o[1]);
+            preparedStatement.setObject(3, o[2]);
+            preparedStatement.setObject(4, o[3]);
+            result = preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente agregado correctamente.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
@@ -62,10 +62,10 @@ public class ClienteDAO  {
     public void eliminar(int id) {
         String sql = "DELETE FROM Clientes WHERE idCliente =?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -77,14 +77,14 @@ public class ClienteDAO  {
         int r = 0;
         String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
-            ps.setObject(4, o[3]);
-            ps.setObject(5, o[4]);
-            r = ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, o[0]);
+            preparedStatement.setObject(2, o[1]);
+            preparedStatement.setObject(3, o[2]);
+            preparedStatement.setObject(4, o[3]);
+            preparedStatement.setObject(5, o[4]);
+            r = preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -96,16 +96,16 @@ public class ClienteDAO  {
         String query = "SELECT * FROM Clientes WHERE DNI =" + dni;
         Cliente c = null;
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 c = new Cliente();
-                c.setId(rs.getInt(1));
-                c.setNombre(rs.getString(2));
-                c.setCorreo(rs.getString(3));
-                c.setContraseña(rs.getString(4));
-                c.setDni(rs.getInt(5));
+                c.setId(resultSet.getInt(1));
+                c.setNombre(resultSet.getString(2));
+                c.setCorreo(resultSet.getString(3));
+                c.setContraseña(resultSet.getString(4));
+                c.setDni(resultSet.getInt(5));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());

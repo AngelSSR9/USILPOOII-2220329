@@ -18,22 +18,22 @@ import javax.swing.JOptionPane;
  * @author henry
  */
 public class DetallesPcDAO {
-    Connection con;
-    Conexion cn = Conexion.obtenerInstancia();
-    PreparedStatement ps;
-    ResultSet rs;
+    Connection connection;
+    Conexion conexion = Conexion.obtenerInstancia();
+    PreparedStatement preparedStatement;
+        ResultSet resultSet;
     
     public int agregar(Object[] o) throws IOException {
         int result = 0;
         String query = "INSERT INTO detallespc(idPc,idProducto)values(?,?)";
-        con = cn.obtenerConexion();
+        connection = conexion.obtenerConexion();
         try {
-            ps = con.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query);
             
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
+            preparedStatement.setObject(1, o[0]);
+            preparedStatement.setObject(2, o[1]);
              JOptionPane.showMessageDialog(null, "Productos agregados correctamente.");
-            result = ps.executeUpdate();
+            result = preparedStatement.executeUpdate();
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -50,15 +50,15 @@ public class DetallesPcDAO {
         ProductoDAO pDAO = new ProductoDAO();
             List<Producto> productos = new ArrayList<Producto>();
         try{
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
             
             // Establece el valor del parámetro idPc
-            ps.setInt(1, idPc);
+            preparedStatement.setInt(1, idPc);
             
-            rs = ps.executeQuery();
-            while(rs.next()){
-                lst.add(rs.getString(2));
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                lst.add(resultSet.getString(2));
             }
             
             for(String id : lst){
@@ -78,11 +78,11 @@ public class DetallesPcDAO {
         String sql = "DELETE FROM detallespc WHERE idPc =?";
         
         try{
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
             
-            ps.setInt(1, idPc);
-            ps.executeUpdate();
+            preparedStatement.setInt(1, idPc);
+            preparedStatement.executeUpdate();
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al eliminar detalles: " + e.toString());

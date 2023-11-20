@@ -30,7 +30,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
      * @return devuelve true si se envio existosmente los cambios a la BD,
      * en caso contrario devolverá falso
      */
-    private boolean modificarProductoBD() {
+        private boolean modificarProductoBD() {
         Object[] o = new Object[9];
         String marca = marcaTxt.getText();
         String modelo = modeloTxt.getText();
@@ -381,7 +381,14 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
         // TODO add your handling code here:
-        modificarProducto();
+        List<String> lst = List.of(idTxt.getText(),marcaTxt.getText(),modeloTxt.getText(), precioTxt.getText()
+                                    , categoriaTxt.getText(), tipoTxt.getText(), imagenTxt.getText(), stockTxt.getText());
+        if(lst.stream().allMatch(l->!l.isEmpty())){
+            modificarProducto();
+        }else {
+            JOptionPane.showMessageDialog(this, "Todos los espacios deben estar llenos");
+        }
+        
     }//GEN-LAST:event_modificarButtonActionPerformed
 
     private void limpiarDatosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarDatosButtonActionPerformed

@@ -11,23 +11,23 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class DetalleCarritoDAO {
-    Connection con;
-    Conexion cn = Conexion.obtenerInstancia();
-    PreparedStatement ps;
-    ResultSet rs;
+    Connection connection;
+    Conexion conexion = Conexion.obtenerInstancia();
+    PreparedStatement preparedStatement;
+    ResultSet resultSet;
 
     public List listar() {
         List<DetalleCarrito> lista = new ArrayList<>();
         String query = "SELECT * FROM detallescarrito";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 DetalleCarrito d = new DetalleCarrito();
-                d.setIdCarrito(rs.getInt(1));
-                d.setIdProducto(rs.getInt(2));
-                d.setCantidad(rs.getInt(3));
+                d.setIdCarrito(resultSet.getInt(1));
+                d.setIdProducto(resultSet.getInt(2));
+                d.setCantidad(resultSet.getInt(3));
                 lista.add(d);
             }
         } catch (SQLException e) {
@@ -47,14 +47,14 @@ public class DetalleCarritoDAO {
             sql = "INSERT INTO detallescarrito(idCarrito, idPC, cantidad)values(?,?,?)";
         }
        
-        con = cn.obtenerConexion();
+        connection = conexion.obtenerConexion();
         try {
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
-            ps.setObject(3, o[2]);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, o[0]);
+            preparedStatement.setObject(2, o[1]);
+            preparedStatement.setObject(3, o[2]);
 
-            result = ps.executeUpdate();
+            result = preparedStatement.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.toString());;
@@ -74,11 +74,11 @@ public class DetalleCarritoDAO {
         }
     
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, idCarrito);
-            ps.setInt(2, idProducto);
-            ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idCarrito);
+            preparedStatement.setInt(2, idProducto);
+            preparedStatement.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -89,10 +89,10 @@ public class DetalleCarritoDAO {
     public void eliminarTodosDetalles(int idCarrito){
         String sql = "DELETE FROM detallescarrito WHERE idCarrito =?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, idCarrito);
-            ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idCarrito);
+            preparedStatement.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -103,16 +103,16 @@ public class DetalleCarritoDAO {
         List<DetalleCarrito> lista = new ArrayList<>();
         String sql = "SELECT * FROM detallescarrito WHERE idCarrito = ?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while(rs.next()){
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
                 DetalleCarrito d = new DetalleCarrito();
-                d.setIdCarrito(rs.getInt(1));
-                d.setIdProducto(rs.getInt(2));
-                d.setIdPC(rs.getInt(3));
-                d.setCantidad(rs.getInt(4));
+                d.setIdCarrito(resultSet.getInt(1));
+                d.setIdProducto(resultSet.getInt(2));
+                d.setIdPC(resultSet.getInt(3));
+                d.setCantidad(resultSet.getInt(4));
                 lista.add(d);
             }
             //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
@@ -134,12 +134,12 @@ public class DetalleCarritoDAO {
         }
         
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, nuevaCantidad);
-            ps.setObject(2, idCarrito);
-            ps.setObject(3, idProducto);
-            r = ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, nuevaCantidad);
+            preparedStatement.setObject(2, idCarrito);
+            preparedStatement.setObject(3, idProducto);
+            r = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }

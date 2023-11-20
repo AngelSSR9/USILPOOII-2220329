@@ -23,26 +23,25 @@ import javax.swing.JOptionPane;
  *
  * @author henry
  */
-public class PcDAO {
-    DetallesPcDAO detPc = new DetallesPcDAO();
-    Connection con;
-    Conexion cn = Conexion.obtenerInstancia();
-    PreparedStatement ps;
-    ResultSet rs;
+public class PcDAO {;
+    Connection connection;
+    Conexion conexion = Conexion.obtenerInstancia();
+    PreparedStatement preparedStatement;
+        ResultSet resultSet;
     
     public List listar(){
         List<PC> lst = new ArrayList<PC>();
         String query = "SELECT * FROM pc";
         try{
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while(rs.next()){
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
                 PC p = new PC();
-                p.setId(rs.getInt(1));
-                p.setNombre(rs.getString(2));
-                p.setStock(rs.getInt(3));
-                byte[] imageData = rs.getBytes(4);
+                p.setId(resultSet.getInt(1));
+                p.setNombre(resultSet.getString(2));
+                p.setStock(resultSet.getInt(3));
+                byte[] imageData = resultSet.getBytes(4);
                 if (imageData != null) {
                     p.setImagen(ImageIO.read(new ByteArrayInputStream(imageData)));
                 } else {
@@ -65,26 +64,26 @@ public class PcDAO {
         String sql = "INSERT INTO pc(nombre, stock, imagen) VALUES (?, ?, ?)";
         String obtenerIdSql = "SELECT LAST_INSERT_ID() as id";  // Específico de MySQL
 
-        con = cn.obtenerConexion();
+        connection = conexion.obtenerConexion();
         try {
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, o[0]);
-            ps.setObject(2, o[1]);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, o[0]);
+            preparedStatement.setObject(2, o[1]);
 
             // Convertir la imagen a un arreglo de bytes para ser almacenada en la base de datos
             File imagenFile = new File((String) o[2]);
             byte[] imagenBytes = Files.readAllBytes(imagenFile.toPath());
 
-            ps.setBlob(3, new SerialBlob(imagenBytes));
-            ps.executeUpdate();
+            preparedStatement.setBlob(3, new SerialBlob(imagenBytes));
+            preparedStatement.executeUpdate();
 
             // Obtener el ID después de la inserción
 
             try{
-                ps = con.prepareStatement(obtenerIdSql);
-                rs =ps.executeQuery();
-                if (rs.next()) {
-                    idGenerado = rs.getInt("id");
+                preparedStatement = connection.prepareStatement(obtenerIdSql);
+                resultSet =preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    idGenerado = resultSet.getInt("id");
                     System.out.println("ID generado después de la inserción: " + idGenerado);
                 } else {
                     System.out.println("No se pudo obtener el ID generado después de la inserción.");
@@ -104,10 +103,10 @@ public class PcDAO {
     public void eliminar(int id) {
         String sql = "DELETE FROM pc WHERE idPC =?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -119,11 +118,11 @@ public class PcDAO {
         int r = 0;
         String sql = "UPDATE pc SET stock=? WHERE idPC=?";
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(sql);
-            ps.setObject(1, stock);
-            ps.setObject(2, idPC);
-            r = ps.executeUpdate();
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setObject(1, stock);
+            preparedStatement.setObject(2, idPC);
+            r = preparedStatement.executeUpdate();
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
@@ -135,16 +134,16 @@ public class PcDAO {
         String query = "SELECT * FROM pc WHERE idPC = ?";
         PC p = null;
         try {
-            con = cn.obtenerConexion();
-            ps = con.prepareStatement(query);
-            ps.setObject(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            connection = conexion.obtenerConexion();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setObject(1, id);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 p = new PC();
-                p.setId(rs.getInt(1));
-                p.setNombre(rs.getString(2));
-                p.setStock(rs.getInt(3));
-                p.setImagen(ImageIO.read(new ByteArrayInputStream(rs.getBytes(4))));
+                p.setId(resultSet.getInt(1));
+                p.setNombre(resultSet.getString(2));
+                p.setStock(resultSet.getInt(3));
+                p.setImagen(ImageIO.read(new ByteArrayInputStream(resultSet.getBytes(4))));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
