@@ -345,6 +345,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
             boxTipo.addItem("ALMACENAMIENTO");
             boxTipo.addItem("REFRIGERACION");
             boxTipo.addItem("FUENTE DE PODER");
+            boxTipo.addItem("GABINETE");
         }
         else if(item.equals("Periferico")){
             boxTipo.removeAllItems();

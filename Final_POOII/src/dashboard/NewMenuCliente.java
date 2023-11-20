@@ -275,6 +275,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnHistorialMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistorialMousePressed
         cambioColor.AnimattHistorial();
+        panelHistorialPedidos= new PanelHistorialPedidos(cliente);
         dashboardView.removeAll();
         dashboardView.add(panelHistorialPedidos);
         dashboardView.revalidate();
@@ -283,6 +284,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnAjustesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMousePressed
         cambioColor.AnimattAjustes();
+        if( optionsClient== null){
+            optionsClient= new OptionsClient(cliente);
+        }
         dashboardView.removeAll();
         dashboardView.add(optionsClient);
         dashboardView.revalidate();

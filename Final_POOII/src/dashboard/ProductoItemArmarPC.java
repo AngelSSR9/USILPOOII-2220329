@@ -52,14 +52,14 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (productos.size() >= 8) {
-                        JOptionPane.showMessageDialog(null, "Cannot add more than 8 products!");
+                        JOptionPane.showMessageDialog(null, "No puedes agregar mas de 8 productos!");
                     } else if (producto.getStock() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Not enough product in Stock!");
+                        JOptionPane.showMessageDialog(null, "No hay este producto en stock!");
                     } else if (productos.contains(producto)) {
-                        JOptionPane.showMessageDialog(null, "Product already chosen!");
+                        JOptionPane.showMessageDialog(null, "Este producto ya fue elegido!");
                     } else {
                         productos.add(producto);
-                        JOptionPane.showMessageDialog(null, "Product chosen");
+                        JOptionPane.showMessageDialog(null, "Product elegido");
                         text.setForeground(Color.red);
                     }
                 }

@@ -1,9 +1,5 @@
 package diseño;
 
-/**
- *
- * @author david
- */
 
 import dashboard.NewMenuCliente;
 import java.awt.Color;

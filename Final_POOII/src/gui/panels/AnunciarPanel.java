@@ -34,13 +34,9 @@ public class AnunciarPanel extends javax.swing.JPanel {
      */
     public final void cargarCombos(){
         List<Producto> listaProductos = productoDAO.listar();
-        for(Producto producto : listaProductos){
-            productosComboBox.addItem(producto.getTipo()+" "+producto.getMarca());
-        }
+        listaProductos.forEach(producto -> productosComboBox.addItem(producto.getTipo()+" "+producto.getMarca()));
         List<PC> listaPcs = pcDAO.listar();
-        for(PC pc : listaPcs){
-            pcComboBox.addItem(pc.getNombre());
-        }
+        listaPcs.forEach(pc -> pcComboBox.addItem(pc.getNombre()));
     }
     /**
      * This method is called from within the constructor to initialize the form.

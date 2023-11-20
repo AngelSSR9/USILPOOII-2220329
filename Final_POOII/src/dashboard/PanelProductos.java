@@ -32,7 +32,7 @@ public class PanelProductos extends javax.swing.JPanel {
     private void iniciar() {
         MenuCustom menu = new MenuCustom();
         menu.addItem("Periféricos", "Monitor", "Mouse", "Teclado", "Audifono", "Mousepad");
-        menu.addItem("Componentes", "Procesador", "Tarjeta de Video", "Memoria RAM", "Placa Madre", "Almacenamiento");
+        menu.addItem("Componentes", "Procesador", "Tarjeta de Video", "Memoria RAM", "Placa Madre", "Almacenamiento", "Refrigeracion", "Fuente de poder", "Gabinete");
         menu.addItem("PC");
         //menu.setMenuHeight(40);
         menu.addEvent(new MenuEvent() {
