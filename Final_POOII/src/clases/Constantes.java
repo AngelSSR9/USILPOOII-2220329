@@ -30,43 +30,13 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
  * @author david
  */
 public class Constantes {
     private static ProductoDAO productoDAO = new ProductoDAO();
-        private static ClienteDAO clienteDAO = new ClienteDAO();
-    
-    
-    static final String MENU = "-----------BIENVENIDO------------\n"
-            + "[1] Ingresar como empleado.\n"
-            + "[2] Ingresar como gerente.\n"
-            + "[3] Salir del sistema.\n";
-    static final String MENU_EMPLEADO_LOGGIN = "---------------------------\n"
-            + "[1] Iniciar Sesion(DNI).\n"
-            + "[2] Registrarse.\n"
-            + "[3] Salir.\n"
-            + "------------------------------\n";
-
-    static final String MENU_EMPLEADO = "------------MENU--------------\n"
-            + "[1] Registrar nuevo producto.\n"
-            + "[2] Registrar una nueva venta.\n"
-            + "[3] Realizar una nueva fabricacion.\n"
-            + "[4] Salir.\n";
-    static final String MENU_GERENTE = "----------------MENU----------------\n"
-            + "[1] Agregar un producto nuevo\n"
-            + "[2] Eliminar un producto registrado.\n"
-            + "[3] Eliminar un empleado registrado.\n"
-            + "[4] Mostrar los empleados registrados.\n"
-            + "[5] Mostrar los productos registrados y el stock disponible.\n"
-            + "[6] Mostrar las ventas del dia.\n"
-            + "[7] SALIR\n";
+    private static ClienteDAO clienteDAO = new ClienteDAO();
 
     public static final boolean esNumeroInt(String text) {
         try {

@@ -19,12 +19,13 @@ public class NewMenuCliente extends javax.swing.JFrame {
     PanelProductos productosPanel;
     PanelArmarPcCliente panelArmarPc;
     PanelHistorialPedidos panelHistorialPedidos;
-    OptionsClient optionsClient = new OptionsClient();
+    OptionsClient optionsClient;
     Cliente cliente = new Cliente();
     
     public NewMenuCliente() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false); //Evita que el usuario modifque el tamaño
     }
     
     public void setCliente(Cliente cliente){
@@ -35,6 +36,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
         panelProcesarCompra = new PanelProcesarCompra(cliente);
         panelArmarPc = new PanelArmarPcCliente(cliente);
         panelHistorialPedidos = new PanelHistorialPedidos(cliente);
+        optionsClient = new OptionsClient(cliente);
       
         carritoPanel.buttonProcesarCompra.addActionListener(new ActionListener() {
             @Override
@@ -70,8 +72,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtSali = new javax.swing.JLabel();
         btnProductos = new diseño.RoundedPanelGradient();
         txtProductos = new javax.swing.JLabel();
-        btnPCs = new diseño.RoundedPanelGradient();
-        txtPc = new javax.swing.JLabel();
         btnArmarPc = new diseño.RoundedPanelGradient();
         txtArmarPC = new javax.swing.JLabel();
         btnHistorial = new diseño.RoundedPanelGradient();
@@ -108,9 +108,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtCarrito.setForeground(new java.awt.Color(255, 255, 255));
         txtCarrito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/carro.png"))); // NOI18N
         txtCarrito.setText("   Carrito Productos");
-        btnCarritoCompras.add(txtCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
+        btnCarritoCompras.add(txtCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 18, -1, -1));
 
-        optionMenu.add(btnCarritoCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 180, 50));
+        optionMenu.add(btnCarritoCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 180, 60));
 
         lblTitulo.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -145,29 +145,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtProductos.setForeground(new java.awt.Color(255, 255, 255));
         txtProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/producto.png"))); // NOI18N
         txtProductos.setText("  Productos");
-        btnProductos.add(txtProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
+        btnProductos.add(txtProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 18, -1, -1));
 
-        optionMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 180, 50));
-
-        btnPCs.setBackground(new java.awt.Color(23, 27, 36));
-        btnPCs.setColorGradient(new java.awt.Color(23, 27, 36));
-        btnPCs.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPCsMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnPCsMousePressed(evt);
-            }
-        });
-        btnPCs.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtPc.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtPc.setForeground(new java.awt.Color(255, 255, 255));
-        txtPc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/pc-de-escritorio.png"))); // NOI18N
-        txtPc.setText("  PC's");
-        btnPCs.add(txtPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
-
-        optionMenu.add(btnPCs, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 50));
+        optionMenu.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 145, 180, 60));
 
         btnArmarPc.setBackground(new java.awt.Color(23, 27, 36));
         btnArmarPc.setColorGradient(new java.awt.Color(23, 27, 36));
@@ -182,9 +162,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtArmarPC.setForeground(new java.awt.Color(255, 255, 255));
         txtArmarPC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/armar.png"))); // NOI18N
         txtArmarPC.setText("  Armar PC");
-        btnArmarPc.add(txtArmarPC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
+        btnArmarPc.add(txtArmarPC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 18, -1, -1));
 
-        optionMenu.add(btnArmarPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 180, 50));
+        optionMenu.add(btnArmarPc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, 60));
 
         btnHistorial.setBackground(new java.awt.Color(23, 27, 36));
         btnHistorial.setColorGradient(new java.awt.Color(23, 27, 36));
@@ -199,9 +179,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtHistorial.setForeground(new java.awt.Color(255, 255, 255));
         txtHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/historial.png"))); // NOI18N
         txtHistorial.setText("  Historial de Pedidos");
-        btnHistorial.add(txtHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
+        btnHistorial.add(txtHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 18, -1, -1));
 
-        optionMenu.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 180, 50));
+        optionMenu.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 295, 180, 60));
 
         btnAjustes.setBackground(new java.awt.Color(23, 27, 36));
         btnAjustes.setColorGradient(new java.awt.Color(23, 27, 36));
@@ -216,9 +196,9 @@ public class NewMenuCliente extends javax.swing.JFrame {
         txtAjustes.setForeground(new java.awt.Color(255, 255, 255));
         txtAjustes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/ajuste.png"))); // NOI18N
         txtAjustes.setText("  Ajustes");
-        btnAjustes.add(txtAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 15, -1, -1));
+        btnAjustes.add(txtAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 18, -1, -1));
 
-        optionMenu.add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 180, 50));
+        optionMenu.add(btnAjustes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 180, 60));
 
         menuPrincipalPanel.add(optionMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 500));
 
@@ -281,10 +261,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
         dashboardView.repaint();
     }//GEN-LAST:event_btnProductosMousePressed
 
-    private void btnPCsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPCsMousePressed
-        cambioColor.AnimattPC();
-    }//GEN-LAST:event_btnPCsMousePressed
-
     private void btnArmarPcMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArmarPcMousePressed
         cambioColor.AnimattArmarPC();
         if(panelArmarPc == null){
@@ -307,7 +283,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
 
     private void btnAjustesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjustesMousePressed
         cambioColor.AnimattAjustes();
-        optionsClient.setCliente(cliente);
         dashboardView.removeAll();
         dashboardView.add(optionsClient);
         dashboardView.revalidate();
@@ -325,10 +300,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
         logCli.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSalirMouseClicked
-
-    private void btnPCsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPCsMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPCsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -370,7 +341,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
     public static diseño.RoundedPanelGradient btnArmarPc;
     public static diseño.RoundedPanelGradient btnCarritoCompras;
     public static diseño.RoundedPanelGradient btnHistorial;
-    public static diseño.RoundedPanelGradient btnPCs;
     public static diseño.RoundedPanelGradient btnProductos;
     private diseño.RoundedPanelGradient btnSalir;
     private javax.swing.JPanel dashboardView;
@@ -381,7 +351,6 @@ public class NewMenuCliente extends javax.swing.JFrame {
     public static javax.swing.JLabel txtArmarPC;
     public static javax.swing.JLabel txtCarrito;
     public static javax.swing.JLabel txtHistorial;
-    public static javax.swing.JLabel txtPc;
     public static javax.swing.JLabel txtProductos;
     private javax.swing.JLabel txtSali;
     // End of variables declaration//GEN-END:variables

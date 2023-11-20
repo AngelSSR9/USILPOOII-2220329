@@ -1,8 +1,5 @@
 package correo;
-/**
- *
- * @author david
- */
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -11,7 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 
+/**
+ * La clase ImageUtils proporciona utilidades para trabajar con imágenes.
+ */
 public class ImageUtils {
+    
+    /**
+     * Convierte una imagen en un flujo de entrada (InputStream) en el formato especificado.
+     *
+     * @param image  La imagen a convertir.
+     * @param format El formato de la imagen (por ejemplo, "png", "jpeg").
+     * @return Un flujo de entrada que representa la imagen convertida.
+     * @throws IOException Si ocurre un error de E/S durante la conversión.
+     */
     public static InputStream convertImageToInputStream(Image image, String format) throws IOException {
         BufferedImage bufferedImage = toBufferedImage(image);
         return convertBufferedImageToInputStream(bufferedImage, format);

@@ -1,26 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package dashboard;
 
 import clases.Cliente;
 import conexionBD.ClienteDAO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import login.Validacion;
+
 
 /**
- *
- * @author david
+ * Panel para la modificación de datos de un cliente en el sistema.
+ * Permite cambiar el nombre de usuario, correo electrónico, contraseña y DNI.
+ * Utiliza validaciones para asegurar la correcta entrada de datos.
+ * Selecciona un cliente existente para modificar sus datos.
  */
 public class EditarDatosCliente extends javax.swing.JPanel {
 
+    // Instancia de la clase de validación
+    Validacion validacion = new Validacion();
+    
+    // Cliente a ser modificado
     Cliente cliente = new Cliente();
     
+    /**
+     * Constructor que inicializa los componentes del panel.
+     */
     public EditarDatosCliente() {
         initComponents();
     }
     
+    /**
+     * Establece el cliente que se va a modificar.
+     *
+     * @param cliente Cliente a ser modificado.
+     */
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
     }
@@ -58,11 +71,6 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         userTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 userTxtMousePressed(evt);
-            }
-        });
-        userTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userTxtActionPerformed(evt);
             }
         });
         panelMain.add(userTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 190, -1));
@@ -105,11 +113,6 @@ public class EditarDatosCliente extends javax.swing.JPanel {
                 dniTxtMousePressed(evt);
             }
         });
-        dniTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dniTxtActionPerformed(evt);
-            }
-        });
         panelMain.add(dniTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 190, -1));
 
         lblDni.setText("Dni");
@@ -135,14 +138,14 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userTxtActionPerformed
-
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnChangeActionPerformed
 
+    /**
+     * Cambia el texto "Ingrese correo" al hacer click para ingresar correo.
+     * @param evt El evento del mouse.
+    */
     private void correoTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_correoTxtMousePressed
         if (correoTxt.getText().equals("Ingrese su correo")) {
             correoTxt.setText("");
@@ -150,6 +153,10 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_correoTxtMousePressed
 
+    /**
+     * Cambia el texto "Ingrese su usuario" al hacer click para ingresar el usuario.
+     * @param evt El evento del mouse.
+    */
     private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
         if (userTxt.getText().equals("Ingrese su usuario")) {
             userTxt.setText("");
@@ -157,15 +164,22 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_userTxtMousePressed
 
+    /**
+     * Realiza el cambio de datos cuando se hace clic en el botón "CAMBIAR".
+     *
+     * @param evt El evento del mouse.
+     */
     private void btnChangeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseClicked
-        if (!esDireccionDeCorreoValida(correoTxt.getText())) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese una dirección de correo electrónico válida.");
-            return;
-        }
+        
         String usuario = userTxt.getText();
         String correo = correoTxt.getText();
         String contraseña = new String(passTxt.getPassword()); 
         String dni = dniTxt.getText();
+        
+        // Llama al método de validación
+        if (!validacion.validarRegistro(usuario, correo, contraseña, dni)) {
+            return; // Detiene la ejecución si la validación no es exitosa
+        }
         
         ClienteDAO clienteDAO = new ClienteDAO();
         
@@ -188,6 +202,10 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnChangeMouseClicked
 
+    /**
+     * Cambia el texto "Ingrese su dni" al hacer click para ingresar el dni.
+     * @param evt El evento del mouse.
+    */
     private void dniTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dniTxtMousePressed
         if (dniTxt.getText().equals("Ingrese su dni")) {
             dniTxt.setText("");
@@ -195,6 +213,10 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_dniTxtMousePressed
 
+    /**
+     * Cambia el texto "********" al hacer click para ingresar contraseña.
+     * @param evt El evento del mouse.
+    */
     private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
         if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
@@ -202,15 +224,6 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_passTxtMousePressed
 
-    private void dniTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dniTxtActionPerformed
-
-    private boolean esDireccionDeCorreoValida(String direccionCorreo) {
-        // Utiliza una expresión regular simple para validar la dirección de correo.
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        return direccionCorreo.matches(regex);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChange;

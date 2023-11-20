@@ -11,21 +11,36 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 
+/**
+ * Panel que muestra las opciones disponibles para un cliente, como ver y editar
+ * información personal y revisar el estado de la cuenta.
+ * Permite acceder a la edición de datos personales.
+ */
 public class OptionsClient extends javax.swing.JPanel {
 
+    // Cliente asociado a este panel
+    Cliente cliente;
+    // Panel para la edición de datos del cliente
+    EditarDatosCliente editarDatos = new EditarDatosCliente();
     
-    Cliente cliente = new Cliente();
-    EditarDatosCliente edc = new EditarDatosCliente();
-    public OptionsClient() {
+    /**
+     * Constructor que inicializa los componentes del panel y muestra los datos del cliente.
+     *
+     * @param cliente Cliente para el cual se mostrarán las opciones.
+     */
+    public OptionsClient(Cliente cliente) {
         initComponents();
+        this.cliente = cliente;
+        mostrarDatos();
     }
 
-    
-    public void setCliente(Cliente cliente){
+    /**
+     * Muestra los datos del cliente en el panel.
+     */
+    public final void mostrarDatos(){
         txtUsuario.setText(cliente.getNombre());
         txtCorreo.setText(cliente.getCorreo());
         txtDni.setText(Integer.toString(cliente.getDni()));
-        this.cliente = cliente;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,6 +51,8 @@ public class OptionsClient extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        kGradientPanel1 = new keeptoo.KGradientPanel();
+        tittleInformacionPersonal = new javax.swing.JLabel();
         panelDatosPersonales = new javax.swing.JPanel();
         lblDatosPersonales = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JLabel();
@@ -46,11 +63,10 @@ public class OptionsClient extends javax.swing.JPanel {
         lblDni = new javax.swing.JLabel();
         btnEditar = new javax.swing.JLabel();
         PanelEstadoDeCuenta = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        tittleInformacionPersonal = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setForeground(new java.awt.Color(204, 204, 0));
@@ -58,40 +74,48 @@ public class OptionsClient extends javax.swing.JPanel {
         setRequestFocusEnabled(false);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        kGradientPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tittleInformacionPersonal.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
+        tittleInformacionPersonal.setForeground(new java.awt.Color(255, 255, 255));
+        tittleInformacionPersonal.setText("MI INFORMACION PERSONAL");
+        kGradientPanel1.add(tittleInformacionPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+
         panelDatosPersonales.setBackground(new java.awt.Color(255, 255, 255));
         panelDatosPersonales.setForeground(new java.awt.Color(204, 204, 204));
         panelDatosPersonales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblDatosPersonales.setFont(new java.awt.Font("Leelawadee", 1, 12)); // NOI18N
+        lblDatosPersonales.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
         lblDatosPersonales.setForeground(new java.awt.Color(204, 0, 204));
         lblDatosPersonales.setText("DATOS PERSONALES");
-        panelDatosPersonales.add(lblDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 18, -1, -1));
+        panelDatosPersonales.add(lblDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
+        txtUsuario.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(204, 0, 204));
-        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtUsuarioMouseClicked(evt);
-            }
-        });
-        panelDatosPersonales.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 130, 20));
+        panelDatosPersonales.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 250, 30));
 
+        txtCorreo.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(204, 0, 204));
-        panelDatosPersonales.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, 130, 20));
+        panelDatosPersonales.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 230, 40));
 
+        txtDni.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         txtDni.setForeground(new java.awt.Color(204, 0, 204));
-        panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 20));
+        panelDatosPersonales.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 240, 30));
 
+        lblCorreo.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         lblCorreo.setForeground(new java.awt.Color(153, 0, 153));
         lblCorreo.setText("Correo:");
-        panelDatosPersonales.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, -1, -1));
+        panelDatosPersonales.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, -1, -1));
 
+        lblUsuario.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(153, 0, 153));
         lblUsuario.setText("Usuario:");
-        panelDatosPersonales.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        panelDatosPersonales.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
+        lblDni.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
         lblDni.setForeground(new java.awt.Color(153, 0, 153));
         lblDni.setText("Dni:");
-        panelDatosPersonales.add(lblDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+        panelDatosPersonales.add(lblDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardimg/lapizRosaEditaer.jpeg"))); // NOI18N
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -99,18 +123,13 @@ public class OptionsClient extends javax.swing.JPanel {
                 btnEditarMouseClicked(evt);
             }
         });
-        panelDatosPersonales.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, -1));
+        panelDatosPersonales.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 80, -1, -1));
 
-        add(panelDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 540, 170));
+        kGradientPanel1.add(panelDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 790, 210));
 
         PanelEstadoDeCuenta.setBackground(new java.awt.Color(255, 255, 255));
         PanelEstadoDeCuenta.setForeground(new java.awt.Color(204, 204, 204));
         PanelEstadoDeCuenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Leelawadee", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 0, 204));
-        jLabel2.setText("ESTADO DE LA CUENTA");
-        PanelEstadoDeCuenta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -121,28 +140,32 @@ public class OptionsClient extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 102));
         jLabel1.setText("VERIFICADO");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 210, 50));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 180, 40));
 
         PanelEstadoDeCuenta.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 540, 50));
 
-        add(PanelEstadoDeCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 540, 120));
+        jLabel2.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 0, 204));
+        jLabel2.setText("ESTADO DE LA CUENTA");
+        PanelEstadoDeCuenta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        tittleInformacionPersonal.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
-        tittleInformacionPersonal.setForeground(new java.awt.Color(204, 0, 204));
-        tittleInformacionPersonal.setText("MI INFORMACION PERSONAL");
-        add(tittleInformacionPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 310, 20));
+        kGradientPanel1.add(PanelEstadoDeCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 540, 120));
+
+        add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 530));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMouseClicked
-        
-    }//GEN-LAST:event_txtUsuarioMouseClicked
-
+    /**
+     * Acción realizada cuando se hace clic en el botón de editar.
+     * Muestra la ventana de edición de datos personales.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         
         JFrame popupFrame = new JFrame();
         popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        edc.setCliente(this.cliente);
-        popupFrame.getContentPane().add(edc);
+        editarDatos.setCliente(this.cliente);
+        popupFrame.getContentPane().add(editarDatos);
         popupFrame.pack();
         popupFrame.setLocationRelativeTo(this); 
         popupFrame.setVisible(true);
@@ -157,6 +180,7 @@ public class OptionsClient extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDatosPersonales;
     private javax.swing.JLabel lblDni;
