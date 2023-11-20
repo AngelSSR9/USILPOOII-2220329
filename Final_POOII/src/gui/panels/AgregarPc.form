@@ -220,7 +220,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Memoria ROM"/>
+        <Property name="text" type="java.lang.String" value="Almacenamiento"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cBoxMemRom">

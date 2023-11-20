@@ -213,7 +213,7 @@ public class AgregarPc extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         photoSelection = new javax.swing.JButton();
 
-        jLabel2.setText("Memoria ROM");
+        jLabel2.setText("Almacenamiento");
 
         jLabel3.setText("Procesador");
 

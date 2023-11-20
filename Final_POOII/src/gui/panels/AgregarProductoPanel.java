@@ -13,7 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import conexionBD.ProductoDAO;
-import java.awt.List;
 
 /**
  *
@@ -21,7 +20,6 @@ import java.awt.List;
  */
 public class AgregarProductoPanel extends javax.swing.JPanel {
 
-    AgregarProductoPanel app;
     public DefaultTableModel modelo = new DefaultTableModel();
     public int id;
     ProductoDAO productoDAO = new ProductoDAO();
@@ -110,7 +108,6 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         precioTxt = new javax.swing.JTextField();
         LogInButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        tipoTxt = new javax.swing.JTextField();
         boxTipo = new javax.swing.JComboBox<>();
 
         updatePanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -264,17 +261,7 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 77, 64));
         jLabel10.setText("tipo");
-        updatePanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 30, -1));
-
-        tipoTxt.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tipoTxt.setForeground(new java.awt.Color(0, 77, 64));
-        tipoTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 77, 64)));
-        tipoTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tipoTxtActionPerformed(evt);
-            }
-        });
-        updatePanel.add(tipoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 110, -1));
+        updatePanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 30, -1));
 
         updatePanel.add(boxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 120, -1));
 
@@ -347,10 +334,6 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_LogInButtonActionPerformed
 
-    private void tipoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tipoTxtActionPerformed
-
     private void catComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catComboActionPerformed
         String item = (String) catCombo.getSelectedItem();
         if(item.equals("Componente")){
@@ -397,7 +380,6 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
     public javax.swing.JTextField precioTxt;
     private javax.swing.JLabel selectedPhoto;
     public javax.swing.JTextField stockTxt;
-    public javax.swing.JTextField tipoTxt;
     public javax.swing.JPanel updatePanel;
     // End of variables declaration//GEN-END:variables
 }
