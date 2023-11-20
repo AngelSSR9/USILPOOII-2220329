@@ -5,6 +5,7 @@ import clases.Cliente;
 import conexionBD.ClienteDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
+import java.util.stream.Collectors;
 
 /**
  * Clase interna para manejar la validación de los datos de registro.
@@ -51,15 +52,14 @@ public class Validacion {
         ClienteDAO clienteDAO = new ClienteDAO();
         
         List<Cliente> clientes = clienteDAO.listar();
-        for(Cliente cliente : clientes){
-            if(correo.equals(cliente.getCorreo())){
-                JOptionPane.showMessageDialog(null, "Este correo ya esta registrado");
-                return false;
-            }
-            if(dni.equals(String.valueOf(cliente.getDni()))){
-                JOptionPane.showMessageDialog(null, "Este dni ya esta registrado");
-                return false;
-            }
+        if (clientes.stream().anyMatch(cliente -> correo.equals(cliente.getCorreo()))) {
+            JOptionPane.showMessageDialog(null, "Este correo ya está registrado");
+            return false;
+        }
+
+        if (clientes.stream().anyMatch(cliente -> dni.equals(String.valueOf(cliente.getDni())))) {
+            JOptionPane.showMessageDialog(null, "Este DNI ya está registrado");
+            return false;
         }
         // Si llega hasta aquí, la validación fue exitosa
         return true;

@@ -81,9 +81,8 @@ public class Cliente  implements Observer<ElementoObservado>{
 
     /**
      * Método de la interfaz Observer que se llama cuando hay una actualización de
-     * un producto. Envia un mensaje de correo electrónico al cliente.
-     *
-     * @param producto El producto actualizado a ser notificado.
+     * un producto o pc. Envia un mensaje de correo electrónico al cliente.
+     * @param objeto 
      */
     @Override
     public void actualizar(ElementoObservado objeto) {

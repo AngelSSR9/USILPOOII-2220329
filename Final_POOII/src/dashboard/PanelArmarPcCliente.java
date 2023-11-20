@@ -73,7 +73,6 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
             if(p.getTipo().equals(componenteSeleccionado)){
                 ProductoItemArmarPC panel = new ProductoItemArmarPC(p,carrito,productosElegidos);
                 panel.setInformacion();
-                System.out.println(p.toString());
                 panelPrincipal.add(panel);
                 productosElegidos = panel.cambiarColor(nombreDelComponenteSeleccionado);
             }
@@ -85,7 +84,6 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
                 panelPrincipal.add(panel);
                 panelPrincipal.revalidate();
                 panelPrincipal.repaint();
-                System.out.println(i);
             }
     }
     

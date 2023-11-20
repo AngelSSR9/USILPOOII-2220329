@@ -19,7 +19,7 @@ public interface Subject <T extends ElementoObservado> {
      *
      * @param observer El observador a eliminar.
      */
-    abstract void eliminar(Observer observer);
+    abstract void eliminar(Observer<T> observer);
     /**
      * Notifica a todos los observadores sobre un cambio en el sujeto observado.
      *
