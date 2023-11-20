@@ -71,7 +71,7 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
      * Establece la información del producto en la interfaz gráfica.
      */
     public void setInformacion() {
-        setNombreProducto(producto.getMarca() + " " + producto.getModelo());
+        setNombreProducto(producto.getMarca());
         setPrecioProducto(producto.getPrecio());
         setImagenProducto(producto.getImagen());
     }
@@ -101,7 +101,7 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
      * @param precio El precio del producto.
      */
     public void setPrecioProducto(double precio) {
-        lblPrecio.setText(String.valueOf(precio));
+        lblPrecio.setText("S/."+String.valueOf(precio));
     }
 
     /**
@@ -155,13 +155,10 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
         panelProducto.setLayout(panelProductoLayout);
         panelProductoLayout.setHorizontalGroup(
             panelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProductoLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(lblPrecio)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProductoLayout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(panelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPrecio)
                     .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombre))
                 .addGap(20, 20, 20))
@@ -173,8 +170,9 @@ public class ProductoItemArmarPC extends javax.swing.JPanel {
                 .addComponent(lblNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(lblPrecio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrecio)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
