@@ -1,7 +1,9 @@
 package dashboard;
 
 import clases.Cliente;
+import conexionBD.ClienteDAO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -60,6 +62,7 @@ public class OptionsClient extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        decisionCheckBox = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setForeground(new java.awt.Color(204, 204, 0));
@@ -144,6 +147,18 @@ public class OptionsClient extends javax.swing.JPanel {
 
         kGradientPanel1.add(PanelEstadoDeCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 540, 120));
 
+        decisionCheckBox.setBackground(new java.awt.Color(255, 255, 255));
+        decisionCheckBox.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 18)); // NOI18N
+        decisionCheckBox.setForeground(new java.awt.Color(204, 0, 204));
+        decisionCheckBox.setSelected(true);
+        decisionCheckBox.setText("¿Desea recibir correos?");
+        decisionCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decisionCheckBoxActionPerformed(evt);
+            }
+        });
+        kGradientPanel1.add(decisionCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, 240, 40));
+
         add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 530));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -164,11 +179,37 @@ public class OptionsClient extends javax.swing.JPanel {
         popupFrame.setVisible(true);
     }//GEN-LAST:event_btnEditarMouseClicked
 
+    private void decisionCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decisionCheckBoxActionPerformed
+        // Obtenemos el estado actual del checkbox
+        boolean estadoCheckbox = decisionCheckBox.isSelected();
+
+        // Actualizamos el atributo notificacion del cliente
+        cliente.setDecision(estadoCheckbox);
+
+        // Actualizamos el estado en la base de datos
+        ClienteDAO clienteDAO = new ClienteDAO();
+        
+        Object[] o = new Object[6];
+        o[0] = cliente.getNombre();
+        o[1] = cliente.getCorreo();
+        o[2] = cliente.getContraseña();
+        o[3] = cliente.getDni();
+        o[4] = cliente.isDecision();
+        o[5] = cliente.getId();
+
+        clienteDAO.actualizar(o);
+    }//GEN-LAST:event_decisionCheckBoxActionPerformed
+
+    
+    public final void verificarCheck(Cliente cliente){
+        decisionCheckBox.setSelected(cliente.isDecision());
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelEstadoDeCuenta;
     private javax.swing.JLabel btnEditar;
+    private javax.swing.JCheckBox decisionCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

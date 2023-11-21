@@ -344,7 +344,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
                 detalleCarritoDAO.agregar(o);
                 JOptionPane.showMessageDialog(null, "Producto añadido al carrito!");
             }
-            else{
+            else if(pc!=null){
                 o[0] = carrito.getIdCarrito();
                 o[1] = pc.getId();
                 o[2] = cantidad;

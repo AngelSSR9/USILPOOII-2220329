@@ -247,7 +247,7 @@ public class GeneradorComprobante {
 
     private static void agregarQRCode(PdfWriter pdfWriter, Document documento)
             throws IOException, DocumentException {
-        String rutaImagenQR = "src/img/qr.png";
+        String rutaImagenQR = "src/correo/images/QR_Github.png";
         Image image = Image.getInstance(rutaImagenQR);
         image.scaleAbsolute(80, 80);
         image.setAbsolutePosition(110, 20);  // Ajustar la posición de la imagen hacia abajo
