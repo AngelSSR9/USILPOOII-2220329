@@ -312,7 +312,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
                 d = new DetalleCarritoDAO();
                 d.agregar(o);
             }
-            else{
+            else if(pc!=null){
                 o[0] = carrito.getIdCarrito();
                 o[1] = pc.getId();
                 o[2] = cantidad;

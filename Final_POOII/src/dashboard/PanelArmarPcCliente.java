@@ -430,10 +430,11 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
         if(productosElegidos.size()==8){
             for(Producto producto : productosElegidos){
-                Object o[] = new Object[3];
+                Object o[] = new Object[4];
                 o[0] = carrito.getIdCarrito();
                 o[1] = producto.getId();
                 o[2] = 1;
+                o[3] = 1;
                 DetalleCarritoDAO d =  new DetalleCarritoDAO();
                 d.agregar(o);
             }
