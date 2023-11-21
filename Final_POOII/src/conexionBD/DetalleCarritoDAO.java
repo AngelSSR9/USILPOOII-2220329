@@ -40,7 +40,7 @@ public class DetalleCarritoDAO {
     public int agregar(Object[] o) {
         int result = 0;
         String sql = "";
-        if((int) o[3] == 1){
+        if((int) o[2] == 1){
             sql = "INSERT INTO detallescarrito(idCarrito, idProducto, cantidad)values(?,?,?)";
         }
         else{

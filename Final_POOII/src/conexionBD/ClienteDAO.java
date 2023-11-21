@@ -30,6 +30,7 @@ public class ClienteDAO  {
                 c.setCorreo(resultSet.getString(3));
                 c.setContraseña(resultSet.getString(4));
                 c.setDni(resultSet.getInt(5));
+                c.setDecision(resultSet.getBoolean(6));
                 lista.add(c);
             }
         } catch (Exception e) {
@@ -41,7 +42,7 @@ public class ClienteDAO  {
 
     public int agregar(Object[] o) {
         int result = 0;
-        String sql = "INSERT INTO Clientes(nombre, correo, contraseña, dni)values(?,?,?,?)";
+        String sql = "INSERT INTO Clientes(nombre, correo, contraseña, dni, notificacion)values(?,?,?,?,?)";
         connection = conexion.obtenerConexion();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -49,6 +50,7 @@ public class ClienteDAO  {
             preparedStatement.setObject(2, o[1]);
             preparedStatement.setObject(3, o[2]);
             preparedStatement.setObject(4, o[3]);
+            preparedStatement.setObject(5, o[4]);
             result = preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente agregado correctamente.");
         } catch (SQLException ex) {
@@ -75,7 +77,7 @@ public class ClienteDAO  {
 
     public int actualizar(Object[] o) {
         int r = 0;
-        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=? WHERE idCliente=?";
+        String sql = "UPDATE Clientes SET nombre=?, correo=?, contraseña=?, dni=?, notificacion=? WHERE idCliente=?";
         try {
             connection = conexion.obtenerConexion();
             preparedStatement = connection.prepareStatement(sql);
@@ -84,6 +86,7 @@ public class ClienteDAO  {
             preparedStatement.setObject(3, o[2]);
             preparedStatement.setObject(4, o[3]);
             preparedStatement.setObject(5, o[4]);
+            preparedStatement.setObject(6, o[5]);
             r = preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
         } catch (Exception e) {
@@ -106,6 +109,7 @@ public class ClienteDAO  {
                 c.setCorreo(resultSet.getString(3));
                 c.setContraseña(resultSet.getString(4));
                 c.setDni(resultSet.getInt(5));
+                c.setDecision(resultSet.getBoolean(6));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
