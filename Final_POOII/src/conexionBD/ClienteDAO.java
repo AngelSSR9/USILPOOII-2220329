@@ -1,6 +1,7 @@
 package conexionBD;
 
 import clases.Cliente;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class ClienteDAO  {
                 c.setDni(resultSet.getInt(5));
                 lista.add(c);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
@@ -67,7 +68,7 @@ public class ClienteDAO  {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
@@ -86,7 +87,7 @@ public class ClienteDAO  {
             preparedStatement.setObject(5, o[4]);
             r = preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente.");
-        } catch (Exception e) {
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         return r;
@@ -107,7 +108,7 @@ public class ClienteDAO  {
                 c.setContraseña(resultSet.getString(4));
                 c.setDni(resultSet.getInt(5));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         

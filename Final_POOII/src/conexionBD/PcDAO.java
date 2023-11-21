@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package conexionBD;
 
 import clases.PC;
+import java.awt.HeadlessException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +16,6 @@ import javax.imageio.ImageIO;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author henry
- */
 public class PcDAO {;
     Connection connection;
     Conexion conexion = Conexion.obtenerInstancia();
@@ -30,7 +23,7 @@ public class PcDAO {;
         ResultSet resultSet;
     
     public List listar(){
-        List<PC> lst = new ArrayList<PC>();
+        List<PC> lst = new ArrayList<>();
         String query = "SELECT * FROM pc";
         try{
             connection = conexion.obtenerConexion();
@@ -51,7 +44,7 @@ public class PcDAO {;
                 }
                 lst.add(p);
             }
-        } catch (Exception e) {
+        } catch (IOException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         
@@ -88,13 +81,12 @@ public class PcDAO {;
                 } else {
                     System.out.println("No se pudo obtener el ID generado después de la inserción.");
                 }
-            }catch (Exception e) {
+            }catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error: " + e.toString());
             }
 
         } catch (SQLException | IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
-            System.out.println(ex);
         }
 
         return idGenerado;
@@ -108,8 +100,7 @@ public class PcDAO {;
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
     }
@@ -124,7 +115,7 @@ public class PcDAO {;
             preparedStatement.setObject(2, idPC);
             r = preparedStatement.executeUpdate();
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
         return r;
@@ -145,7 +136,7 @@ public class PcDAO {;
                 p.setStock(resultSet.getInt(3));
                 p.setImagen(ImageIO.read(new ByteArrayInputStream(resultSet.getBytes(4))));
             }
-        } catch (Exception e) {
+        } catch (IOException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo p x id: " + e.toString());
         }
 

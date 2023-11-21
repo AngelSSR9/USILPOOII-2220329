@@ -86,7 +86,6 @@ public class CarritoPanel extends javax.swing.JPanel {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         // Realizar acciones cuando se produce un cambio en el JSpinner
-                        //System.out.println(productoPanel.spinnerCantidad.getValue());
                         if ((int) productoPanel.spinnerCantidad.getValue() <= producto.getStock()) {
                             detalleCarritoDAO.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), producto.getId(), 1);
                             calcularTotal();
@@ -120,7 +119,6 @@ public class CarritoPanel extends javax.swing.JPanel {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         // Realizar acciones cuando se produce un cambio en el JSpinner
-                        //System.out.println(productoPanel.spinnerCantidad.getValue());
                         if ((int) productoPanel.spinnerCantidad.getValue() <= pc.getStock()) {
                             detalleCarritoDAO.actualizarCantidadProducto((int) productoPanel.spinnerCantidad.getValue(), carrito.getIdCarrito(), pc.getId(), 0);
                             calcularTotal();

@@ -48,6 +48,4 @@ public class DetalleCarrito {
         this.cantidad = cantidad;
     }
 
-
-
 }

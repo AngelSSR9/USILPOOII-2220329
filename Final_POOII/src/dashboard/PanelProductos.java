@@ -34,7 +34,7 @@ public class PanelProductos extends javax.swing.JPanel {
         menu.addItem("Periféricos", "Monitor", "Mouse", "Teclado", "Audifono", "Mousepad");
         menu.addItem("Componentes", "Procesador", "Tarjeta de Video", "Memoria RAM", "Placa Madre", "Almacenamiento", "Refrigeracion", "Fuente de poder", "Gabinete");
         menu.addItem("PC");
-        //menu.setMenuHeight(40);
+        
         menu.addEvent(new MenuEvent() {
             @Override
             public void selected(int index, int subIndex, boolean menuItem) {
@@ -67,7 +67,6 @@ public class PanelProductos extends javax.swing.JPanel {
     }
 
     private List<Producto> filtrar(String tipo) {
-        //System.out.println("Nombre item seleccionado: " + tipo);
         return productos.stream()
                 .filter(p -> p.getTipo().toUpperCase().equals(tipo)).toList();
     }

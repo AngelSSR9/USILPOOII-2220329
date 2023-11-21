@@ -1,6 +1,7 @@
 package dashboard;
 
 import java.awt.Component;
+import java.util.Calendar;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,11 +15,11 @@ public class FramePagar extends javax.swing.JFrame {
         pagarBtn.setEnabled(false);
         jLabel1.setFocusable(true);
     }
-    
-    private void establecer(){
-        for(Component component : getContentPane().getComponents()){
-            if(component instanceof JTextField jTextField){
-                jTextField.getDocument().addDocumentListener(new DocumentListener(){
+
+    private void establecer() {
+        for (Component component : getContentPane().getComponents()) {
+            if (component instanceof JTextField jTextField) {
+                jTextField.getDocument().addDocumentListener(new DocumentListener() {
                     @Override
                     public void insertUpdate(DocumentEvent e) {
                         verificar();
@@ -33,12 +34,11 @@ public class FramePagar extends javax.swing.JFrame {
                     public void changedUpdate(DocumentEvent e) {
                         verificar();
                     }
-                    
+
                 });
             }
         }
-        
-        
+
     }
 
     private boolean hayCampoVacio() {
@@ -47,11 +47,79 @@ public class FramePagar extends javax.swing.JFrame {
     }
 
     private void verificar() {
-        if (!hayCampoVacio()) {
+        if (!hayCampoVacio() && validarNumeroTarjeta() && validarFechaVencimiento() && validarCVV() && validarEmail() && validarNombreApellido()) {
             pagarBtn.setEnabled(true);
         } else {
             pagarBtn.setEnabled(false);
         }
+    }
+
+    private boolean validarNombreApellido() {
+        String nombre = nombreTxt.getText();
+        String apellido = apellidoTxt.getText();
+
+        // Validar que nombre y apellido no contengan números ni caracteres especiales
+        return nombre.matches("[a-zA-Z]+") && apellido.matches("[a-zA-Z]+");
+    }
+
+    private boolean validarNumeroTarjeta() {
+        String numeroTarjeta = numeroTarjetaTxt.getText();
+        // Validar que el número de tarjeta sea numérico y tenga la longitud correcta (16 dígitos)
+        return numeroTarjeta.matches("\\d{16}");
+    }
+
+    private boolean validarFechaVencimiento() {
+        String fechaVencimiento = fechaVencTxt.getText();
+
+        // Separar el mes y el año
+        String[] partes = fechaVencimiento.split("/");
+        if (partes.length != 2) {
+            // El formato no es válido
+            return false;
+        }
+
+        int mes, año;
+
+        try {
+            mes = Integer.parseInt(partes[0]);
+            año = Integer.parseInt(partes[1]);
+
+            // Verificar si el mes y el año están en rangos válidos
+            if (mes < 1 || mes > 12 || año < 0) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Error al convertir a números
+            return false;
+        }
+
+        // Obtener la fecha actual
+        Calendar calHoy = Calendar.getInstance();
+        calHoy.set(Calendar.DAY_OF_MONTH, 1); // Configurar el día a 1 para evitar problemas con meses con diferentes números de días
+        calHoy.set(Calendar.HOUR_OF_DAY, 0);
+        calHoy.set(Calendar.MINUTE, 0);
+        calHoy.set(Calendar.SECOND, 0);
+        calHoy.set(Calendar.MILLISECOND, 0);
+
+        // Configurar la fecha de vencimiento
+        Calendar calVencimiento = Calendar.getInstance();
+        calVencimiento.set(Calendar.YEAR, año + 2000); // Convertir los últimos dos dígitos a año completo
+        calVencimiento.set(Calendar.MONTH, mes - 1); // El mes en Calendar va de 0 a 11
+
+        // Verificar si la fecha de vencimiento está en el futuro
+        return calVencimiento.compareTo(calHoy) >= 0;
+    }
+
+    private boolean validarCVV() {
+        String cvv = cvvTxt.getText();
+        // Validar que el CVV sea numérico y tenga la longitud correcta (3 o 4 dígitos)
+        return cvv.matches("\\d{3,4}");
+    }
+
+    private boolean validarEmail() {
+        String email = emailTxt.getText();
+        // Validar el formato del correo electrónico utilizando una expresión regular simple
+        return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
     }
 
     @SuppressWarnings("unchecked")
@@ -221,32 +289,32 @@ public class FramePagar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void numeroTarjetaTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_numeroTarjetaTxtMousePressed
-        if(numeroTarjetaTxt.getText().equals("Número de tarjeta"))
+        if (numeroTarjetaTxt.getText().equals("Número de tarjeta"))
             numeroTarjetaTxt.setText("");
     }//GEN-LAST:event_numeroTarjetaTxtMousePressed
 
     private void fechaVencTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaVencTxtMousePressed
-        if(fechaVencTxt.getText().equals("Fecha venc."))
+        if (fechaVencTxt.getText().equals("Fecha venc."))
             fechaVencTxt.setText("");
     }//GEN-LAST:event_fechaVencTxtMousePressed
 
     private void cvvTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cvvTxtMousePressed
-        if(cvvTxt.getText().equals("CVV"))
+        if (cvvTxt.getText().equals("CVV"))
             cvvTxt.setText("");
     }//GEN-LAST:event_cvvTxtMousePressed
 
     private void nombreTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nombreTxtMousePressed
-        if(nombreTxt.getText().equals("Nombre"))
+        if (nombreTxt.getText().equals("Nombre"))
             nombreTxt.setText("");
     }//GEN-LAST:event_nombreTxtMousePressed
 
     private void apellidoTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_apellidoTxtMousePressed
-        if(apellidoTxt.getText().equals("Apellido"))
+        if (apellidoTxt.getText().equals("Apellido"))
             apellidoTxt.setText("");
     }//GEN-LAST:event_apellidoTxtMousePressed
 
     private void emailTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_emailTxtMousePressed
-        if(emailTxt.getText().equals("Email"))
+        if (emailTxt.getText().equals("Email"))
             emailTxt.setText("");
     }//GEN-LAST:event_emailTxtMousePressed
 

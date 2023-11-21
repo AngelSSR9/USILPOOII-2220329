@@ -26,123 +26,122 @@ import javax.swing.JOptionPane;
  */
 public class AgregarPc extends javax.swing.JPanel {
 
-    
     PC pc;
     ProductoDAO productoDAO = new ProductoDAO();
     PcDAO pcDAO = new PcDAO();
     DetallesPcDAO detPc = new DetallesPcDAO();
     String path;
     /**
-        * Creates new form AgregarPc
+     * Creates new form AgregarPc
      */
     public AgregarPc() {
-        
+
         initComponents();
         cargarComboBox();
     }
     /**
      * Llena todos los combobox con los productos por tipo
      */
-    private void cargarComboBox(){
-        
-        List<Producto> listaMother =  productoDAO.obtenerProductosPorTipo("PLACA MADRE");
-        listaMother.forEach((t) -> cBoMoBo.addItem(t.getTipo()+"marca "+t.getMarca()));
+    private void cargarComboBox() {
 
-        List<Producto> listaRam =  productoDAO.obtenerProductosPorTipo("MEMORIA RAM");
-        listaRam.forEach((t) -> cBoxMemRam.addItem(t.getTipo()+" marca "+t.getMarca()));
+        List<Producto> listaMother = productoDAO.obtenerProductosPorTipo("PLACA MADRE");
+        listaMother.forEach((t) -> cBoMoBo.addItem(t.getTipo() + "marca " + t.getMarca()));
 
-        List<Producto> listaRom =  productoDAO.obtenerProductosPorTipo("ALMACENAMIENTO");
-        listaRom.forEach((t) -> cBoxMemRom.addItem(t.getTipo()+" marca "+t.getMarca()));
+        List<Producto> listaRam = productoDAO.obtenerProductosPorTipo("MEMORIA RAM");
+        listaRam.forEach((t) -> cBoxMemRam.addItem(t.getTipo() + " marca " + t.getMarca()));
 
-        List<Producto> listaPro =  productoDAO.obtenerProductosPorTipo("PROCESADOR");
-        listaPro.forEach((t) -> cBoxProce.addItem(t.getTipo()+" marca "+t.getMarca()));
+        List<Producto> listaRom = productoDAO.obtenerProductosPorTipo("ALMACENAMIENTO");
+        listaRom.forEach((t) -> cBoxMemRom.addItem(t.getTipo() + " marca " + t.getMarca()));
 
-        List<Producto> listaRefr =  productoDAO.obtenerProductosPorTipo("REFRIGERACION");
+        List<Producto> listaPro = productoDAO.obtenerProductosPorTipo("PROCESADOR");
+        listaPro.forEach((t) -> cBoxProce.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaRefr = productoDAO.obtenerProductosPorTipo("REFRIGERACION");
         cBoxRefrig.addItem("sin seleccionar");
-        listaRefr.forEach((t) -> cBoxRefrig.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
-        
-        List<Producto> listaMouse =  productoDAO.obtenerProductosPorTipo("MOUSE");
+        listaRefr.forEach((t) -> cBoxRefrig.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaMouse = productoDAO.obtenerProductosPorTipo("MOUSE");
         cBoxMouse.addItem("sin seleccionar");
-        listaMouse.forEach((t) -> cBoxMouse.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
-        List<Producto> listaTar =  productoDAO.obtenerProductosPorTipo("TARJETA DE VIDEO");
+        listaMouse.forEach((t) -> cBoxMouse.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaTar = productoDAO.obtenerProductosPorTipo("TARJETA DE VIDEO");
         cBoxTarjGraf.addItem("sin seleccionar");
-        listaTar.forEach((t) -> cBoxTarjGraf.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
-        List<Producto> listaAud =  productoDAO.obtenerProductosPorTipo("AUDIFONOS");
+        listaTar.forEach((t) -> cBoxTarjGraf.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaAud = productoDAO.obtenerProductosPorTipo("AUDIFONOS");
         cBoxAudif.addItem("sin seleccionar");
-        listaAud.forEach((t) -> cBoxAudif.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
-        List<Producto> listaTec =  productoDAO.obtenerProductosPorTipo("TECLADO");
+        listaAud.forEach((t) -> cBoxAudif.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaTec = productoDAO.obtenerProductosPorTipo("TECLADO");
         cBoxTeclado.addItem("sin seleccionar");
-        listaTec.forEach((t) -> cBoxTeclado.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
-        List<Producto> listaMon =  productoDAO.obtenerProductosPorTipo("MONITOR");
+        listaTec.forEach((t) -> cBoxTeclado.addItem(t.getTipo() + " marca " + t.getMarca()));
+
+        List<Producto> listaMon = productoDAO.obtenerProductosPorTipo("MONITOR");
         cBoxMonitor.addItem("sin seleccionar");
-        listaMon.forEach((t) -> cBoxMonitor.addItem(t.getTipo()+" marca "+t.getMarca()));
-        
+        listaMon.forEach((t) -> cBoxMonitor.addItem(t.getTipo() + " marca " + t.getMarca()));
+
     }
     /**
-     * 
+     *
      * @param prod
      * @param box
-     * @return devuelve El producto de tipo componente segun el item de combobox seleccionado
-     * si
+     * @return devuelve El producto de tipo componente segun el item de combobox
+     * seleccionado si
      */
-    private Producto agregarCom(String prod, JComboBox box){
+    private Producto agregarCom(String prod, JComboBox box) {
         //
         List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
-            int selectedIndex = box.getSelectedIndex();
-            //verifica si el indice del item seleccionado esta dentro del rango de la lista de componentes de determinado tipo.
-            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
-                //verifica que el stock del componente no sea 0.
-               if(valoresEspecificos.get(selectedIndex).getStock()!=0){
-                   //retorna el producto que esta ubicado un determinada posicion.
+        int selectedIndex = box.getSelectedIndex();
+        //verifica si el indice del item seleccionado esta dentro del rango de la lista de componentes de determinado tipo.
+        if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+            //verifica que el stock del componente no sea 0.
+            if (valoresEspecificos.get(selectedIndex).getStock() != 0) {
+                //retorna el producto que esta ubicado un determinada posicion.
                 return valoresEspecificos.get(selectedIndex);
-                }else{
-                    return null;
-                }
-            }else{
+            } else {
                 return null;
             }
-        
+        } else {
+            return null;
+        }
+
     }
     /**
-     * 
+     *
      * @param prod
      * @param box
-     * @return devuelve el producto de tipo periferico segun el item de combobox seleccionado
+     * @return devuelve el producto de tipo periferico segun el item de combobox
+     * seleccionado
      */
-    private Producto agregarPer(String prod, JComboBox box){
+    private Producto agregarPer(String prod, JComboBox box) {
         List<Producto> valoresEspecificos = productoDAO.obtenerProductosPorTipo(prod);
-            int selectedIndex = box.getSelectedIndex()-1;//el primer elemento del checkbox no tiene valor debido a que puedes no agregar periferico.
-            //verifica si el indice del item seleccionado esta dentro del rango de la lista de periferico de determinado tipo.
-            if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
-                //verifica que el stock del componente no sea 0.
-                if(valoresEspecificos.get(selectedIndex).getStock()!=0){
-                    String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
-                    //retorna el producto que esta ubicado un determinada posicion.
+        int selectedIndex = box.getSelectedIndex() - 1;//el primer elemento del checkbox no tiene valor debido a que puedes no agregar periferico.
+        //verifica si el indice del item seleccionado esta dentro del rango de la lista de periferico de determinado tipo.
+        if (selectedIndex >= 0 && selectedIndex < valoresEspecificos.size()) {
+            //verifica que el stock del componente no sea 0.
+            if (valoresEspecificos.get(selectedIndex).getStock() != 0) {
+                String valorEspecifico = valoresEspecificos.get(selectedIndex).getTipo();
+                //retorna el producto que esta ubicado un determinada posicion.
                 return valoresEspecificos.get(selectedIndex);
-                }else{
-                    return null;
-                }
-                
-            }else{
+            } else {
                 return null;
             }
-        
+
+        } else {
+            return null;
+        }
+
     }
-    
+
     private int agregarPcBD() {
         Object[] o = new Object[3];
-        
-        try{
+
+        try {
             o[0] = txtNombre.getText();
             o[1] = Integer.parseInt(txtStock.getText());
             o[2] = txtImagen.getText();
-            
-            int id=pcDAO.agregar(o);
+
+            int id = pcDAO.agregar(o);
             Constantes.limpiarPanel(updatePanel);
             return id;
         } catch (Exception ex) {
@@ -152,7 +151,7 @@ public class AgregarPc extends javax.swing.JPanel {
             return -1;
         }
     }
-    
+
     /*public void agregarPc() {
         boolean confirm = agregarPcBD();
         if (confirm) {
@@ -172,7 +171,6 @@ public class AgregarPc extends javax.swing.JPanel {
             
         }
     }*/
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -489,7 +487,7 @@ public class AgregarPc extends javax.swing.JPanel {
     private void txtImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImagenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtImagenActionPerformed
-    
+
     private void photoSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_photoSelectionActionPerformed
         // TODO add your handling code here:
         /**
@@ -506,12 +504,12 @@ public class AgregarPc extends javax.swing.JPanel {
                 Image img = ImageIO.read(selectedImage);
                 txtImagen.setText(path);
                 selectedPhoto.setIcon(new ImageIcon(img.getScaledInstance(selectedPhoto.getWidth(),
-                    selectedPhoto.getHeight(), Image.SCALE_SMOOTH)));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.toString());
+                        selectedPhoto.getHeight(), Image.SCALE_SMOOTH)));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.toString());
+            }
         }
-        }
-        
+
     }//GEN-LAST:event_photoSelectionActionPerformed
 
     private void cBoMoBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoMoBoActionPerformed
@@ -519,80 +517,81 @@ public class AgregarPc extends javax.swing.JPanel {
     }//GEN-LAST:event_cBoMoBoActionPerformed
 
     private void btnNuevaPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPcActionPerformed
-        // TODO add your handling code here:
-        List<String> text = List.of(txtNombre.getText(), txtStock.getText(), txtImagen.getText());
-        if(text.stream().anyMatch(t->t.isEmpty())) {
-            JOptionPane.showMessageDialog(this, "Llena los espacios vacios");
-        }else{
+        if (!txtStock.getText().matches(".[^\\d.].")) {
+            List<String> text = List.of(txtNombre.getText(), txtStock.getText(), txtImagen.getText());
+            if (text.stream().anyMatch(t -> t.isEmpty())) {
+                JOptionPane.showMessageDialog(this, "Llena los espacios vacios");
+            } else {
                 //verifica que ninguno sea nulo
-            if(agregarCom("MEMORIA RAM", cBoxMemRam)== null || agregarCom("ALMACENAMIENTO", cBoxMemRom)== null || agregarCom("PROCESADOR", cBoxProce)==null || agregarCom("PLACA MADRE", cBoMoBo)==null){
-                JOptionPane.showMessageDialog(this, "El stock esta en 0");
-            }else{
+                if (agregarCom("MEMORIA RAM", cBoxMemRam) == null || agregarCom("ALMACENAMIENTO", cBoxMemRom) == null || agregarCom("PROCESADOR", cBoxProce) == null || agregarCom("PLACA MADRE", cBoMoBo) == null) {
+                    JOptionPane.showMessageDialog(this, "El stock esta en 0");
+                } else {
 
-                List<Producto> prod = new ArrayList<Producto>();
+                    List<Producto> prod = new ArrayList<Producto>();
 
-                prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
-                prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
-                prod.add(agregarCom("PROCESADOR", cBoxProce));
-                prod.add(agregarCom("PLACA MADRE", cBoMoBo));
-                if(agregarPer("REFRIGERACION", cBoxTarjGraf)!=null){
-                    prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
-                }
-                if(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf) != null){
-                    prod.add(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf));
-                }
-                if(agregarPer("MOUSE", cBoxMouse)!=null){
-                    prod.add(agregarPer("MOUSE", cBoxMouse));
-                }
-                if(agregarPer("AUDIFONOS", cBoxAudif)!=null){
-                    prod.add(agregarPer("AUDIFONOS", cBoxAudif));
-                }
-                if(agregarPer("TECLADO", cBoxTeclado)!=null){
-                    prod.add(agregarPer("TECLADO", cBoxTeclado));
-                }
-                if(agregarPer("MONITOR", cBoxMonitor)!=null){
-                    prod.add(agregarPer("MONITOR", cBoxMonitor));
-                }
-
-
-                Object[] o = new Object[2];
-
-
-                //crea lista para comprobar que todos los elementos existar
-                boolean todosLosProductosExisten = prod.stream().allMatch(i->productoDAO.comprobarProducto(i.getId()));
-                if(todosLosProductosExisten){
-                    int stockAct = Integer.parseInt(txtStock.getText());//se guarda el stock puesto.
-                    //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
-                    boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock()>=stockAct);
-
-                    if(confirm){
-                            int id=agregarPcBD();
-                            for(int a=0;a<prod.size();a++){
-
-                            try {
-                                o[0] = id;
-                                o[1] = prod.get(a).getId();
-                                detPc.agregar(o);
-
-                            } catch (IOException ex) {
-                                JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
-                            }
-                        }
-
-                        for(Producto i : prod){
-                            productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);
-                        }
-
-                    }else{
-                        JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
+                    prod.add(agregarCom("MEMORIA RAM", cBoxMemRam));
+                    prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
+                    prod.add(agregarCom("PROCESADOR", cBoxProce));
+                    prod.add(agregarCom("PLACA MADRE", cBoMoBo));
+                    if (agregarPer("REFRIGERACION", cBoxTarjGraf) != null) {
+                        prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
                     }
-                }else{
-                    JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
-                }
+                    if (agregarPer("TARJETA DE VIDEO", cBoxTarjGraf) != null) {
+                        prod.add(agregarPer("TARJETA DE VIDEO", cBoxTarjGraf));
+                    }
+                    if (agregarPer("MOUSE", cBoxMouse) != null) {
+                        prod.add(agregarPer("MOUSE", cBoxMouse));
+                    }
+                    if (agregarPer("AUDIFONOS", cBoxAudif) != null) {
+                        prod.add(agregarPer("AUDIFONOS", cBoxAudif));
+                    }
+                    if (agregarPer("TECLADO", cBoxTeclado) != null) {
+                        prod.add(agregarPer("TECLADO", cBoxTeclado));
+                    }
+                    if (agregarPer("MONITOR", cBoxMonitor) != null) {
+                        prod.add(agregarPer("MONITOR", cBoxMonitor));
+                    }
 
+                    Object[] o = new Object[2];
+
+                    //crea lista para comprobar que todos los elementos existar
+                    boolean todosLosProductosExisten = prod.stream().allMatch(i -> productoDAO.comprobarProducto(i.getId()));
+                    if (todosLosProductosExisten) {
+                        int stockAct = Integer.parseInt(txtStock.getText());//se guarda el stock puesto.
+                        //se vaerifica que todos los elementos q componen la pc tengan suficiente stock
+                        boolean confirm = prod.stream().allMatch(s -> productoDAO.obtenerProductoPorId(s.getId()).getStock() >= stockAct);
+
+                        if (confirm) {
+                            int id = agregarPcBD();
+                            for (int a = 0; a < prod.size(); a++) {
+
+                                try {
+                                    o[0] = id;
+                                    o[1] = prod.get(a).getId();
+                                    detPc.agregar(o);
+
+                                } catch (IOException ex) {
+                                    JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
+                                }
+                            }
+
+                            for (Producto i : prod) {
+                                productoDAO.actualizarStock(i.getId(), i.getStock() - stockAct);
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
+                    }
+
+                }
             }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
 
     }//GEN-LAST:event_btnNuevaPcActionPerformed
 

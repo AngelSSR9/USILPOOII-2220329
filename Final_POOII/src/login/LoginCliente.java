@@ -12,7 +12,7 @@ import dashboard.NewMenuCliente;
 public class LoginCliente extends javax.swing.JFrame {
     
     // Instancias de clases
-    NewMenuCliente menuPrincipal = new NewMenuCliente();
+    public NewMenuCliente menuPrincipal = new NewMenuCliente();
     Autenticacion autenticacion = new Autenticacion();
     RegisterCliente registerCliente = new RegisterCliente();
     Validacion validacion = new Validacion();
@@ -27,7 +27,7 @@ public class LoginCliente extends javax.swing.JFrame {
         title.requestFocusInWindow();
         setResizable(false); //Evita que el usuario modifque el tamaño
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -380,7 +380,7 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JPanel backgroundImg;
     private javax.swing.JPanel bg;
     private javax.swing.JLabel dniLabel;
-    private javax.swing.JTextField dniTxt;
+    public javax.swing.JTextField dniTxt;
     private diseño.RoundedPanel dniTxtPanel;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JSeparator jSeparator1;
@@ -389,9 +389,9 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblRegistrarse;
     private javax.swing.JLabel lblSlonga;
     private diseño.RoundedPanel loginBtn;
-    private javax.swing.JLabel loginBtnTxt;
+    public javax.swing.JLabel loginBtnTxt;
     private javax.swing.JLabel passLabel;
-    private javax.swing.JPasswordField passTxt;
+    public javax.swing.JPasswordField passTxt;
     private diseño.RoundedPanel passTxtPanel;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;

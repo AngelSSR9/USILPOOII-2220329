@@ -446,9 +446,9 @@ public class RegisterCliente extends javax.swing.JFrame {
     private diseño.RoundedPanel bgPass;
     private diseño.RoundedPanel bgUser;
     private javax.swing.JLabel correoLabel;
-    private javax.swing.JTextField correoTxt;
+    public javax.swing.JTextField correoTxt;
     private javax.swing.JLabel dniLabel;
-    private javax.swing.JTextField dniTxt;
+    public javax.swing.JTextField dniTxt;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -456,11 +456,11 @@ public class RegisterCliente extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblSlongan;
     private javax.swing.JLabel nombreLabel;
-    private javax.swing.JTextField nombreTxt;
+    public javax.swing.JTextField nombreTxt;
     private javax.swing.JLabel passLabel;
-    private javax.swing.JPasswordField passTxt;
+    public javax.swing.JPasswordField passTxt;
     private javax.swing.JPanel registerBtn;
-    private javax.swing.JLabel registerBtnTxt;
+    public javax.swing.JLabel registerBtnTxt;
     private javax.swing.JLabel title;
     private javax.swing.JLabel txtName;
     // End of variables declaration//GEN-END:variables
