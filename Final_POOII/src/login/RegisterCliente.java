@@ -353,12 +353,13 @@ public class RegisterCliente extends javax.swing.JFrame {
         }
         
         ClienteDAO clienteDAO = new ClienteDAO();
-        Object[] o = new Object[4];
+        Object[] o = new Object[5];
         try {
             o[0] = usuario;
             o[1] = correo;
             o[2] = contraseña;
             o[3] = Integer.parseInt(dni);
+            o[4] = true;
             
                 clienteDAO.agregar(o);
         } catch (Exception ex) {

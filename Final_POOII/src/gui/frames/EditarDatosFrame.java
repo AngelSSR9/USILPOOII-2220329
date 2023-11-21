@@ -172,7 +172,8 @@ public class EditarDatosFrame extends javax.swing.JFrame {
         ClienteDAO clienteDAO = new ClienteDAO();
 
         int id = cliente.getId();
-        Object[] o = new Object[5];
+        boolean notificacion = cliente.isDecision();
+        Object[] o = new Object[6];
 
         try {
 
@@ -180,7 +181,8 @@ public class EditarDatosFrame extends javax.swing.JFrame {
             o[1] = correo;
             o[2] = contraseña;
             o[3] = Integer.parseInt(dni);
-            o[4] = id;
+            o[4] = notificacion;
+            o[5] = id;
 
             clienteDAO.actualizar(o);
 

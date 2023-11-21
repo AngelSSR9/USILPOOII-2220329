@@ -28,6 +28,8 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
     // Carrito de compras actual del usuario
     private CarritoCompras carrito;
     
+    private Cliente cliente;
+    
     // Lista para almacenar productos seleccionados
     private List<Producto> productosElegidos = new ArrayList<>();
     
@@ -44,6 +46,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
      */
     public PanelArmarPcCliente(Cliente cliente) {
         initComponents();
+        this.cliente = cliente;
         this.carrito = carritoDAO.obtenerCarritoPorIdCliente(cliente.getId());
         iniciar();
     }
@@ -63,6 +66,7 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
      * Actualiza los productos mostrados según el tipo de componente seleccionado.
      */
     public void establecerItems(){
+        setCarrito();
         panelPrincipal.removeAll();
         List<Producto> productos = productoDAO.listar();
         for (Producto p : productos) {
@@ -75,12 +79,12 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < 5; i++) {
-                JPanel panel = new JPanel();
-                panel.setBackground(Color.white);
-                panelPrincipal.add(panel);
-                panelPrincipal.revalidate();
-                panelPrincipal.repaint();
-            }
+            JPanel panel = new JPanel();
+            panel.setBackground(Color.white);
+            panelPrincipal.add(panel);
+            panelPrincipal.revalidate();
+            panelPrincipal.repaint();
+        }
     }
     
     /**
@@ -422,18 +426,16 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
 
         if(productosElegidos.size()==8){
             for(Producto producto : productosElegidos){
-                Object o[] = new Object[3];
+                Object o[] = new Object[4];
                 o[0] = carrito.getIdCarrito();
                 o[1] = producto.getId();
                 o[2] = 1;
+                o[3] = 1;
                 DetalleCarritoDAO d =  new DetalleCarritoDAO();
                 d.agregar(o);
-                int stockActualizado = producto.getStock() - 1 ;
-                producto.setStock(stockActualizado);
-                ProductoDAO p = new ProductoDAO();
-                p.actualizarStock(producto.getId(), stockActualizado);
             }
             JOptionPane.showMessageDialog(null, "Productos en el carrito");
+            reestablecerColor();
             productosElegidos.removeAll(productosElegidos);
         }
         else{
@@ -453,6 +455,22 @@ public class PanelArmarPcCliente extends javax.swing.JPanel {
         this.nombreDelComponenteSeleccionado = nameColor;
         establecerItems();
         
+    }
+    
+    public void reestablecerColor(){
+        lblProcesadorColor.setForeground(Color.black);
+        lblPlacaMadreColor.setForeground(Color.black);
+        lblMemoriaRAMColor.setForeground(Color.black);
+        lblAlmacenamientoColor.setForeground(Color.black);
+        lblTarjetaDeVideoColor.setForeground(Color.black);
+        lblGabineteColor.setForeground(Color.black);
+        lblFuentePoderColor.setForeground(Color.black);
+        lblSistemaEnfriamentoColor.setForeground(Color.black);
+            
+    }
+    
+    public void setCarrito(){
+        this.carrito = carritoDAO.obtenerCarritoPorIdCliente(cliente.getId());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

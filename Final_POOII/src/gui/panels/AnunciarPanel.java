@@ -163,34 +163,45 @@ public class AnunciarPanel extends javax.swing.JPanel {
      * @param evt Evento de clic del mouse
      */
     private void btnAnunciarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarProdMouseClicked
-        
         ElementoObservado productoEncontrado = encontrarProducto(productosComboBox);
-        // Obtener la listaProductos de clientes, añadir y notificarlos OBserver
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Subject tienda = TiendaSubject.getInstancia();
-        List<Cliente> clientes = clienteDAO.listar();
-        for (Cliente cliente : clientes) {
-            tienda.añadir(cliente);
+        if(productoEncontrado!=null){
+            // Obtener la listaProductos de clientes, añadir y notificarlos OBserver
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Subject tienda = TiendaSubject.getInstancia();
+            List<Cliente> clientes = clienteDAO.listar();
+            clientes.stream()
+                .filter(Cliente::isDecision) 
+                .forEach(tienda::añadir);  
+            JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
+            tienda.notificar(productoEncontrado);
+            System.out.println("Mensajes Enviados");
+            JOptionPane.showMessageDialog(null, "Mesajes enviados");
         }
-        JOptionPane.showMessageDialog(null, "Espere a que los correos se envien");
-        tienda.notificar(productoEncontrado);
-        System.out.println("Mensajes Enviados");
-        JOptionPane.showMessageDialog(null, "Mesajes enviados");    
+        else{
+            JOptionPane.showMessageDialog(null, "No hay stock de este producto");
+        }
+            
     }//GEN-LAST:event_btnAnunciarProdMouseClicked
 
     private void btnAnunciarPcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnunciarPcMouseClicked
         ElementoObservado pcEncontrada = encontrarPc(pcComboBox);
-        // Obtener la lista de clientes, añadir y notificarlos como Observer
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Subject tienda = TiendaSubject.getInstancia();
-        List<Cliente> clientes = clienteDAO.listar();
-        for (Cliente cliente : clientes) {
-            tienda.añadir(cliente);
+        if(pcEncontrada!=null){
+            // Obtener la lista de clientes, añadir y notificarlos como Observer
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Subject tienda = TiendaSubject.getInstancia();
+            List<Cliente> clientes = clienteDAO.listar();
+            clientes.stream()
+                .filter(Cliente::isDecision) 
+                .forEach(tienda::añadir);  
+            JOptionPane.showMessageDialog(null, "Espere a que los correos se envíen");
+            tienda.notificar(pcEncontrada);
+            System.out.println("Mensajes Enviados");
+            JOptionPane.showMessageDialog(null, "Mensajes enviados");
         }
-        JOptionPane.showMessageDialog(null, "Espere a que los correos se envíen");
-        tienda.notificar(pcEncontrada);
-        System.out.println("Mensajes Enviados");
-        JOptionPane.showMessageDialog(null, "Mensajes enviados");
+        else{
+            JOptionPane.showMessageDialog(null, "No hay stock de esta pc");
+        }
+        
     }//GEN-LAST:event_btnAnunciarPcMouseClicked
 
     /**

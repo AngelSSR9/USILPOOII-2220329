@@ -37,7 +37,7 @@ public class EditarDatosCliente extends javax.swing.JPanel {
     public void setCliente(Cliente cliente){
         this.cliente = cliente;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,7 +184,9 @@ public class EditarDatosCliente extends javax.swing.JPanel {
         ClienteDAO clienteDAO = new ClienteDAO();
         
         int id = cliente.getId();
-        Object[] o = new Object[5];
+        boolean notificacion = cliente.isDecision();
+        
+        Object[] o = new Object[6];
         
         try {
            
@@ -192,7 +194,8 @@ public class EditarDatosCliente extends javax.swing.JPanel {
             o[1] = correo;
             o[2] = contraseña;
             o[3] = Integer.parseInt(dni);
-            o[4] = id;
+            o[4] = notificacion;
+            o[5] = id;
 
             clienteDAO.actualizar(o);
             
