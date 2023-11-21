@@ -266,6 +266,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
         if(panelArmarPc == null){
             panelArmarPc = new PanelArmarPcCliente(cliente);
         }
+        panelArmarPc.establecerItems();
         dashboardView.removeAll();
         dashboardView.add(panelArmarPc);
         dashboardView.revalidate();

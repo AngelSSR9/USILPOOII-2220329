@@ -13,6 +13,7 @@ public class Cliente  implements Observer<ElementoObservado>{
     private int id;
     private String correo;
     private String contraseña;
+    private boolean notificacion;
     
     /**
      * Instancia de la clase encargada de enviar mensajes de correo.
@@ -78,6 +79,16 @@ public class Cliente  implements Observer<ElementoObservado>{
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isDecision() {
+        return notificacion;
+    }
+
+    public void setDecision(boolean decision) {
+        this.notificacion = decision;
+    }
+    
+    
 
     /**
      * Método de la interfaz Observer que se llama cuando hay una actualización de
