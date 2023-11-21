@@ -5,6 +5,7 @@
 package gui.panels;
 
 import clases.Constantes;
+import clases.Producto;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import conexionBD.ProductoDAO;
+import java.util.List;
 
 /**
  *
@@ -322,14 +324,28 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
         if(!stockTxt.getText().matches(".[^\\d.].") && !precioTxt.getText().matches(".[^\\d.].")){
-                java.util.List<String> text = java.util.List.of(marcaTxt.getText(), modeloTxt.getText(), precioTxt.getText(), stockTxt.getText()
-                                            ,mDescription.getText(), imagenTxt.getText());
+            List<Producto> lstProdc = productoDAO.listar();
+            String marca = marcaTxt.getText();
+            String modelo = modeloTxt.getText();
+            String precio = precioTxt.getText();
+            String stock = stockTxt.getText();
+            String categoria = (String) catCombo.getSelectedItem();
+            String tipo = (String)boxTipo.getSelectedItem();
+            String rutaImagen = imagenTxt.getText();
+            String descripcion = mDescription.getText();
+             boolean mismoProducto = lstProdc.stream().anyMatch(a -> a.getMarca().equals(marca) && a.getModelo().equals(modelo) && a.getTipo().equals(tipo));
+            if(!mismoProducto){
+                    List<String> text = List.of(marca, modelo, precio, stock, descripcion, rutaImagen);
 
-            if(text.stream().allMatch(t -> !t.isEmpty()) && catCombo.getSelectedItem()!=null && boxTipo.getSelectedItem().toString()!=null){
-                agregarProducto();
+                if(text.stream().allMatch(t -> !t.isEmpty()) && catCombo.getSelectedItem()!=null && boxTipo.getSelectedItem().toString()!=null){
+                    agregarProducto();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Debes llenar todos los casilleros");
+                }
             }else{
-                JOptionPane.showMessageDialog(this, "Debes llenar todos los casilleros");
+                JOptionPane.showMessageDialog(this, "Este producto ya esta registrado");
             }
+                
         }
         else{
             JOptionPane.showMessageDialog(this, "Ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
