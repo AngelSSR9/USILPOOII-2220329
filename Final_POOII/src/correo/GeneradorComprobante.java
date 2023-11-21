@@ -250,9 +250,8 @@ public class GeneradorComprobante {
         String rutaImagenQR = "src/img/qr.png";
         Image image = Image.getInstance(rutaImagenQR);
         image.scaleAbsolute(80, 80);
-        image.setAbsolutePosition(110, 50);
+        image.setAbsolutePosition(110, 20);  // Ajustar la posición de la imagen hacia abajo
         PdfContentByte contentByte = pdfWriter.getDirectContent();
         contentByte.addImage(image);
-        documento.add(image);
     }
 }
