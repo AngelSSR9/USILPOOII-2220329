@@ -474,20 +474,23 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                         public void actionPerformed(ActionEvent e) {
                             checkTarjetaCredito.setSelected(false);
                             checkTarjetaDebito.setSelected(false);
-                            JOptionPane.showMessageDialog(null, "Pedido Finalizado\nGracias por su compra !");
+                            
                             if(checkTarjetaCredito.isSelected())
                                 generarPedido("Tarjeta Crédito");
                             else
                                 generarPedido("Tarjeta Débito");
                             frame.dispose();
+                            JOptionPane.showMessageDialog(null, "Pedido Finalizado\nGracias por su compra !");
                         }   
 
                     });
                     frame.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
+                    
                     checkTransferencia.setSelected(false);
                     generarPedido("Transferencia Bancaria");
+                    JOptionPane.showMessageDialog(null, "Pedido Finalizado\nTiene 24 horas para realizar la transferencia.");
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un medio de pago.");
