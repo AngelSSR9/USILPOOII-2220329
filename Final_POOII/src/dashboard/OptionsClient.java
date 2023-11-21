@@ -1,6 +1,7 @@
 package dashboard;
 
 import clases.Cliente;
+import conexionBD.ClienteDAO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
