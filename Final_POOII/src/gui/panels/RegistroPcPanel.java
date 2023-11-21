@@ -200,38 +200,42 @@ public class RegistroPcPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fila");
         }else{
             
-            if(!txtStock.getText().isEmpty()){
-                int id = Integer.parseInt(tablaPc.getValueAt(fila, 0).toString()); //recoge el id de la tabla
-           
-                final int stockAct = Integer.parseInt(txtStock.getText());  //recoge el valor del stock a aumentar
+            if(!txtStock.getText().matches(".[^\\d.].")){
+                    if(!txtStock.getText().isEmpty()){
+                    int id = Integer.parseInt(tablaPc.getValueAt(fila, 0).toString()); //recoge el id de la tabla
 
-                //crea lista con los elementos del pc para comprobar que todos los elementos existan
-                List<Integer> prodPcList = detallesPcDAO.obtenerDetallesPorId(id).stream()
-                    .map(Producto::getId)
-                    .collect(Collectors.toList());
-                boolean todosLosProductosExisten = prodPcList.stream().allMatch(i->productoDAO.comprobarProducto(i));//verificar si todos existen
+                    final int stockAct = Integer.parseInt(txtStock.getText());  //recoge el valor del stock a aumentar
 
-                if(todosLosProductosExisten){
-                    //se verifica que todos los elementos que componen la pc tengan suficiente stock
-                    boolean prolst = detallesPcDAO.obtenerDetallesPorId(id).stream().allMatch(det->det.getStock()>=stockAct);
+                    //crea lista con los elementos del pc para comprobar que todos los elementos existan
+                    List<Integer> prodPcList = detallesPcDAO.obtenerDetallesPorId(id).stream()
+                        .map(Producto::getId)
+                        .collect(Collectors.toList());
+                    boolean todosLosProductosExisten = prodPcList.stream().allMatch(i->productoDAO.comprobarProducto(i));//verificar si todos existen
 
-                    if(prolst){
+                    if(todosLosProductosExisten){
+                        //se verifica que todos los elementos que componen la pc tengan suficiente stock
+                        boolean prolst = detallesPcDAO.obtenerDetallesPorId(id).stream().allMatch(det->det.getStock()>=stockAct);
 
-                        int stk= pcDAO.obtenerPcPorId(id).getStock();// stock que se solicitó
-                        pcDAO.actualizarStock(id, stk+stockAct); //actualiza el stock del pc
+                        if(prolst){
 
-                        List<Producto> idListProd = detallesPcDAO.obtenerDetallesPorId(id);
-                        for(Producto i : idListProd){
-                            productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);//actualiza el stock de los productos empleados
+                            int stk= pcDAO.obtenerPcPorId(id).getStock();// stock que se solicitó
+                            pcDAO.actualizarStock(id, stk+stockAct); //actualiza el stock del pc
+
+                            List<Producto> idListProd = detallesPcDAO.obtenerDetallesPorId(id);
+                            for(Producto i : idListProd){
+                                productoDAO.actualizarStock(i.getId(), i.getStock()-stockAct);//actualiza el stock de los productos empleados
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
                         }
                     }else{
-                        JOptionPane.showMessageDialog(this, "No el stock de alguno de sus elemento no es suficiente");
+                        JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(this, "No existe alguno(s) de los elementos que lo componian");
+                    JOptionPane.showMessageDialog(this, "Determina el stock");
                 }
             }else{
-                JOptionPane.showMessageDialog(this, "Determina el stock");
+                JOptionPane.showMessageDialog(this, "Ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
             
         }

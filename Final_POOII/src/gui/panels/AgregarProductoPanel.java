@@ -321,17 +321,19 @@ public class AgregarProductoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_precioTxtActionPerformed
 
     private void LogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInButtonActionPerformed
-        // TODO add your handling code here:
-        java.util.List<String> text = java.util.List.of(marcaTxt.getText(), modeloTxt.getText(), precioTxt.getText(), stockTxt.getText()
-                                        ,mDescription.getText(), imagenTxt.getText());
-        
-        if(text.stream().allMatch(t -> !t.isEmpty()) && catCombo.getSelectedItem()!=null && boxTipo.getSelectedItem().toString()!=null){
-            agregarProducto();
-        }else{
-            JOptionPane.showMessageDialog(this, "Debes llenar todos los casilleros");
-        }
-        
+        if(!stockTxt.getText().matches(".[^\\d.].") && !precioTxt.getText().matches(".[^\\d.].")){
+                java.util.List<String> text = java.util.List.of(marcaTxt.getText(), modeloTxt.getText(), precioTxt.getText(), stockTxt.getText()
+                                            ,mDescription.getText(), imagenTxt.getText());
 
+            if(text.stream().allMatch(t -> !t.isEmpty()) && catCombo.getSelectedItem()!=null && boxTipo.getSelectedItem().toString()!=null){
+                agregarProducto();
+            }else{
+                JOptionPane.showMessageDialog(this, "Debes llenar todos los casilleros");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_LogInButtonActionPerformed
 
     private void catComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catComboActionPerformed

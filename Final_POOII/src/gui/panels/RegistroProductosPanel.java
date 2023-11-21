@@ -3,8 +3,13 @@ package gui.panels;
 import clases.Constantes;
 import clases.Producto;
 import conexionBD.ProductoDAO;
+import java.awt.Image;
+import java.io.File;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +22,8 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     public int id;
     ProductoDAO productoDAO = new ProductoDAO();
     TableRowSorter<DefaultTableModel> sorter;
+    private String path;
+    
     /**
      * constructor del panel
      */
@@ -144,6 +151,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         mDescripcion = new javax.swing.JTextArea();
+        btnElegirImagen = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -159,7 +167,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setText("ID:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         idTxt.setEditable(false);
         idTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -169,23 +177,23 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
                 idTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(idTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 150, 20));
+        jPanel1.add(idTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 20));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("Marca:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 50, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 50, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setText("Precio:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setText("Stock");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, 20));
 
         marcaTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         marcaTxt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(marcaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 130, 20));
+        jPanel1.add(marcaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 110, 20));
 
         precioTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         precioTxt.setBorder(null);
@@ -194,7 +202,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
                 precioTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(precioTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 120, 20));
+        jPanel1.add(precioTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 70, 20));
 
         eliminarButton.setText("Eliminar");
         eliminarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -202,7 +210,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
                 eliminarButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(eliminarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 100, -1));
+        jPanel1.add(eliminarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 100, -1));
 
         limpiarDatosButton.setText("Limpiar");
         limpiarDatosButton.addActionListener(new java.awt.event.ActionListener() {
@@ -218,16 +226,16 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
                 modificarButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(modificarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
-        jPanel1.add(stockTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 60, 20));
+        jPanel1.add(modificarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
+        jPanel1.add(stockTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, 50, 20));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setText("Modelo:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 63, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 63, -1));
 
         modeloTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         modeloTxt.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel1.add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 110, 20));
+        jPanel1.add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 180, 20));
 
         categoriaTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         categoriaTxt.setBorder(null);
@@ -244,7 +252,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setText("Descripcion");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
 
         imagenTxt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         imagenTxt.setBorder(null);
@@ -253,7 +261,7 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
                 imagenTxtActionPerformed(evt);
             }
         });
-        jPanel1.add(imagenTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 150, 20));
+        jPanel1.add(imagenTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 180, 30));
 
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel10.setText("Tipo:");
@@ -276,7 +284,15 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
         mDescripcion.setRows(5);
         jScrollPane2.setViewportView(mDescripcion);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 370, 80));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 370, 70));
+
+        btnElegirImagen.setText("Elegir Imagen");
+        btnElegirImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegirImagenActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnElegirImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 40, -1, 30));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 830, 160));
 
@@ -380,15 +396,17 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_categoriaTxtActionPerformed
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
-        // TODO add your handling code here:
-        List<String> lst = List.of(idTxt.getText(),marcaTxt.getText(),modeloTxt.getText(), precioTxt.getText()
-                                    , categoriaTxt.getText(), tipoTxt.getText(), imagenTxt.getText(), stockTxt.getText());
-        if(lst.stream().allMatch(l->!l.isEmpty())){
-            modificarProducto();
-        }else {
-            JOptionPane.showMessageDialog(this, "Todos los espacios deben estar llenos");
+        if(!stockTxt.getText().matches(".[^\\d.].") && !precioTxt.getText().matches(".[^\\d.].")){
+                List<String> lst = List.of(idTxt.getText(),marcaTxt.getText(),modeloTxt.getText(), precioTxt.getText()
+                                        , categoriaTxt.getText(), tipoTxt.getText(), imagenTxt.getText(), stockTxt.getText());
+            if(lst.stream().allMatch(l->!l.isEmpty())){
+                modificarProducto();
+            }else {
+                JOptionPane.showMessageDialog(this, "Todos los espacios deben estar llenos");
+            }
+        }else{
+           JOptionPane.showMessageDialog(this, "Ingresar un numero", "Error", JOptionPane.ERROR_MESSAGE); 
         }
-        
     }//GEN-LAST:event_modificarButtonActionPerformed
 
     private void limpiarDatosButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarDatosButtonActionPerformed
@@ -416,10 +434,22 @@ public class RegistroProductosPanel extends javax.swing.JPanel {
     private void idTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idTxtActionPerformed
+
+    private void btnElegirImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirImagenActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File selectedImage = fc.getSelectedFile();
+
+        if (selectedImage != null) {
+            path = selectedImage.getAbsolutePath();
+            imagenTxt.setText(path);
+        }
+    }//GEN-LAST:event_btnElegirImagenActionPerformed
     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnElegirImagen;
     private javax.swing.JTextField buscarTxt;
     public javax.swing.JTextField categoriaTxt;
     private javax.swing.JButton eliminarButton;

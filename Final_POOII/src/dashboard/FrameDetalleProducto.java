@@ -1,12 +1,15 @@
 package dashboard;
 
 import clases.CarritoCompras;
+import clases.DetalleCarrito;
 import clases.PC;
 import clases.Producto;
 import conexionBD.DetalleCarritoDAO;
 import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -15,6 +18,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
     PC pc;
     Producto producto;
     CarritoCompras carrito;
+    DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
 
     public FrameDetalleProducto(Producto producto, CarritoCompras carrito) {
         initComponents();
@@ -56,16 +60,18 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
             lblMarca.setText(producto.getMarca());
             lblStock.setText(String.valueOf(producto.getStock()));
             lblNombre.setText(producto.getMarca() + " " + producto.getModelo());
-            lblPrecio.setText(String.valueOf(producto.getPrecio()));
+            lblPrecio.setText("s/." + String.valueOf(producto.getPrecio()));
             lblDescripcion.setText(convertirHtml(producto.getDescripcion()));
         } else {
             lblImagen.setIcon(new ImageIcon(pc.getImagen().getScaledInstance(346,
                     316, Image.SCALE_SMOOTH)));
-            lblDescripcion.setText("");
+            lblDescripcion.setText(convertirHtml(pc.getPartes().stream()
+                .map(producto -> producto.getTipo() + " " + producto.getMarca() + " " + producto.getModelo()+"\n")
+                .collect(Collectors.joining("-"))));
             lblMarca.setText("");
             lblNombre.setText(pc.getNombre());
             lblStock.setText(String.valueOf(pc.getStock()));
-            lblPrecio.setText(String.valueOf(pc.getPartes().stream()
+            lblPrecio.setText("s/." + String.valueOf(pc.getPartes().stream()
                     .map(p -> p.getPrecio())
                     .reduce(0.0, (a, b) -> a + b)));
         }
@@ -121,10 +127,12 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
 
         lblMarca.setText("jLabel1");
 
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Stock:");
 
-        lblStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblStock.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         lblStock.setText("jLabel3");
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
@@ -205,6 +213,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel1.setText("Precio:");
 
+        lblDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         lblDescripcion.setText("jLabel3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -247,14 +256,14 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblMarca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,7 +279,7 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
                                 .addComponent(panelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
+                                .addGap(76, 76, 76)
                                 .addComponent(addToCart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
@@ -298,30 +307,53 @@ public class FrameDetalleProducto extends javax.swing.JFrame {
     private void addToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartActionPerformed
         int stock = Integer.parseInt(this.lblStock.getText());
         int cantidad = Integer.parseInt(this.lblCantidad.getText());
+        
+        
 
         if (stock < cantidad) {
             JOptionPane.showMessageDialog(null, "No hay suficiente stock!");
         } else {
+            List<DetalleCarrito> detalleCarritos = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
+            if(producto != null){
+                List<DetalleCarrito> detallesProductos = detalleCarritos.stream().filter(d -> d.getIdProducto() != 0).toList();
+                for(DetalleCarrito detalle : detallesProductos){
+                    if(detalle.getIdProducto() == producto.getId()){
+                        detalleCarritoDAO.actualizarCantidadProducto(detalle.getCantidad()+cantidad, carrito.getIdCarrito(), producto.getId(), 1);
+                        JOptionPane.showMessageDialog(null, "Producto agregado al carrito!");
+                        return;
+                    }
+                }
+            }
+            else{
+                List<DetalleCarrito> detallesPcs = detalleCarritos.stream().filter(d -> d.getIdPC() != 0).toList();
+                for(DetalleCarrito detalle : detallesPcs){
+                    if(detalle.getIdProducto() == producto.getId()){
+                        detalleCarritoDAO.actualizarCantidadProducto(detalle.getCantidad()+cantidad, carrito.getIdCarrito(), pc.getId(), 0);
+                        JOptionPane.showMessageDialog(null, "Pc agregada al carrito!");
+                        return;
+                    }
+                }
+            }
+
             Object o[] = new Object[4];
-            DetalleCarritoDAO d = new DetalleCarritoDAO();
             if (producto != null) {
                 o[0] = carrito.getIdCarrito();
                 o[1] = producto.getId();
                 o[2] = cantidad;
                 o[3] = 1;
-                d = new DetalleCarritoDAO();
-                d.agregar(o);
+                detalleCarritoDAO.agregar(o);
+                JOptionPane.showMessageDialog(null, "Producto añadido al carrito!");
             }
             else if(pc!=null){
                 o[0] = carrito.getIdCarrito();
                 o[1] = pc.getId();
                 o[2] = cantidad;
                 o[3] = 0;
-                d = new DetalleCarritoDAO();
-                d.agregar(o);
+                detalleCarritoDAO.agregar(o);
+                JOptionPane.showMessageDialog(null, "Pc añadida al carrito!");
             }
 
-            JOptionPane.showMessageDialog(null, "Producto añadido al carrito!");
+            
         }
     }//GEN-LAST:event_addToCartActionPerformed
 

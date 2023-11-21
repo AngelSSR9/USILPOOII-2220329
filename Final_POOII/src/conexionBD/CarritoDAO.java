@@ -28,7 +28,7 @@ public class CarritoDAO {
                 c.setIdCliente(resultSet.getInt(2));
                 lista.add(c);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
@@ -44,7 +44,6 @@ public class CarritoDAO {
             preparedStatement.setObject(1, idCliente);
             
             result = preparedStatement.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Carrito agregado correctamente.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
         }
@@ -60,8 +59,7 @@ public class CarritoDAO {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Carrito eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error eliminando carro: " + e.toString());
         }
 

@@ -1,7 +1,6 @@
 
 package clases.observer;
 
-import clases.Producto;
 
 /**
  * La interfaz Observer define el contrato que deben seguir los observadores.

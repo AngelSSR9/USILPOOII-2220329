@@ -40,7 +40,7 @@ public class PedidoDAO {
         return lista;
     }
 
-    public int agregar(Date fecha, int idCliente, String metodoPago)  {
+    public int agregar(Date fecha, int idCliente, String metodoPago) {
         int result = 0;
         String sql = "INSERT INTO pedidos(fecha, metodoPago, idCliente)values(?,?,?)";
         connection = conexion.obtenerConexion();
@@ -69,12 +69,12 @@ public class PedidoDAO {
             preparedStatement.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente.");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error eliminando: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
     }
-    
-    public Pedido obtenerPedidoPorId(int idPedido){
+
+    public Pedido obtenerPedidoPorId(int idPedido) {
         Pedido pedido = null;
         String query = "SELECT * FROM pedidos where idPedido =?";
         try {
@@ -90,13 +90,13 @@ public class PedidoDAO {
                 pedido.setIdCliente(resultSet.getInt(4));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error obteniendo: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
         return pedido;
     }
-    
-    public List<Pedido> obtenerPedidoPorIdCliente(int idCliente){
+
+    public List<Pedido> obtenerPedidoPorIdCliente(int idCliente) {
         List<Pedido> pedidosCliente = new ArrayList<>();;
         Pedido pedido;
         String query = "SELECT * FROM pedidos where idCliente=?";
@@ -113,7 +113,7 @@ public class PedidoDAO {
                 pedidosCliente.add(pedido);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error obteniendo: " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
 
         return pedidosCliente;

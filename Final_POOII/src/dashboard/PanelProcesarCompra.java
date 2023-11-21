@@ -1,5 +1,6 @@
 package dashboard;
 
+import correo.GeneradorComprobante;
 import diseño.ScrollBarCustom;
 import clases.CarritoCompras;
 import clases.Cliente;
@@ -23,7 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class PanelProcesarCompra extends javax.swing.JPanel {
-
+    List<DetalleCarrito> detalles;
     DetalleCarritoDAO detalleCarritoDAO = new DetalleCarritoDAO();
     DetallePedidoDAO detallePedidoDAO = new DetallePedidoDAO();
     PedidoDAO pedidoDAO = new PedidoDAO();
@@ -79,7 +80,6 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                     panelProductos.add(pan);
                 }
             }
-            //lblTotal.setText(String.valueOf(total));
             lblNumeroProductos.setText(String.valueOf(cant));
         }
 
@@ -88,7 +88,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
     public void calcularTotal() {
         CarritoCompras carrito = c.obtenerCarritoPorIdCliente(cliente.getId());
         List<DetalleCarrito> listaDetalles = detalleCarritoDAO.obtenerDetallesPorId(carrito.getIdCarrito());
-
+        detalles = listaDetalles;
         total = listaDetalles.stream()
                 .map(detalle -> {
                     if (detalle.getIdProducto() != 0) {
@@ -112,9 +112,15 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
         guardarDetallesVenta();
         eliminarCarrito();
         crearNuevoCarrito();
+        enviarComprobanteCorreo();
         panelProductos.removeAll();
         lblNumeroProductos.setText("0");
         lblTotal.setText("0");
+    }
+    
+    public void enviarComprobanteCorreo(){
+        GeneradorComprobante generadorComprobante = new GeneradorComprobante(cliente, idPedido, detalles);
+        generadorComprobante.generarBoletaElectronicaConQR();
     }
 
     public void guardarNuevaVenta(String metodoPago) {
@@ -473,6 +479,7 @@ public class PanelProcesarCompra extends javax.swing.JPanel {
                                 generarPedido("Tarjeta Crédito");
                             else
                                 generarPedido("Tarjeta Débito");
+                            frame.dispose();
                         }   
 
                     });

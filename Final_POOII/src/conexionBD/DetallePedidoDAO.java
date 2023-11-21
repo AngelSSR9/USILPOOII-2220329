@@ -1,9 +1,6 @@
 package conexionBD;
 
-import clases.Cliente;
-import clases.DetalleCarrito;
 import clases.DetallePedido;
-import clases.Pedido;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,14 +42,13 @@ public class DetallePedidoDAO {
     public int agregar(Object[] o) {
         int result = 0;
         String sql = "";
-        
-        if((int) o[4] ==  1){
+
+        if ((int) o[4] == 1) {
             sql = "INSERT INTO detallespedidos(idPedido, idProducto, cantidad, precioVenta)values(?,?,?,?)";
-        }
-        else{
+        } else {
             sql = "INSERT INTO detallespedidos(idPedido, idPC, cantidad, precioVenta)values(?,?,?,?)";
         }
-        
+
         connection = conexion.obtenerConexion();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -61,10 +57,8 @@ public class DetallePedidoDAO {
             preparedStatement.setObject(3, o[2]);
             preparedStatement.setObject(4, o[3]);
             result = preparedStatement.executeUpdate();
-            //JOptionPane.showMessageDialog(null, "Detalle agregado correctamente.");
         } catch (SQLException ex) {
             System.out.println("Er: " + ex.toString());
-            //JOptionPane.showMessageDialog(null, "Error agregando: " + ex.toString());
         }
 
         return result;
@@ -78,13 +72,13 @@ public class DetallePedidoDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             //JOptionPane.showMessageDialog(null, "Detalle pedido eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error eliminando: " + e.toString());
         }
 
     }
-    
-    public List obtenerDetallesPorId(int id){
+
+    public List obtenerDetallesPorId(int id) {
         List<DetallePedido> lista = new ArrayList<>();
         String sql = "SELECT * FROM detallespedidos WHERE idPedido = ?";
         try {
@@ -92,7 +86,7 @@ public class DetallePedidoDAO {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 DetallePedido d = new DetallePedido();
                 d.setIdPedido(resultSet.getInt(1));
                 d.setIdProducto(resultSet.getInt(2));
@@ -101,11 +95,10 @@ public class DetallePedidoDAO {
                 d.setIdPC(resultSet.getInt(5));
                 lista.add(d);
             }
-            //JOptionPane.showMessageDialog(null, "Detalle eliminado correctamente.");
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error obteniendo detalle: " + e.toString());
         }
-       
+
         return lista;
     }
 
