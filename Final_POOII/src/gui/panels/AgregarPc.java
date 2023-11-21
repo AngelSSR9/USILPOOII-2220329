@@ -56,7 +56,7 @@ public class AgregarPc extends javax.swing.JPanel {
         List<Producto> listaPro = productoDAO.obtenerProductosPorTipo("PROCESADOR");
         listaPro.forEach((t) -> cBoxProce.addItem(t.getTipo() + " marca " + t.getMarca()));
         
-        List<Producto> listaFpod = productoDAO.obtenerProductosPorTipo("FUENTE PODER");
+        List<Producto> listaFpod = productoDAO.obtenerProductosPorTipo("FUENTE DE PODER");
         listaFpod.forEach((t) -> cBoxFpoder.addItem(t.getTipo() + " marca " + t.getMarca()));
         
         List<Producto> listaGab = productoDAO.obtenerProductosPorTipo("GABINETE");
@@ -571,7 +571,7 @@ public class AgregarPc extends javax.swing.JPanel {
                     prod.add(agregarCom("ALMACENAMIENTO", cBoxMemRom));
                     prod.add(agregarCom("PROCESADOR", cBoxProce));
                     prod.add(agregarCom("PLACA MADRE", cBoMoBo));
-                    prod.add(agregarCom("FUENTE PODER", cBoxFpoder));
+                    prod.add(agregarCom("FUENTE DE PODER", cBoxFpoder));
                     prod.add(agregarCom("GABINETE", cBoxGabinete));
                     if (agregarPer("REFRIGERACION", cBoxTarjGraf) != null) {
                         prod.add(agregarPer("REFRIGERACION", cBoxTarjGraf));
