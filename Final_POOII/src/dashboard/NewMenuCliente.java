@@ -288,6 +288,7 @@ public class NewMenuCliente extends javax.swing.JFrame {
         if( optionsClient== null){
             optionsClient= new OptionsClient(cliente);
         }
+        optionsClient.verificarCheck(cliente);
         dashboardView.removeAll();
         dashboardView.add(optionsClient);
         dashboardView.revalidate();
